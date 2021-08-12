@@ -1,0 +1,21 @@
+<resources>
+    <string name="app_name">VoilaRegistration</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="register_as_driver">Register as Driver</string>
+    <string name="register_as_restaurant">Register as Restaurant</string>
+    <string name="docs_name">docs_name</string>
+    <string name="required_document">Required Document</string>
+    <string name="we_require_for_registration_below">We require for registration below documents is necessary .</string>
+    <string name="kyc_documents">KYC DOCUMENTS</string>
+    <string name="vehicle_documents">VEHICLE DOCUMENTS</string>
+    <string name="contine">Continue</string>
+    <string name="sign_up_to_voila">Sign up to Voila</string>
+    <string name="enter_mobile_text">Enter your mobile number to create account.</string>
+    <string name="send_otp_text">We will send you one time password (OTP)</string>
+    <string name="enter_phone_number">Enter phone number</string>
+    <string name="send_otp">Send OTP</string>
+    <string name="verify_text">Verify your Phone Number</string>
+    <string name="send_otp_on_number_text">We have send the code verification to <br /> your mobile number</string>
+    <string name="save_and_submit"><![CDATA[Save&Submit]]></string>
+</resources>
