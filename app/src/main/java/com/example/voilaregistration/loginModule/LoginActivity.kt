@@ -24,21 +24,21 @@ import kotlinx.android.synthetic.main.activity_login.*
 
 class LoginActivity : AppCompatActivity(),LoginViewModelListener {
 
-    lateinit var activityLoginBinding: ActivityLoginBinding
+    lateinit var binding : ActivityLoginBinding
     private lateinit var loginViewModel : LoginViewModel
     lateinit var progressBar : ProgressDialog
     lateinit var helper: Helper
-    val registrationFor  = ObservableField<String>()
+    private val registrationFor  = ObservableField<String>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         //setContentView(R.layout.activity_login)
 
-        activityLoginBinding = DataBindingUtil.setContentView(this, R.layout.activity_login)
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_login)
         loginViewModel = ViewModelProviders.of(this, LoginViewModelFactory(this)).get(LoginViewModel::class.java)
-        activityLoginBinding.login = loginViewModel
+        binding.login = loginViewModel
         loginViewModel.listner = this
-        activityLoginBinding.executePendingBindings()
+        binding.executePendingBindings()
 
         if (intent!=null){
             registrationFor.set(intent.getStringExtra("registrationFor"))
@@ -73,6 +73,7 @@ class LoginActivity : AppCompatActivity(),LoginViewModelListener {
         override fun onTextChanged(arg0: CharSequence?, arg1: Int, arg2: Int, arg3: Int) {}
 
     }
+
     override fun onOTPSendSuccess() {
         progressBar =  Helper.DialogsUtils.showProgressDialog(this, "Sending Otp Please wait...")
         Log.d("sendOTP", "onOTPSendSuccess: otp send successfully")
@@ -91,12 +92,12 @@ class LoginActivity : AppCompatActivity(),LoginViewModelListener {
 
     /*--after send the otp visible a verify otp*/
     private fun enableVerifyOtpLayout() {
-       activityLoginBinding.signUpTextLayout.visibility = View.GONE
-       activityLoginBinding.otpVerifyLayout.visibility = View.VISIBLE
+        binding.signUpTextLayout.visibility = View.GONE
+        binding.otpVerifyLayout.visibility = View.VISIBLE
 
-       activityLoginBinding.phoneNumberLayot.visibility = View.GONE
-       activityLoginBinding.getOtpTextLayout.visibility = View.VISIBLE
-        activityLoginBinding.mobileNumberText.text = loginViewModel.mobileNumber.get()
+        binding.phoneNumberLayot.visibility = View.GONE
+        binding.getOtpTextLayout.visibility = View.VISIBLE
+        binding.mobileNumberText.text = loginViewModel.mobileNumber.get()
     }
 
     override fun onOTPSendFailed() {

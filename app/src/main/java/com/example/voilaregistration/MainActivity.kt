@@ -4,7 +4,6 @@ package com.example.voilaregistration
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
@@ -62,6 +61,8 @@ class MainActivity : AppCompatActivity() , MainViewModelListener {
                 .observe(this, Observer {
                     if (it != null) {
                         showDocsRequiredList(it)
+                        mainActivityViewModel.getAllRequiredRestaurantObservable()
+                            .removeObservers(this)
                     }
                 })
     }
@@ -110,6 +111,8 @@ class MainActivity : AppCompatActivity() , MainViewModelListener {
                 .observe(this, Observer {
                     if (it != null) {
                         showRestaurantDocsList(it)
+                        mainActivityViewModel.getAllRequiredRestaurantObservable()
+                            .removeObservers(this)
                     }
                 })
     }

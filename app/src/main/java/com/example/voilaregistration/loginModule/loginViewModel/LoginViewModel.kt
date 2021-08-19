@@ -2,6 +2,7 @@ package com.example.voilaregistration.loginModule.loginViewModel
 
 import android.app.ProgressDialog
 import android.content.Context
+import android.content.Intent
 import android.content.SharedPreferences
 import androidx.databinding.ObservableField
 import androidx.lifecycle.MutableLiveData
@@ -12,6 +13,7 @@ import com.example.voilaregistration.loginModule.LoginViewModelListner.LoginView
 import com.example.voilaregistration.loginModule.Model.UserDetail
 import com.example.voilaregistration.loginModule.NetworkResponse.OtpVerificationResponse
 import com.example.voilaregistration.loginModule.NetworkResponse.SendOtpResponse
+import com.example.voilaregistration.restaurantRegistration.UI.RestaurantHomeScreenActivity
 import com.google.firebase.messaging.FirebaseMessaging
 
 class LoginViewModel(var context: Context) : ViewModel() {
@@ -86,6 +88,20 @@ class LoginViewModel(var context: Context) : ViewModel() {
            val mobilNumber:String = userDetails.mobile_number
            val authToken:String = userDetails.auth_token
            insertPref(id,mobilNumber,authToken,get)
+        }
+
+        //move on home screen
+        moveOnHomeScreen(get)
+    }
+
+    //move a home screen by check login for
+    private fun moveOnHomeScreen(get: String?) {
+        if (get.toString() == "Driver"){
+           // val intent = Intent(context,Drive)
+        }
+        else{
+            val intent = Intent(context,RestaurantHomeScreenActivity::class.java)
+            context.startActivity(intent)
         }
     }
 

@@ -2,10 +2,21 @@ package com.example.voilaregistration.restaurantRegistration.RestaurantViewModel
 
 interface RestaurantViewModelListener {
 
+    fun onSuccess(s: String)
+    fun onFailed(s: String)
+
     fun onOwnerBasicDetailFound();
-    fun onOwnerBasicDetailsNotFound(s: String);
 
     //add restaurant owner details
     fun onAddRestaurantOwnerDetailsSuccess()
-    fun onAddRestaurantOwnerDetailsFailed(s: String)
+
+    //track registration process
+    fun toTrackRegistrationProcessSuccess()
+
+    //add restaurant profile details
+    fun onAddRestaurantProfileDetailsSuccess()
+
+    //add restaurant profile photo
+    fun onAddRestaurantPhotoSuccess()
+
 }

@@ -76,9 +76,16 @@ public class Helper {
     }
 
     object getAuthToken{
-        fun authToken(context: Context): String? {
+        fun authToken(context: Context): String {
             val sharedPreferences = context.getSharedPreferences("voila", Context.MODE_PRIVATE)
-            return sharedPreferences.getString("authToken", "")
+            return sharedPreferences.getString("authToken", "").toString()
+        }
+    }
+
+    object getRestaurantId{
+        fun restaurantId(context: Context) : String {
+            val sharedPreferences = context.getSharedPreferences("voila",Context.MODE_PRIVATE)
+            return sharedPreferences.getString("userId","").toString()
         }
     }
 

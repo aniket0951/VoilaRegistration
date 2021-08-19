@@ -18,4 +18,22 @@
     <string name="verify_text">Verify your Phone Number</string>
     <string name="send_otp_on_number_text">We have send the code verification to <br /> your mobile number</string>
     <string name="save_and_submit"><![CDATA[Save&Submit]]></string>
+    <string name="select_dish_item">Select dish item</string>
+    <string name="add_items">Add Items</string>
+    <string name="cancle">Cancle</string>
+    <string name="filter">filter</string>
+
+
+    <!-- Menu items -->
+    <string-array name="menuItems">
+
+        <item>Starter</item>
+        <item>Main Course</item>
+        <item>Desserts</item>
+        <item>Salad</item>
+        <item>Bread</item>
+        <item>Soup</item>
+
+    </string-array>
+
 </resources>

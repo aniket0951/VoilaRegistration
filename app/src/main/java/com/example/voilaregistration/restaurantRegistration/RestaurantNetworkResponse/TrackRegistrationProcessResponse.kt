@@ -6,5 +6,6 @@ data class TrackRegistrationProcessResponse(
         val message: String,
         val needToProcessComplete: List<NeedToProcessComplete>,
         val processCompleteStatus: String,
-        val result: Boolean
+        val result: Boolean,
+        val accountCreated : String
 )

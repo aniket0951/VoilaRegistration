@@ -1,0 +1,4 @@
+package com.example.voilaregistration.restaurantRegistration.RestaurantViewModelListner
+
+interface MenuCardViewModelListener {
+}
