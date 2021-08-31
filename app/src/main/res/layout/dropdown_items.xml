@@ -8,4 +8,6 @@
     android:padding="12dp"
     android:fontFamily="@font/poppins_medium"
     android:textColor="@color/black"
+    android:background="@color/off_white"
+    android:backgroundTint="@color/off_white"
     xmlns:android="http://schemas.android.com/apk/res/android" />

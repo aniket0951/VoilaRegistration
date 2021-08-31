@@ -1,0 +1,416 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    >
+
+    <data>
+
+        <variable
+            name="updatemodel"
+            type="com.voila.voilasailor.restaurantRegistration.restaurantViewModel.UpdateMenuViewModel" />
+
+    </data>
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:background="@color/off_white"
+        android:backgroundTint="@color/off_white"
+        tools:context=".restaurantRegistration.UI.UpdateMenuActivity">
+
+        <!-- AppBar layout for using Toolbar as AppBar -->
+        <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/appBarLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <!-- ToolBar widget -->
+                <androidx.appcompat.widget.Toolbar
+                    android:id="@+id/toolbar"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/primary_color"
+                    android:minHeight="?attr/actionBarSize"
+                    android:theme="?attr/actionBarTheme"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:title="  Update Menu"
+                    app:titleTextColor="#ffff"
+                    />
+
+
+                <!-- ImageView beside title of ToolBar -->
+                <ImageView
+                    android:id="@+id/imageView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:src="@drawable/ic_arrow_back"
+                    app:tint="#ffff"
+                    android:layout_marginStart="5dp"
+                    android:paddingRight="15dp"
+                    tools:ignore="MissingConstraints,RtlSymmetry"
+                    android:paddingEnd="15dp"
+                    android:visibility="gone"
+                    android:layout_marginLeft="5dp"
+                    />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </com.google.android.material.appbar.AppBarLayout>
+
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            >
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                >
+
+                <!--  Radio button to select veg or non-veg -->
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:id="@+id/radio_layout"
+                    android:visibility="visible"
+                    >
+
+                    <RadioButton
+                        android:id="@+id/radioButton1"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:text="Veg"
+                        android:layout_marginTop="5dp"
+                        android:textColor="@color/black"
+                        android:textColorHint="@color/black"
+                        android:textSize="20dp" />
+
+                    <RadioButton
+                        android:id="@+id/radioButton2"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:text="Non Veg"
+                        android:textColor="@color/black"
+                        android:textColorHint="@color/black"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginStart="25dp"
+                        android:textSize="20dp"
+                        android:layout_marginLeft="25dp" />
+
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+                <!-- Layout for title and edit text-->
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:id="@+id/edit_main_layout"
+                    android:visibility="visible"
+                    >
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Dish Item"
+                        android:textSize="16sp"
+                        android:layout_marginStart="10dp"
+                        android:textColor="@color/black"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginLeft="10dp"
+                        android:id="@+id/title"
+                        />
+                    <!-- to show a spinner items -->
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginEnd="10dp"
+                        android:visibility="visible"
+                        android:id="@+id/list_item_layout"
+                        android:layout_marginTop="10dp"
+                        android:theme="@style/textInputLayoutAppearance"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                        >
+
+
+                        <AutoCompleteTextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:inputType="none"
+                            android:id="@+id/auto_complete_text"
+                            android:text="@={updatemodel.dishItem}"
+                            />
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+
+                    <!--  Dish Name Layout  -->
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Dish Name"
+                        android:textSize="16sp"
+                        android:layout_marginStart="10dp"
+                        android:textColor="@color/black"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginLeft="10dp"
+                        />
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/simple_edit_layout"
+                        android:theme="@style/textInputLayoutAppearance"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+                        android:layout_marginLeft="10dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginEnd="10dp"
+                        android:layout_marginTop="10dp"
+                        >
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/dish_name_edit"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:freezesText="true"
+                            android:inputType="text"
+                            android:textColorHint="@color/black"
+                            android:singleLine="true"
+                            android:text="@={updatemodel.dishName}"
+                            android:textColor="@color/black"
+                            android:textSize="16sp"
+                            >
+
+                        </com.google.android.material.textfield.TextInputEditText>
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <!--  Dish Description  -->
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Dish Description"
+                        android:textSize="16sp"
+                        android:layout_marginStart="10dp"
+                        android:textColor="@color/black"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginLeft="10dp"
+                        />
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:theme="@style/textInputLayoutAppearance"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+                        android:layout_marginLeft="10dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginEnd="10dp"
+                        android:layout_marginTop="10dp"
+                        >
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/dish_description_edit"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:freezesText="true"
+                            android:inputType="text"
+                            android:textColorHint="@color/black"
+                            android:singleLine="true"
+                            android:textColor="@color/black"
+                            android:textSize="16sp"
+                            android:text="@={updatemodel.dishDescription}"
+                            >
+
+                        </com.google.android.material.textfield.TextInputEditText>
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <!--  Dish Price  -->
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Dish Price"
+                        android:textSize="16sp"
+                        android:layout_marginStart="10dp"
+                        android:textColor="@color/black"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginLeft="10dp"
+                        />
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:theme="@style/textInputLayoutAppearance"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+                        android:layout_marginLeft="10dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginEnd="10dp"
+                        android:layout_marginTop="10dp"
+                        >
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/dish_price_edit"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:freezesText="true"
+                            android:inputType="text"
+                            android:textColorHint="@color/black"
+                            android:singleLine="true"
+                            android:textColor="@color/black"
+                            android:textSize="16sp"
+                            android:text="@={updatemodel.dishPrice}"
+                            >
+
+                        </com.google.android.material.textfield.TextInputEditText>
+                    </com.google.android.material.textfield.TextInputLayout>
+
+
+                    <!-- Layout for Upload doc and title-->
+                    <androidx.appcompat.widget.LinearLayoutCompat
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:id="@+id/doc_main_layout"
+                        android:visibility="gone"
+                        >
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="owner title"
+                            android:textSize="16sp"
+                            android:layout_marginStart="10dp"
+                            android:textColor="@color/black"
+                            android:layout_marginTop="10dp"
+                            android:layout_marginLeft="10dp"
+                            android:id="@+id/doc_title"
+                            />
+
+                        <androidx.appcompat.widget.LinearLayoutCompat
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:layout_marginStart="10dp"
+                            android:layout_marginTop="10dp"
+                            android:background="@drawable/image_background"
+                            android:layout_marginLeft="10dp">
+
+
+                            <androidx.appcompat.widget.AppCompatImageView
+                                android:layout_width="120dp"
+                                android:layout_height="120dp"
+                                android:src="@drawable/ic_add"
+                                android:id="@+id/docs_image"/>
+
+
+                        </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+                    </androidx.appcompat.widget.LinearLayoutCompat>
+
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+                <!-- Layout for Upload doc and title-->
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:visibility="visible"
+                    >
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Dish Photo"
+                        android:textSize="16sp"
+                        android:layout_marginStart="10dp"
+                        android:textColor="@color/black"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginLeft="10dp"
+                        />
+
+                    <androidx.appcompat.widget.LinearLayoutCompat
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginTop="10dp"
+                        android:background="@drawable/image_background"
+                        android:layout_marginLeft="10dp">
+
+
+                        <androidx.appcompat.widget.AppCompatImageView
+                            android:layout_width="200dp"
+                            android:layout_height="120dp"
+                            android:scaleType="fitXY"
+                            android:src="@drawable/ic_add"
+                            android:id="@+id/dish_image"/>
+
+
+                    </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginBottom="15dp"
+                    android:gravity="end"
+                    >
+
+                    <androidx.appcompat.widget.AppCompatButton
+                        android:layout_width="120dp"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/primary_color"
+                        android:text="@string/cancle"
+                        android:fontFamily="@font/poppins_medium"
+                        android:textSize="16sp"
+                        android:layout_gravity="end"
+                        android:layout_marginRight="10dp"
+                        android:textAllCaps="false"
+                        android:layout_marginBottom="15dp"
+                        android:id="@+id/btn_cancel"
+                        android:layout_marginEnd="10dp" />
+
+                    <androidx.appcompat.widget.AppCompatButton
+                        android:layout_width="120dp"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/two_color_bg_button"
+                        android:textColor="@color/white"
+                        android:text="@string/save_and_submit"
+                        android:fontFamily="@font/poppins_medium"
+                        android:textSize="16sp"
+                        android:layout_gravity="end"
+                        android:layout_marginRight="15dp"
+                        android:textAllCaps="false"
+                        android:onClick="@{() -> updatemodel.updateMenuItem()}"
+                        android:layout_marginBottom="15dp"
+                        android:id="@+id/btn_save_confirm"
+                        android:layout_marginEnd="15dp" />
+
+
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+        </ScrollView>
+
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+</layout>

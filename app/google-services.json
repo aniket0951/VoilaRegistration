@@ -9,7 +9,7 @@
       "client_info": {
         "mobilesdk_app_id": "1:595985581469:android:ec516b504ff15a12b61b74",
         "android_client_info": {
-          "package_name": "com.example.voila"
+          "package_name": "com.voila.voilasailor"
         }
       },
       "oauth_client": [
@@ -38,7 +38,7 @@
       "client_info": {
         "mobilesdk_app_id": "1:595985581469:android:8ef8e50f6436a0b1b61b74",
         "android_client_info": {
-          "package_name": "com.example.voilalive"
+          "package_name": "com.voila.voilasailor"
         }
       },
       "oauth_client": [
@@ -67,7 +67,7 @@
       "client_info": {
         "mobilesdk_app_id": "1:595985581469:android:b4714ed3f40a4b60b61b74",
         "android_client_info": {
-          "package_name": "com.example.voilaregistration"
+          "package_name": "com.voila.voilasailor"
         }
       },
       "oauth_client": [

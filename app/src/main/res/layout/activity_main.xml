@@ -9,7 +9,7 @@
 
         <variable
             name="main"
-            type="com.example.voilaregistration.viewModel.MainActivityViewModel" />
+            type="com.voila.voilasailor.viewModel.MainActivityViewModel" />
 
     </data>
 
@@ -78,6 +78,15 @@
 
         </androidx.appcompat.widget.LinearLayoutCompat>
 
+        <ProgressBar
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="40dp"
+            android:id="@+id/progress_bar_bar"
+            android:visibility="gone"
+            />
+        
         <!-- showing docs list -->
         <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="match_parent"

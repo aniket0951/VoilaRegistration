@@ -10,18 +10,28 @@
     <string name="kyc_documents">KYC DOCUMENTS</string>
     <string name="vehicle_documents">VEHICLE DOCUMENTS</string>
     <string name="contine">Continue</string>
-    <string name="sign_up_to_voila">Sign up to Voila</string>
+    <string name="sign_up_to_voila">Sign up with Voila</string>
     <string name="enter_mobile_text">Enter your mobile number to create account.</string>
     <string name="send_otp_text">We will send you one time password (OTP)</string>
-    <string name="enter_phone_number">Enter phone number</string>
+    <string name="enter_phone_number">Enter contact number</string>
     <string name="send_otp">Send OTP</string>
-    <string name="verify_text">Verify your Phone Number</string>
-    <string name="send_otp_on_number_text">We have send the code verification to <br /> your mobile number</string>
-    <string name="save_and_submit"><![CDATA[Save&Submit]]></string>
+    <string name="verify_text">Verify your contact number</string>
+    <string name="send_otp_on_number_text">We have send verification code <br /> your mobile number</string>
+    <string name="save_and_submit">Submit</string>
     <string name="select_dish_item">Select dish item</string>
     <string name="add_items">Add Items</string>
-    <string name="cancle">Cancle</string>
-    <string name="filter">filter</string>
+    <string name="cancle">Cancel</string>
+    <string name="filter">Filter</string>
+    <string name="profile">Profile</string>
+    <string name="owner_details">Owner Details</string>
+    <string name="restaurant_details">Restaurant details</string>
+    <string name="restaurant_docs">Restaurant Documents</string>
+    <string name="select_vehicle_type">select vehicle type</string>
+    <string name="select_date">select date</string>
+    <string name="basic_information">Basic Information</string>
+    <string name="address_information">Address Information</string>
+    <string name="kyc_information">KYC Information</string>
+    <string name="vehicle_information">Vehicle Information</string>
 
 
     <!-- Menu items -->
@@ -35,5 +45,108 @@
         <item>Soup</item>
 
     </string-array>
+
+    <!-- vehicle type -->
+    <string-array name="vehicleType">
+
+        <item>Auto</item>
+        <item>Cab</item>
+
+
+    </string-array>
+
+    <!--  states -->
+    <string-array name="states">
+
+        <item>Andhra Pradesh</item>
+        <item>Arunachal Pradesh</item>
+        <item>Assam</item>
+        <item>Bihar</item>
+        <item>Chhattisgarh</item>
+        <item>Goa</item>
+        <item>Gujarat</item>
+        <item>Haryana</item>
+        <item>Himachal Pradesh</item>
+        <item>Jharkhand</item>
+        <item>Karnataka</item>
+        <item>Kerala</item>
+        <item>Madhya Pradesh</item>
+        <item>Maharashtra</item>
+        <item>Manipur</item>
+        <item>Meghalaya</item>
+        <item>Mizoram</item>
+        <item>Nagaland</item>
+        <item>Odisha</item>
+        <item>Punjab</item>
+        <item>Rajasthan</item>
+        <item>Sikkim</item>
+        <item>Tamil Nadu</item>
+        <item>Telangana</item>
+        <item>Tripura</item>
+        <item>Uttar Pradesh</item>
+        <item>Uttarakhand</item>
+        <item>West Bengal</item>
+
+    </string-array>
+
+    <!--  vehicle colors -->
+    <string-array name="vehicleColors">
+        <item>White</item>
+        <item>Black</item>
+        <item>Gray</item>
+        <item>Silver</item>
+        <item>Red</item>
+        <item>Blue</item>
+        <item>Brown</item>
+        <item>Green</item>
+        <item>Beige</item>
+        <item>Orange</item>
+        <item>Gold</item>
+        <item>Yellow</item>
+        <item>Purple</item>
+    </string-array>
+
+    <!-- District list -->
+    <string-array name="districtList">
+
+        <item>Ahmednagar</item>
+        <item>Akola</item>
+        <item>Amravati</item>
+        <item>Aurangabad</item>
+        <item>Beed</item>
+        <item>Bhandara</item>
+        <item>Buldhana</item>
+        <item>Chandrapur</item>
+        <item>Dhule</item>
+        <item>Gadchiroli</item>
+        <item>Gondia</item>
+        <item>Hingoli</item>
+        <item>Jalgaon</item>
+        <item>Jalna</item>
+        <item>Kolhapur</item>
+        <item>Latur</item>
+        <item>Mumbai City</item>
+        <item>Mumbai Suburban</item>
+        <item>Nagpur</item>
+        <item>Nanded</item>
+        <item>Nandurbar</item>
+        <item>Nashik</item>
+        <item>Osmanabad</item>
+        <item>Palghar</item>
+        <item>Parbhani</item>
+        <item>Pune</item>
+        <item>Raigad</item>
+        <item>Ratnagiri</item>
+        <item>Sangli</item>
+        <item>Satara</item>
+        <item>Sindhudurg</item>
+        <item>Solapur</item>
+        <item>Thane</item>
+        <item>Wardha</item>
+        <item>Washim</item>
+        <item>Yavatmal</item>
+
+    </string-array>
+
 
 </resources>

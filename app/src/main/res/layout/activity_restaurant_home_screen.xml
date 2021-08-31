@@ -9,16 +9,17 @@
 
         <variable
             name="restaurantHome"
-            type="com.example.voilaregistration.restaurantRegistration.restaurantViewModel.RestaurantHomeViewModel" />
+            type="com.voila.voilasailor.restaurantRegistration.restaurantViewModel.RestaurantHomeViewModel" />
 
     </data>
 
     <androidx.appcompat.widget.LinearLayoutCompat
         android:id="@+id/parent_layout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:orientation="vertical"
         android:background="@color/off_white"
+        android:backgroundTint="@color/off_white"
         tools:context=".restaurantRegistration.UI.RestaurantHomeScreenActivity">
 
 
@@ -47,9 +48,8 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     app:title="  Menu Card"
-                    android:layout_marginStart="15dp"
                     app:titleTextColor="#ffff"
-                    android:layout_marginLeft="15dp" />
+                    />
 
 
                 <!-- ImageView beside title of ToolBar -->
@@ -65,6 +65,7 @@
                     android:paddingRight="15dp"
                     tools:ignore="MissingConstraints,RtlSymmetry"
                     android:paddingEnd="15dp"
+                    android:visibility="gone"
                     android:layout_marginLeft="5dp" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
@@ -75,31 +76,37 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            >
-
-
-
-        </androidx.appcompat.widget.LinearLayoutCompat>
-
-        <androidx.appcompat.widget.LinearLayoutCompat
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
             android:layout_gravity="end"
             android:gravity="end"
+            android:id="@+id/options_parent_layout"
             >
 
             <androidx.appcompat.widget.AppCompatImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:id="@+id/filter_img"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
                 android:src="@drawable/filter"
-                android:layout_marginTop="15dp"
+                android:layout_marginTop="20dp"
+                android:visibility="gone"
                 android:layout_marginRight="15dp"
                 android:onClick="@{() -> restaurantHome.getAllFilterOption()}"
                 android:layout_marginEnd="15dp" />
 
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/profile"
+                android:layout_marginTop="15dp"
+                android:textSize="22sp"
+                android:layout_marginRight="15dp"
+                android:layout_marginEnd="15dp"
+                android:textColor="@color/black"
+                android:fontFamily="@font/poppins_medium"
+                android:id="@+id/profile_text"
+                />
+
             <androidx.appcompat.widget.AppCompatButton
-                android:layout_width="180dp"
+                android:layout_width="120dp"
                 android:layout_height="wrap_content"
                 android:background="@drawable/two_color_bg_button"
                 android:textColor="@color/white"
@@ -117,7 +124,12 @@
 
         </androidx.appcompat.widget.LinearLayoutCompat>
 
-
+        <androidx.fragment.app.FragmentContainerView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/fragment_view"
+            android:visibility="gone"
+            />
 
         <!-- to show a account is under review layout -->
         <androidx.appcompat.widget.LinearLayoutCompat
@@ -126,6 +138,7 @@
             android:orientation="vertical"
             android:layout_gravity="center"
             android:gravity="center"
+            android:background="@color/off_white"
             android:id="@+id/layout_account_under_review"
             >
 
@@ -160,6 +173,7 @@
             android:orientation="vertical"
             android:layout_marginTop="10dp"
             android:visibility="gone"
+            android:background="@color/off_white"
             android:id="@+id/recycler_view_layout"
             >
 

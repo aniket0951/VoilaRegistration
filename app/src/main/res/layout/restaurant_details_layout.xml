@@ -24,10 +24,12 @@
             android:layout_marginTop="10dp"
             android:layout_marginLeft="10dp"
             android:id="@+id/title"
+            android:fontFamily="@font/poppins_medium"
+            android:textStyle="bold"
             />
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/til_Login_mobNo"
+            android:id="@+id/edt_text_layout"
             android:theme="@style/textInputLayoutAppearance"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
             android:layout_marginLeft="10dp"
@@ -50,6 +52,33 @@
                 >
 
             </com.google.android.material.textfield.TextInputEditText>
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+
+        <!-- to show a spinner items -->
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:visibility="gone"
+            android:id="@+id/list_item_layout"
+            android:layout_marginTop="10dp"
+            android:theme="@style/textInputLayoutAppearance"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+            >
+
+
+            <AutoCompleteTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:inputType="none"
+                android:id="@+id/auto_complete_text"
+                android:text="@string/select_vehicle_type"
+                />
+
         </com.google.android.material.textfield.TextInputLayout>
 
 
@@ -90,7 +119,7 @@
             <androidx.appcompat.widget.AppCompatImageView
                 android:layout_width="120dp"
                 android:layout_height="120dp"
-                android:src="@drawable/ic_add"
+                android:src="@drawable/imgae_add_new"
                 android:id="@+id/docs_image"/>
 
 

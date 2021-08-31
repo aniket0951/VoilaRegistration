@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    >
+
+    <data>
+
+        <variable
+            name="profile"
+            type="com.voila.voilasailor.restaurantRegistration.restaurantViewModel.ProfileDetailViewModel" />
+
+    </data>
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        tools:context=".restaurantRegistration.UI.ProfileFragment">
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:id="@+id/text_parent_layout"
+            android:visibility="visible"
+            >
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="@string/owner_details"
+                android:layout_marginTop="10dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginLeft="10dp"
+                android:textSize="16sp"
+                android:textColor="@color/black"
+                android:fontFamily="@font/poppins_medium"
+                android:id="@+id/owner_details"
+                android:onClick="@{() -> profile.showOwnerDetails()}"
+                />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="@string/restaurant_details"
+                android:layout_marginTop="15dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginLeft="10dp"
+                android:textSize="16sp"
+                android:textColor="@color/black"
+                android:fontFamily="@font/poppins_medium"
+                android:id="@+id/restaurant_details"
+                android:onClick="@{() -> profile.showRestaurantDetails()}"
+                />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="@string/restaurant_docs"
+                android:layout_marginTop="10dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginLeft="10dp"
+                android:textSize="16sp"
+                android:textColor="@color/black"
+                android:fontFamily="@font/poppins_medium"
+                android:id="@+id/restaurant_profile_details"
+                android:layout_marginBottom="10dp"
+                android:onClick="@{() -> profile.showRestaurantDocsDetails()}"
+                />
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            >
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:id="@+id/recycler_view_layout"
+                android:layout_marginTop="10dp"
+                android:visibility="gone"
+                >
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/recycler_view"
+                    />
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
+                    >
+
+                    <androidx.appcompat.widget.AppCompatButton
+                        android:layout_width="120dp"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/two_color_bg_button"
+                        android:textColor="@color/white"
+                        android:text="@string/cancle"
+                        android:fontFamily="@font/poppins_medium"
+                        android:textSize="16sp"
+                        android:layout_gravity="end"
+                        android:layout_marginRight="15dp"
+                        android:layout_marginStart="10dp"
+                        android:textAllCaps="false"
+                        android:layout_marginBottom="15dp"
+                        android:id="@+id/btn_cancel"
+                        android:layout_marginEnd="15dp"
+                        android:layout_marginLeft="10dp"
+                        android:onClick="@{() -> profile.onCancelClick()}"
+                        />
+
+                    <androidx.appcompat.widget.AppCompatButton
+                        android:layout_width="120dp"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/two_color_bg_button"
+                        android:textColor="@color/white"
+                        android:text="@string/save_and_submit"
+                        android:fontFamily="@font/poppins_medium"
+                        android:textSize="16sp"
+                        android:layout_gravity="end"
+                        android:layout_marginRight="15dp"
+                        android:textAllCaps="false"
+                        android:layout_marginBottom="15dp"
+                        android:id="@+id/btn_save_confirm"
+                        android:layout_marginEnd="15dp" />
+
+
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+        </ScrollView>
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+</layout>
