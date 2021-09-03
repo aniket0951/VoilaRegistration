@@ -132,6 +132,26 @@ interface ApiService {
     @GET(WebServer.GET_ALL_REQUESTED_INFORMATION)
     fun getAllRequestedInformation(@Query("api_token")api_token: String?,@Query("request_token")request_token: String) : Observable<DriverRequestedInfoResponse>??
 
+    //update personal info
+    @POST(WebServer.POST_UPDATE_PERSONAL_INFORMATION)
+    fun updatePersonalInformation(@Query("api_token")api_token: String?,@Body jsonObject: JsonObject) : Observable<AddPersonalInformationResponse?>?
+
+    //update vehicle info
+    @POST(WebServer.POST_UPDATE_VEHICLE_INFORMATION)
+    fun updateVehicleInformation(@Query("api_token")api_token: String?,@Body jsonObject: JsonObject) : Observable<AddVehicleDetailsResponse?>?
+
+    //update address info
+    @POST(WebServer.POST_UPDATE_ADDRESS_INFORMATION)
+    fun updateAddressInformation(@Query("api_token")api_token: String?,@Body jsonObject: JsonObject) : Observable<AddAddressResponse?>?
+
+    @Multipart
+    @POST(WebServer.POST_UPDATE_KYC_INFORMATION)
+    fun updateKYCInformation(@Part image :MultipartBody.Part,@Part("title")title: RequestBody,@Part("request_token")request_token: RequestBody) : Observable<AddKYCDocumentResponse?>?
+
+    @Multipart
+    @POST(WebServer.POST_UPDATE_VEHICLE_DOCUMENTS)
+    fun updateVehicleDocuments(@Part image :MultipartBody.Part,@Part("title")title: RequestBody,@Part("request_token")request_token: RequestBody) : Observable<AddVehicleProfileResponse?>?
+
     /*----------------------------------------------  FILTER OPTIONS --------------------------------*/
 
     //get all filter options

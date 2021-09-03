@@ -21,277 +21,376 @@
         android:backgroundTint="@color/off_white"
         tools:context=".loginModule.LoginActivity">
 
-
-        <!-- Login Screen Image -->
         <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
+            android:layout_gravity="center_vertical"
+            android:gravity="center_vertical"
+            android:layout_marginTop="0dp"
             >
 
-            <androidx.appcompat.widget.AppCompatImageView
-                android:layout_width="match_parent"
-                android:layout_height="190dp"
-                android:layout_marginTop="15dp"
-                android:src="@drawable/login_img"
-                android:id="@+id/login_image"
-                />
-
-        </androidx.appcompat.widget.LinearLayoutCompat>
-
-        <!-- Sign up text layout -->
-        <androidx.appcompat.widget.LinearLayoutCompat
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
-            android:orientation="vertical"
-            android:id="@+id/sign_up_text_layout"
-            android:visibility="visible"
-            >
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:text="@string/sign_up_to_voila"
-                android:gravity="center_horizontal"
-                android:textSize="18sp"
-                android:textColor="@color/primary_color"
-                android:textStyle="bold"
-                android:fontFamily="@font/roboto"
-                android:id="@+id/sign_up_text"
-                />
-
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:text="@string/enter_mobile_text"
-                android:textSize="16sp"
-                android:layout_gravity="center"
-                android:textColor="@color/black"
-                android:gravity="center"
-                />
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:text="@string/send_otp_text"
-                android:textSize="16sp"
-                android:layout_gravity="center"
-                android:gravity="center"
-                android:textColor="@color/black"
-                />
-
-        </androidx.appcompat.widget.LinearLayoutCompat>
-
-        <!--  OTP Verify layout  -->
-        <androidx.appcompat.widget.LinearLayoutCompat
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_marginTop="15dp"
-            android:visibility="gone"
-            android:id="@+id/otp_verify_layout"
-            >
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:text="@string/verify_text"
-                android:gravity="center_horizontal"
-                android:textSize="18sp"
-                android:textColor="@color/primary_color"
-                android:textStyle="bold"
-                android:fontFamily="@font/roboto"
-                />
-
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:text="@string/send_otp_on_number_text"
-                android:textSize="16sp"
-                android:layout_gravity="center"
-                android:textColor="@color/black"
-                android:gravity="center"
-                />
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:textSize="16sp"
-                android:layout_gravity="center"
-                android:gravity="center"
-                android:textColor="@color/black"
-                android:id="@+id/mobile_number_text"
-                />
-
-
-        </androidx.appcompat.widget.LinearLayoutCompat>
-
-        <!-- Phone number Layout -->
-        <androidx.appcompat.widget.LinearLayoutCompat
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:layout_marginTop="25dp"
-            android:visibility="visible"
-            android:id="@+id/phone_number_layot"
-            >
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/til_Login_mobNo"
-                android:theme="@style/textInputLayoutAppearance"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
-                android:layout_marginLeft="3dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:layout_marginEnd="10dp"
-                android:hint="@string/enter_phone_number"
-                app:hintTextColor="@color/black"
-                >
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/edt_mobile"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:freezesText="true"
-                    android:maxLength="10"
-                    android:inputType="number"
-                    android:textColorHint="@color/black"
-                    android:singleLine="true"
-                    android:textColor="@color/black"
-                    android:textSize="16sp"
-                    android:text="@={login.mobileNumber}"
-                    >
-
-                </com.google.android.material.textfield.TextInputEditText>
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <androidx.appcompat.widget.AppCompatButton
-                android:onClick="@{() -> login.sendOTP()}"
-                android:layout_width="120dp"
-                android:layout_height="wrap_content"
-                android:background="@drawable/two_color_bg_button"
-                android:textColor="@color/white"
-                android:text="@string/send_otp"
-                android:fontFamily="@font/poppins_medium"
-                android:textSize="16sp"
-                android:layout_marginTop="15dp"
-                android:layout_gravity="center"
-                android:layout_marginRight="15dp"
-                android:textAllCaps="false"
-                android:layout_marginBottom="15dp"
-                android:id="@+id/btn_conform_voilacab"
-                android:layout_marginEnd="15dp" />
-
-
-        </androidx.appcompat.widget.LinearLayoutCompat>
-
-        <!-- OTP GET text layout -->
-        <androidx.appcompat.widget.LinearLayoutCompat
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_marginTop="15dp"
-            android:id="@+id/get_otp_text_layout"
-            android:visibility="gone"
-            >
-
+            <!-- Login Screen Image -->
             <androidx.appcompat.widget.LinearLayoutCompat
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
+                android:orientation="vertical"
+                android:layout_gravity="center"
                 >
 
-                <EditText
-                    android:text="@={login.editOtp1}"
-                    android:id="@+id/otp_edit_box1"
-                    android:layout_weight="0.6"
-                    android:layout_width="0dp"
-                    android:layout_height="50dp"
-                    android:layout_marginRight="20dp"
-                    android:gravity="center"
-                    android:inputType="number"
-                    android:maxLength="1"
-                    android:textColor="@color/black"
-                    android:layout_marginStart="10dp"
-                    android:textSize="30sp"
-                    android:background="@drawable/edit_text"
-                    android:layout_marginEnd="20dp"
-                    android:layout_marginLeft="10dp" />
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="190dp"
+                    android:layout_marginTop="15dp"
+                    android:src="@drawable/login_img"
+                    android:id="@+id/login_image"
+                    />
 
-                <EditText
-                    android:text="@={login.editOtp2}"
-                    android:id="@+id/otp_edit_box2"
-                    android:layout_weight="0.6"
-                    android:layout_width="0dp"
-                    android:layout_height="50dp"
-                    android:layout_marginRight="20dp"
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+            <!-- Sign up text layout -->
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:orientation="vertical"
+                android:id="@+id/sign_up_text_layout"
+                android:visibility="visible"
+                android:layout_gravity="center"
+                android:gravity="center"
+                >
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:text="@string/sign_up_to_voila"
+                    android:gravity="center_horizontal"
+                    android:textSize="18sp"
+                    android:textColor="@color/primary_color"
+                    android:textStyle="bold"
+                    android:fontFamily="@font/roboto"
+                    android:id="@+id/sign_up_text"
+                    />
+
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:text="@string/enter_mobile_text"
+                    android:textSize="16sp"
+                    android:layout_gravity="center"
+                    android:textColor="@color/black"
+                    android:gravity="center"
+                    />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:text="@string/send_otp_text"
+                    android:textSize="16sp"
+                    android:layout_gravity="center"
                     android:gravity="center"
                     android:textColor="@color/black"
-                    android:textSize="30sp"
-                    android:inputType="number"
-                    android:maxLength="1"
-                    android:background="@drawable/edit_text"
-                    android:layout_marginEnd="20dp" />
+                    />
 
-                <EditText
-                    android:text="@={login.editOtp3}"
-                    android:id="@+id/otp_edit_box3"
-                    android:layout_weight="0.6"
-                    android:layout_width="0dp"
-                    android:layout_height="50dp"
-                    android:layout_marginRight="20dp"
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+            <!--  OTP Verify layout  -->
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginTop="15dp"
+                android:visibility="gone"
+                android:id="@+id/otp_verify_layout"
+                >
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:text="@string/verify_text"
+                    android:gravity="center_horizontal"
+                    android:textSize="18sp"
+                    android:textColor="@color/primary_color"
+                    android:textStyle="bold"
+                    android:fontFamily="@font/roboto"
+                    />
+
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:text="@string/send_otp_on_number_text"
+                    android:textSize="16sp"
+                    android:layout_gravity="center"
+                    android:textColor="@color/black"
+                    android:gravity="center"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginEnd="15dp"
+                    android:layout_marginRight="15dp"
+                    />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:textSize="16sp"
+                    android:layout_gravity="center"
                     android:gravity="center"
                     android:textColor="@color/black"
-                    android:textSize="30sp"
-                    android:inputType="number"
-                    android:maxLength="1"
-                    android:background="@drawable/edit_text"
-                    android:layout_marginEnd="20dp" />
-
-                <EditText
-                    android:text="@={login.editOtp4}"
-                    android:id="@+id/otp_edit_box4"
-                    android:layout_width="0dp"
-                    android:layout_height="50dp"
-                    android:gravity="center"
-                    android:textSize="30sp"
-                    android:layout_weight="0.6"
-                    android:inputType="number"
-                    android:maxLength="1"
-                    android:textColor="@color/black"
-                    android:layout_marginRight="10dp"
-                    android:background="@drawable/edit_text"
-                    android:layout_marginEnd="10dp" />
-
+                    android:id="@+id/mobile_number_text"
+                    />
 
 
             </androidx.appcompat.widget.LinearLayoutCompat>
 
-            <androidx.appcompat.widget.AppCompatButton
-                android:onClick="@{() -> login.verifyTheOtp()}"
-                android:layout_width="120dp"
+            <!-- Phone number Layout -->
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:layout_marginTop="25dp"
+                android:visibility="visible"
+                android:id="@+id/phone_number_layot"
+                >
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    >
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:theme="@style/textInputLayoutAppearance"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+                        android:layout_marginLeft="3dp"
+                        android:layout_width="60dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginEnd="10dp"
+                        app:hintTextColor="@color/black"
+                        >
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:freezesText="true"
+                            android:maxLength="10"
+                            android:inputType="number"
+                            android:textColorHint="@color/black"
+                            android:singleLine="true"
+                            android:textColor="@color/black"
+                            android:textSize="16sp"
+                            android:text="@string/_91"
+                            >
+
+                        </com.google.android.material.textfield.TextInputEditText>
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/til_Login_mobNo"
+                        android:theme="@style/textInputLayoutAppearance"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+                        android:layout_marginLeft="3dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginEnd="10dp"
+                        android:hint="@string/enter_phone_number"
+                        app:hintTextColor="@color/black"
+                        >
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/edt_mobile"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:freezesText="true"
+                            android:maxLength="10"
+                            android:inputType="number"
+                            android:textColorHint="@color/black"
+                            android:singleLine="true"
+                            android:textColor="@color/black"
+                            android:textSize="16sp"
+                            android:text="@={login.mobileNumber}"
+                            >
+
+                        </com.google.android.material.textfield.TextInputEditText>
+                    </com.google.android.material.textfield.TextInputLayout>
+
+
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:onClick="@{() -> login.sendOTP()}"
+                    android:layout_width="120dp"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/two_color_bg_button"
+                    android:textColor="@color/white"
+                    android:text="@string/send_otp"
+                    android:fontFamily="@font/poppins_medium"
+                    android:textSize="16sp"
+                    android:layout_marginTop="15dp"
+                    android:layout_gravity="center"
+                    android:layout_marginRight="15dp"
+                    android:textAllCaps="false"
+                    android:layout_marginBottom="15dp"
+                    android:id="@+id/btn_conform_voilacab"
+                    android:layout_marginEnd="15dp" />
+
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+            <!-- OTP GET text layout -->
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/two_color_bg_button"
-                android:textColor="@color/white"
-                android:text="@string/contine"
-                android:fontFamily="@font/poppins_medium"
-                android:textSize="16sp"
+                android:orientation="vertical"
                 android:layout_marginTop="15dp"
-                android:layout_gravity="center"
+                android:id="@+id/get_otp_text_layout"
+                android:visibility="gone"
+                >
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    >
+
+                    <EditText
+                        android:text="@={login.editOtp1}"
+                        android:id="@+id/otp_edit_box1"
+                        android:layout_weight="0.6"
+                        android:layout_width="0dp"
+                        android:layout_height="50dp"
+                        android:layout_marginRight="20dp"
+                        android:gravity="center"
+                        android:inputType="number"
+                        android:maxLength="1"
+                        android:textColor="@color/black"
+                        android:layout_marginStart="10dp"
+                        android:textSize="30sp"
+                        android:background="@drawable/edit_text"
+                        android:layout_marginEnd="20dp"
+                        android:layout_marginLeft="10dp" />
+
+                    <EditText
+                        android:text="@={login.editOtp2}"
+                        android:id="@+id/otp_edit_box2"
+                        android:layout_weight="0.6"
+                        android:layout_width="0dp"
+                        android:layout_height="50dp"
+                        android:layout_marginRight="20dp"
+                        android:gravity="center"
+                        android:textColor="@color/black"
+                        android:textSize="30sp"
+                        android:inputType="number"
+                        android:maxLength="1"
+                        android:background="@drawable/edit_text"
+                        android:layout_marginEnd="20dp" />
+
+                    <EditText
+                        android:text="@={login.editOtp3}"
+                        android:id="@+id/otp_edit_box3"
+                        android:layout_weight="0.6"
+                        android:layout_width="0dp"
+                        android:layout_height="50dp"
+                        android:layout_marginRight="20dp"
+                        android:gravity="center"
+                        android:textColor="@color/black"
+                        android:textSize="30sp"
+                        android:inputType="number"
+                        android:maxLength="1"
+                        android:background="@drawable/edit_text"
+                        android:layout_marginEnd="20dp" />
+
+                    <EditText
+                        android:text="@={login.editOtp4}"
+                        android:id="@+id/otp_edit_box4"
+                        android:layout_width="0dp"
+                        android:layout_height="50dp"
+                        android:gravity="center"
+                        android:textSize="30sp"
+                        android:layout_weight="0.6"
+                        android:inputType="number"
+                        android:maxLength="1"
+                        android:textColor="@color/black"
+                        android:layout_marginRight="10dp"
+                        android:background="@drawable/edit_text"
+                        android:layout_marginEnd="10dp" />
+
+
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/resend_otp"
+                    android:layout_gravity="end"
+                    android:layout_marginEnd="15dp"
+                    android:layout_marginTop="10dp"
+                    android:textColor="@color/black"
+                    android:layout_marginRight="15dp"
+                    android:textSize="16sp"
+                    android:id="@+id/resend_otp_text"
+                    android:onClick="@{() -> login.resendOtp()}"
+                    android:fontFamily="@font/poppins_medium"
+                    />
+
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:onClick="@{() -> login.verifyTheOtp()}"
+                    android:layout_width="120dp"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/two_color_bg_button"
+                    android:textColor="@color/white"
+                    android:text="@string/contine"
+                    android:fontFamily="@font/poppins_medium"
+                    android:textSize="16sp"
+                    android:layout_marginTop="15dp"
+                    android:layout_gravity="center"
+                    android:layout_marginRight="15dp"
+                    android:textAllCaps="false"
+                    android:layout_marginBottom="15dp"
+                    android:id="@+id/btn_continue"
+                    android:layout_marginEnd="15dp" />
+
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:gravity="bottom"
+            >
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/privacy_police"
+                android:layout_gravity="bottom"
+                android:gravity="bottom"
+                android:layout_marginTop="30dp"
                 android:layout_marginRight="15dp"
-                android:textAllCaps="false"
+                android:layout_marginEnd="15dp"
+                android:layout_marginStart="15dp"
+                android:layout_marginLeft="15dp"
+                android:textSize="14sp"
                 android:layout_marginBottom="15dp"
-                android:id="@+id/btn_continue"
-                android:layout_marginEnd="15dp" />
+                android:textColor="@color/black"
+                android:id="@+id/privacy_police"
+                android:visibility="visible"
+                android:fontFamily="@font/poppins_medium"
+                />
 
 
         </androidx.appcompat.widget.LinearLayoutCompat>

@@ -7,6 +7,7 @@ import android.content.Intent
 import androidx.databinding.ObservableField
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.google.gson.JsonObject
 import com.voila.voilasailor.Helper.Helper
 import com.voila.voilasailor.Helper.NetworkStatus
 import com.voila.voilasailor.NetworkResponse.GetAllRestaurantDocsResponse
@@ -18,7 +19,6 @@ import com.voila.voilasailor.restaurantRegistration.RestaurantNetworkResponse.Tr
 import com.voila.voilasailor.restaurantRegistration.RestaurantRespository.RestaurantRepository
 import com.voila.voilasailor.restaurantRegistration.RestaurantViewModelListner.RestaurantViewModelListener
 import com.voila.voilasailor.restaurantRegistration.UI.RestaurantHomeScreenActivity
-import com.google.gson.JsonObject
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 
@@ -73,7 +73,7 @@ class RestaurantRegistrationViewModel(var context: Context): ViewModel() {
         if (NetworkStatus.getInstance(context)?.isOnline()!!) {
             progressDialog =
                 Helper.DialogsUtils.showProgressDialog(context, "Please wait getting form for you")
-            Helper.getAuthToken.authToken(context)?.let { trackRegistrationForm(it) }
+            Helper.getAuthToken.authToken(context).let { trackRegistrationForm(it) }
             listener.toTrackRegistrationProcessSuccess()
         }
         else{
@@ -94,13 +94,13 @@ class RestaurantRegistrationViewModel(var context: Context): ViewModel() {
                     //   Log.d("conditionCheck", "checkProcessCompleteStatus: " + processCompleteStatusCode.get() +  "from second condition")
                 }
                 "2" -> {
-                    println("Enter a number: ")
+                   // println("Enter a number: ")
                     // num = readLine().toString()
 
                     // println("Your number is: " + num + "\n")
                 }
                 "3" -> {
-                    println("\nClosing program...")
+                    //println("\nClosing program...")
                 }
                 else -> {
                     _addRestaurantOwnerDetails(jsonObject)
@@ -130,6 +130,7 @@ class RestaurantRegistrationViewModel(var context: Context): ViewModel() {
     fun moveOnRestaurantHome(){
         val intent = Intent(context,RestaurantHomeScreenActivity::class.java)
         context.startActivity(intent)
+        (context as Activity).finish()
     }
 
 

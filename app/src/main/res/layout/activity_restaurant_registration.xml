@@ -47,6 +47,7 @@
                     app:layout_constraintTop_toTopOf="parent"
                     app:title="  Restaurant Registration"
                     app:titleTextColor="#ffff"
+                    app:titleMarginStart="25dp"
                      />
 
 
@@ -63,14 +64,31 @@
                     android:paddingRight="15dp"
                     tools:ignore="MissingConstraints,RtlSymmetry"
                     android:paddingEnd="15dp"
-                    android:visibility="gone"
+                    android:visibility="visible"
                     android:layout_marginLeft="5dp"
+                    android:layout_marginEnd="15dp"
+                    android:layout_marginRight="15dp"
                     />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
         </com.google.android.material.appbar.AppBarLayout>
 
+
+        <com.kofigyan.stateprogressbar.StateProgressBar
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:spb_stateBackgroundColor="@color/primary_color"
+            app:spb_stateForegroundColor="@color/color_claim_now_success_green"
+            app:spb_stateNumberBackgroundColor="@color/white"
+            app:spb_stateNumberForegroundColor="@color/white"
+            app:spb_currentStateDescriptionColor="@color/white"
+            app:spb_stateDescriptionColor="@color/white"
+            android:layout_marginTop="5dp"
+            android:id="@+id/step_bar"
+            android:visibility="gone"
+            app:spb_animateToCurrentProgressState="true"
+            app:spb_checkStateCompleted="true"/>
 
 
         <!--Recycler View -->
@@ -84,6 +102,7 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 >
+
 
                 <androidx.appcompat.widget.LinearLayoutCompat
                     android:layout_width="match_parent"

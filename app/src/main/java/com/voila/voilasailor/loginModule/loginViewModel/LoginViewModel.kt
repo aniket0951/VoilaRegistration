@@ -19,7 +19,7 @@ import com.voila.voilasailor.restaurantRegistration.RestaurantRegistrationActivi
 
 class LoginViewModel(var context: Context) : ViewModel() {
 
-    public var mobileNumber = ObservableField<String>()
+    var mobileNumber = ObservableField<String>()
     var sessionId = ObservableField<String>()
     var editOtp1 = ObservableField<String>()
     var editOtp2 = ObservableField<String>()
@@ -39,10 +39,15 @@ class LoginViewModel(var context: Context) : ViewModel() {
            // Log.d("sendOTP", "sendOTP: number empty")
         }
         else{
-            listner.onOTPSendSuccess()
             mobileNumber.get()?.let { sendOtp(it) }
+            listner.onOTPSendSuccess()
         }
     }
+
+    fun dismissDialog(){
+        if (progressDialog!=null) progressDialog.dismiss()
+    }
+
 
     //verify the  otp
     fun verifyTheOtp(){
@@ -127,7 +132,11 @@ class LoginViewModel(var context: Context) : ViewModel() {
         listner.onVerifyOtpFailed(message)
     }
 
-
+    fun resendOtp(){
+        progressDialog = Helper.DialogsUtils.showProgressDialog(context,"Resending otp please wait...")
+        mobileNumber.get()?.let { sendOtp(it) }
+        listner.onResendOtpSuccessfully()
+    }
 
 
 

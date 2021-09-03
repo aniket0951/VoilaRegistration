@@ -5,6 +5,7 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.widget.AppCompatTextView
 import androidx.recyclerview.widget.RecyclerView
 import com.voila.voilasailor.R
 import com.voila.voilasailor.restaurantRegistration.RestaurantModel.FilterOption
@@ -33,7 +34,7 @@ class FilterOptionAdapter(var context: Context) : RecyclerView.Adapter<FilterOpt
     }
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
-        val optionName = itemView.option_name
+        val optionName: AppCompatTextView = itemView.option_name
 
         init {
             optionName.setOnClickListener {

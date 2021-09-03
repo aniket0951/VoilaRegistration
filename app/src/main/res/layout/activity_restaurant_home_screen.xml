@@ -49,6 +49,7 @@
                     app:layout_constraintTop_toTopOf="parent"
                     app:title="  Menu Card"
                     app:titleTextColor="#ffff"
+                    app:titleMarginStart="45dp"
                     />
 
 
@@ -68,6 +69,21 @@
                     android:visibility="gone"
                     android:layout_marginLeft="5dp" />
 
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/filter_img"
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    android:src="@drawable/filter"
+                    android:visibility="visible"
+                    android:layout_marginRight="15dp"
+                    android:onClick="@{() -> restaurantHome.getAllFilterOption()}"
+                    android:layout_marginEnd="15dp"
+                    tools:ignore="MissingConstraints,UnknownId"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    />
+
             </androidx.constraintlayout.widget.ConstraintLayout>
 
         </com.google.android.material.appbar.AppBarLayout>
@@ -81,16 +97,6 @@
             android:id="@+id/options_parent_layout"
             >
 
-            <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/filter_img"
-                android:layout_width="35dp"
-                android:layout_height="35dp"
-                android:src="@drawable/filter"
-                android:layout_marginTop="20dp"
-                android:visibility="gone"
-                android:layout_marginRight="15dp"
-                android:onClick="@{() -> restaurantHome.getAllFilterOption()}"
-                android:layout_marginEnd="15dp" />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:layout_width="wrap_content"

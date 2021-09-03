@@ -3,6 +3,7 @@ package com.voila.voilasailor.restaurantRegistration.UI
 
 import android.Manifest
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
@@ -11,6 +12,8 @@ import android.os.Build
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContract
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
@@ -19,6 +22,7 @@ import androidx.databinding.ObservableField
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.theartofdev.edmodo.cropper.CropImage
 import com.voila.voilasailor.Helper.Helper
 import com.voila.voilasailor.R.layout
 import com.voila.voilasailor.databinding.ActivityMenuCardBinding
@@ -47,6 +51,9 @@ import java.io.FileOutputStream
 import java.util.*
 
 
+
+
+
 class MenuCardActivity : AppCompatActivity(),MenuCardViewListener,
     GetDishRequiredDocsAdapter.OnItemClickListener {
 
@@ -68,8 +75,10 @@ class MenuCardActivity : AppCompatActivity(),MenuCardViewListener,
     var map:HashMap<String,RequestBody> = HashMap<String, RequestBody>()
     lateinit var body : MultipartBody.Part
 
+    private lateinit var cropActivityResultLauncher: ActivityResultLauncher<Any?>
     var isImageSelected : Boolean = false
 
+    @RequiresApi(Build.VERSION_CODES.KITKAT)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -90,6 +99,19 @@ class MenuCardActivity : AppCompatActivity(),MenuCardViewListener,
             ),
             100
         )
+
+        cropActivityResultLauncher = registerForActivityResult(cropActivityResultContract){
+            it?.let { uri ->
+                selectedImage = uri
+                // Log.d("imageUri", "onCreate: $uri")
+                // binding.dishImage.setImageURI(uri)
+                uploadImage()
+            }
+            if (it == null){
+                onFailed("Do not use camera....")
+            }
+        }
+
     }
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
@@ -211,15 +233,21 @@ class MenuCardActivity : AppCompatActivity(),MenuCardViewListener,
     }
 
     private fun openImageChooser(position: Int) {
+        cropActivityResultLauncher.launch(null)
 
-        Intent(Intent.ACTION_PICK).also {
-            it.type = "image/*"
+    }
 
-            val mimeTypes = arrayOf("image/jpeg","image/png")
-            it.putExtra(Intent.EXTRA_MIME_TYPES,mimeTypes)
-
-            startActivityForResult(it, REQUEST_CODE_IMAGE_PICKER)
+    private val cropActivityResultContract = object : ActivityResultContract<Any?, Uri?>(){
+        override fun createIntent(context: Context, input: Any?): Intent {
+            return CropImage.activity()
+                .setAspectRatio(16,9)
+                .getIntent(this@MenuCardActivity)
         }
+
+        override fun parseResult(resultCode: Int, intent: Intent?): Uri? {
+            return CropImage.getActivityResult(intent)?.uri
+        }
+
     }
 
     @RequiresApi(Build.VERSION_CODES.KITKAT)
@@ -248,18 +276,28 @@ class MenuCardActivity : AppCompatActivity(),MenuCardViewListener,
             val parcelFileDescriptor =
                 contentResolver.openFileDescriptor(selectedImage!!, "r", null) ?: return
 
+            val file = File(cacheDir,selectedImage.toString())
+            if (!file.parentFile.exists()){
+                file.parentFile.mkdirs()
+                //  Log.d("imageUri", "uploadImage: from parent file $file")
+            }
+            else if (!file.exists()) {
+                // Log.d("imageUri", "uploadImage: from  file $file")
+                file.createNewFile()
+            }
+
             val inputStream = FileInputStream(parcelFileDescriptor.fileDescriptor)
-            val file = File(cacheDir, contentResolver.getFileName(selectedImage!!))
+            //val file = File(cacheDir, contentResolver.getFileName(selectedImage!!))
             val outputStream = FileOutputStream(file)
             inputStream.copyTo(outputStream)
 
-          //  Log.d("fileLength", "uploadImage: ${file.length()}")
-
+//            Log.d("fileLength", "uploadImage:before compress ${file.length()}")
+//
 //            val fullSizeBitmap : Bitmap = BitmapFactory.decodeFile(file.path)
 //
 //            val reduceBitmap : Bitmap? = ImageResizer.reduce.reduceBitmapSize(fullSizeBitmap,2048)
 //
-//            val reduceFile : File = getBitmapFile(reduceBitmap)
+//           val reduceFile : File = getBitmapFile(reduceBitmap)
 
             GlobalScope.launch {
                 val compressedImageFile = Compressor.compress(this@MenuCardActivity, file) {
@@ -268,18 +306,19 @@ class MenuCardActivity : AppCompatActivity(),MenuCardViewListener,
                     format(Bitmap.CompressFormat.JPEG)
                     size(2_097_152) // 2 MB
                 }
-                // create RequestBody instance from file
+                //Log.d("fileLength", "uploadImage: after compress" + compressedImageFile.length())
+
                 val requestFile = RequestBody.create(
                     contentResolver.getType(selectedImage!!)?.let { it.toMediaTypeOrNull() },
                     compressedImageFile
                 )
 
-                // MultipartBody.Part is used to send also the actual file name
+
                 body = MultipartBody.Part.createFormData("image", compressedImageFile.name, requestFile)
 
             }
 
-            adapter.isImageSelected(imagePosition)
+            adapter.isImageSelected(selectedImage!!)
 
             isImageSelected = true
         }

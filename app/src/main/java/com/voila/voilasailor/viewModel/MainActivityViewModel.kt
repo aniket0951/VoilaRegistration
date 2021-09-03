@@ -1,5 +1,6 @@
 package com.voila.voilasailor.viewModel
 
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
@@ -57,10 +58,12 @@ class MainActivityViewModel(var context: Context) : ViewModel(){
         else if(registrationForCheck.get().equals("Driver")){
             val intent = Intent(context,DriverRegistrationActivity::class.java)
             context.startActivity(intent)
+            (context as Activity).finishAffinity()
         }
         else if(registrationForCheck.get().equals("Restaurant")){
             val intent = Intent(context,RestaurantRegistrationActivity::class.java)
             context.startActivity(intent)
+            (context as Activity).finishAffinity()
         }
     }
 

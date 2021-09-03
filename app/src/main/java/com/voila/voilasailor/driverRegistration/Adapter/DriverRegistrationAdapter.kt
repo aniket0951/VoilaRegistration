@@ -89,7 +89,7 @@ class DriverRegistrationAdapter(var context: Context) : RecyclerView.Adapter<Dri
 
         private val years : ArrayList<String> = ArrayList<String>()
 
-        private val thisYear : Int = Calendar.getInstance().get(Calendar.YEAR);
+        private val thisYear : Int = Calendar.getInstance().get(Calendar.YEAR)
 
 
         init {
@@ -169,6 +169,7 @@ class DriverRegistrationAdapter(var context: Context) : RecyclerView.Adapter<Dri
                 }
 
                 title.text = needToProcessComplete[position].required_docs_name
+                titleEdit.hint = needToProcessComplete[position].required_docs_name
                 titleEdit.setText(needToProcessComplete[position].editText)
 
                 autoCompleteTextView.setOnClickListener {

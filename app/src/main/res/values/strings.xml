@@ -13,7 +13,7 @@
     <string name="sign_up_to_voila">Sign up with Voila</string>
     <string name="enter_mobile_text">Enter your mobile number to create account.</string>
     <string name="send_otp_text">We will send you one time password (OTP)</string>
-    <string name="enter_phone_number">Enter contact number</string>
+    <string name="enter_phone_number">Phone number</string>
     <string name="send_otp">Send OTP</string>
     <string name="verify_text">Verify your contact number</string>
     <string name="send_otp_on_number_text">We have send verification code <br /> your mobile number</string>
@@ -32,7 +32,23 @@
     <string name="address_information">Address Information</string>
     <string name="kyc_information">KYC Information</string>
     <string name="vehicle_information">Vehicle Information</string>
+    <string name="next">NEXT</string>
+    <string name="select_vehicle_color">select vehicle color</string>
 
+    <!-- privacy police -->
+    <string name="privacy_police">
+
+       By providing my phone number, I hereby agree &amp; accept the Terms of Service &amp; Privacy Policy in use of the Voila app.
+    </string>
+
+    <string name="terms"
+        >
+        Terms of Service &amp; Privacy Policy
+    </string>
+
+    <string name="update">Update</string>
+    <string name="_91">+91</string>
+    <string name="resend_otp">Resend otp</string>
 
     <!-- Menu items -->
     <string-array name="menuItems">

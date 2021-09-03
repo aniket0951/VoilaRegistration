@@ -29,14 +29,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/docs_name"
-            android:textSize="16sp"
-            android:textColor="@color/black"
-            android:fontFamily="@font/poppins_medium"
+            android:textSize="14sp"
             android:id="@+id/docs_name"
             android:layout_marginStart="10dp"
             android:layout_marginLeft="10dp"
-            android:layout_marginBottom="5dp"
-            android:layout_marginTop="5dp"/>
+            android:drawableLeft="@drawable/ic_doat"
+            android:drawableStart="@drawable/ic_doat"
+            android:drawablePadding="10dp"
+            />
 
     </androidx.appcompat.widget.LinearLayoutCompat>
 

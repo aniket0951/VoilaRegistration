@@ -15,4 +15,14 @@ interface DriverProfileViewModelListener {
     fun onVehicleInfo()
 
     fun onVehicleDocuments()
+
+    fun onBasicInfoUpdate()
+
+    fun onAddressInfoUpdate()
+
+    fun onVehicleInfoUpdate()
+
+    fun onKYCInfoUpdate()
+
+    fun onVehicleDocumentUpdate()
 }

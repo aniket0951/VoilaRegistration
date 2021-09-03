@@ -507,7 +507,7 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:id="@+id/restaurant_docs_parent_payout"
-        android:visibility="visible"
+        android:visibility="gone"
         android:layout_marginBottom="10dp"
         >
 
@@ -522,7 +522,6 @@
             android:fontFamily="@font/poppins_medium"
             android:textColor="@color/black"
             />
-
         <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="match_parent"
             android:layout_height="210dp"
@@ -531,7 +530,6 @@
             android:layout_marginTop="10dp"
             android:layout_marginRight="15dp"
             android:layout_marginEnd="15dp"
-            android:background="@drawable/image_background"
             android:layout_marginLeft="20dp">
 
 
@@ -539,10 +537,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:src="@drawable/ic_add"
-                android:scaleType="centerCrop"
+                android:scaleType="fitCenter"
                 android:adjustViewBounds="true"
                 android:id="@+id/restaurant_indoor_photo"/>
-
 
         </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -566,7 +563,6 @@
             android:layout_marginTop="10dp"
             android:layout_marginEnd="15dp"
             android:layout_marginRight="15dp"
-            android:background="@drawable/image_background"
             android:layout_marginLeft="20dp">
 
 
@@ -574,7 +570,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:src="@drawable/ic_add"
-                android:scaleType="centerCrop"
+                android:scaleType="fitCenter"
                 android:adjustViewBounds="true"
                 android:id="@+id/restaurant_outdoor_photo"/>
 
@@ -602,7 +598,6 @@
             android:layout_marginTop="10dp"
             android:layout_marginRight="15dp"
             android:layout_marginEnd="15dp"
-            android:background="@drawable/image_background"
             android:layout_marginLeft="20dp">
 
 
@@ -610,7 +605,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:src="@drawable/ic_add"
-                android:scaleType="centerCrop"
+                android:scaleType="fitCenter"
                 android:adjustViewBounds="true"
                 android:id="@+id/restaurant_licence_photo"/>
 

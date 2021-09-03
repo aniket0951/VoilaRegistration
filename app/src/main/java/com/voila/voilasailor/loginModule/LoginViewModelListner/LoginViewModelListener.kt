@@ -8,4 +8,5 @@ interface LoginViewModelListener {
     fun onVerifyOtpSuccess()
     fun onVerifyOtpFailed(s: String)
     fun onUserSavedLocally()
+    fun onResendOtpSuccessfully()
 }

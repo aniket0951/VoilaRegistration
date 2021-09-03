@@ -4,6 +4,7 @@ import android.Manifest
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.ProgressDialog
+import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
@@ -13,6 +14,8 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.Toast
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContract
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
@@ -23,6 +26,8 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.gson.JsonObject
+import com.kofigyan.stateprogressbar.StateProgressBar
+import com.theartofdev.edmodo.cropper.CropImage
 import com.voila.voilasailor.Helper.Helper
 import com.voila.voilasailor.Model.RequireRestaurantDocs
 import com.voila.voilasailor.Model.RestaurantOwnerRequiredDoc
@@ -36,6 +41,7 @@ import com.voila.voilasailor.restaurantRegistration.RestaurantNetworkResponse.Tr
 import com.voila.voilasailor.restaurantRegistration.RestaurantViewModelListner.RestaurantViewModelListener
 import com.voila.voilasailor.restaurantRegistration.Util.getFileName
 import com.voila.voilasailor.restaurantRegistration.Util.snackbar
+import com.voila.voilasailor.restaurantRegistration.Util.toast
 import com.voila.voilasailor.restaurantRegistration.restaurantViewModel.RestaurantRegistrationViewModel
 import id.zelory.compressor.Compressor
 import id.zelory.compressor.constraint.format
@@ -54,7 +60,6 @@ import java.io.File
 import java.io.FileInputStream
 import java.io.FileOutputStream
 
-
 class RestaurantRegistrationActivity : AppCompatActivity(),RestaurantViewModelListener,
     RestaurantDetailsAdapter.OnItemClickListener {
 
@@ -67,7 +72,7 @@ class RestaurantRegistrationActivity : AppCompatActivity(),RestaurantViewModelLi
 
     //adapter
      private lateinit var restaurantDetailsAdapter: RestaurantDetailsAdapter
-
+    private lateinit var cropActivityResultLauncher: ActivityResultLauncher<Any?>
 
      //list
      var mainNeedToProcessCompleteList = ArrayList<NeedToProcessComplete>()
@@ -78,9 +83,9 @@ class RestaurantRegistrationActivity : AppCompatActivity(),RestaurantViewModelLi
 
     //get title of doc name
     var docsTitle = ObservableField<String>()
-
     var isShowSnackBar : Boolean = false
 
+    @RequiresApi(Build.VERSION_CODES.KITKAT)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
        // setContentView(R.layout.activity_restaurant_registration)
@@ -101,7 +106,21 @@ class RestaurantRegistrationActivity : AppCompatActivity(),RestaurantViewModelLi
             ),
             100
         )
+
+        cropActivityResultLauncher = registerForActivityResult(cropActivityResultContract){
+            it?.let { uri ->
+                selectedImage = uri
+                // Log.d("imageUri", "onCreate: $uri")
+                // binding.dishImage.setImageURI(uri)
+                uploadImage()
+            }
+            if (it == null){
+                onFailed("Do not use camera....")
+            }
+        }
+
     }
+
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
@@ -129,6 +148,7 @@ class RestaurantRegistrationActivity : AppCompatActivity(),RestaurantViewModelLi
            .observe(this, Observer {
                if (it != null && it.result) {
                    showRegistrationFormToUser(it)
+                   toast("From All Required Info")
                }
                else onFailed("Basic Details Not Found")
            })
@@ -205,12 +225,14 @@ class RestaurantRegistrationActivity : AppCompatActivity(),RestaurantViewModelLi
        restaurantViewModel.trackRegistrationFormObservable()
            .observe(this, Observer {
                if (it!=null){
-                   Log.d("process", "toTrackRegistrationProcessSuccess: ${it.processCompleteStatus}")
-                   restaurantViewModel.processCompleteStatusCode.set(it.processCompleteStatus)
-                   showPendingRegistrationProcess(it)
-                   restaurantViewModel.dismissProgressDai()
+                   if (it.result) {
+                       Log.d("process", "toTrackRegistrationProcessSuccess: $it")
+                       restaurantViewModel.processCompleteStatusCode.set(it.processCompleteStatus)
+                       showPendingRegistrationProcess(it)
+                       restaurantViewModel.dismissProgressDai()
 
-                   if (isShowSnackBar) parent_layout.snackbar("Please upload a next document..")
+                       if (isShowSnackBar) parent_layout.snackbar("Please upload a next document..")
+                   }
                }
                else {
                    onFailed("Information not found")
@@ -235,48 +257,50 @@ class RestaurantRegistrationActivity : AppCompatActivity(),RestaurantViewModelLi
                 docsType = mainNeedToProcessCompleteList[count].required_docs_type
             }
 
-            if (docsType == "image") {
+            when (docsType) {
+                "image" -> {
 
-                val numberOfColumns = 2
-                binding.recyclerView.layoutManager = GridLayoutManager(this, numberOfColumns)
+                    val numberOfColumns = 2
+                    binding.recyclerView.layoutManager = GridLayoutManager(this, numberOfColumns)
 
-                binding.btnSaveConfirm.visibility = View.GONE
+                    binding.btnSaveConfirm.visibility = View.GONE
 
-                //initialize adapter
-                restaurantDetailsAdapter = RestaurantDetailsAdapter(this)
-                restaurantDetailsAdapter.addRestaurantImages(mainNeedToProcessCompleteList)
-                binding.recyclerView.adapter = restaurantDetailsAdapter
-                restaurantDetailsAdapter.notifyDataSetChanged()
+                    //initialize adapter
+                    restaurantDetailsAdapter = RestaurantDetailsAdapter(this)
+                    restaurantDetailsAdapter.addRestaurantImages(mainNeedToProcessCompleteList)
+                    binding.recyclerView.adapter = restaurantDetailsAdapter
+                    restaurantDetailsAdapter.notifyDataSetChanged()
 
-                restaurantDetailsAdapter.setOnItemClickListener(this)
+                    restaurantDetailsAdapter.setOnItemClickListener(this)
 
 
-            }
-            else if (docsType == "text") {
+                }
+                "text" -> {
 
-                binding.btnSaveConfirm.visibility = View.VISIBLE
-                binding.recyclerView.layoutManager = LinearLayoutManager(this)
+                    binding.btnSaveConfirm.visibility = View.VISIBLE
+                    binding.recyclerView.layoutManager = LinearLayoutManager(this)
 
-                //initialize adapter
-                restaurantDetailsAdapter = RestaurantDetailsAdapter(this)
-                restaurantDetailsAdapter.trackRegistrationProcess(mainNeedToProcessCompleteList)
-                binding.recyclerView.adapter = restaurantDetailsAdapter
-                restaurantDetailsAdapter.notifyDataSetChanged()
+                    //initialize adapter
+                    restaurantDetailsAdapter = RestaurantDetailsAdapter(this)
+                    restaurantDetailsAdapter.trackRegistrationProcess(mainNeedToProcessCompleteList)
+                    binding.recyclerView.adapter = restaurantDetailsAdapter
+                    restaurantDetailsAdapter.notifyDataSetChanged()
 
-                submitTheInfo(restaurantDetailsAdapter)
-            }
-            else if (docsType == "time"){
+                    submitTheInfo(restaurantDetailsAdapter)
+                }
+                "time" -> {
 
-                binding.btnSaveConfirm.visibility = View.VISIBLE
-                binding.recyclerView.layoutManager = LinearLayoutManager(this)
+                    binding.btnSaveConfirm.visibility = View.VISIBLE
+                    binding.recyclerView.layoutManager = LinearLayoutManager(this)
 
-                //initialize adapter
-                restaurantDetailsAdapter = RestaurantDetailsAdapter(this)
-                restaurantDetailsAdapter.trackRegistrationProcess(mainNeedToProcessCompleteList)
-                binding.recyclerView.adapter = restaurantDetailsAdapter
-                restaurantDetailsAdapter.notifyDataSetChanged()
+                    //initialize adapter
+                    restaurantDetailsAdapter = RestaurantDetailsAdapter(this)
+                    restaurantDetailsAdapter.trackRegistrationProcess(mainNeedToProcessCompleteList)
+                    binding.recyclerView.adapter = restaurantDetailsAdapter
+                    restaurantDetailsAdapter.notifyDataSetChanged()
 
-                submitTheInfo(restaurantDetailsAdapter)
+                    submitTheInfo(restaurantDetailsAdapter)
+                }
             }
 
         } else if (it.processCompleteStatus == "4") {
@@ -312,6 +336,7 @@ class RestaurantRegistrationActivity : AppCompatActivity(),RestaurantViewModelLi
 
     //set registration title on toolbar
     private fun setRegistrationTitle(it: TrackRegistrationProcessResponse) {
+        Log.d("processCode", "setRegistrationTitle: ${it.processCompleteStatus}")
         if (it.processCompleteStatus!=null){
             when(it.processCompleteStatus){
 
@@ -319,18 +344,32 @@ class RestaurantRegistrationActivity : AppCompatActivity(),RestaurantViewModelLi
                     binding.toolbar.title = "Owner Details"
                 }
                 "1" -> {
+                    binding.stepBar.setMaxStateNumber(StateProgressBar.StateNumber.THREE)
+                    binding.stepBar.setCurrentStateNumber(StateProgressBar.StateNumber.TWO)
+                    binding.stepBar.visibility = View.VISIBLE
                     binding.toolbar.title = "Restaurant Details"
                 }
                 "2" -> {
+                    binding.stepBar.setMaxStateNumber(StateProgressBar.StateNumber.THREE)
+                    binding.stepBar.setCurrentStateNumber(StateProgressBar.StateNumber.THREE)
+                    binding.stepBar.visibility = View.VISIBLE
                     binding.toolbar.title = "Restaurant Profile"
                 }
                 else -> {
+                    binding.stepBar.setMaxStateNumber(StateProgressBar.StateNumber.THREE)
+                    binding.stepBar.setCurrentStateNumber(StateProgressBar.StateNumber.THREE)
+                    binding.stepBar.visibility = View.VISIBLE
                     binding.toolbar.title = "Restaurant Registration"
                 }
             }
+
+        }
+        else {
+            binding.stepBar.setMaxStateNumber(StateProgressBar.StateNumber.THREE)
+            //binding.stepBar.setCurrentStateNumber(StateProgressBar.StateNumber.ONE)
+            binding.stepBar.visibility = View.VISIBLE
         }
     }
-
 
     override fun onAddRestaurantProfileDetailsSuccess() {
         restaurantViewModel.addRestaurantProfileDetailsObservable()
@@ -366,32 +405,43 @@ class RestaurantRegistrationActivity : AppCompatActivity(),RestaurantViewModelLi
         }
     }
 
-
     //adapter click listener
     override fun onItemClick(position: Int) {
 
         imagePosition = position
+
+        val isFirstUploaded = ObservableField<String>()
 
         var title : String = mainNeedToProcessCompleteList[position].required_docs_name
         title = title.replace(" ".toRegex(), "_").toLowerCase()
 
         docsTitle.set(title)
 
-
-        openImageChooser(position)
+        isFirstUploaded.set(mainNeedToProcessCompleteList[0].required_docs_name)
+        if (position == 0) {
+            openImageChooser()
+        }
+        else{
+            Helper.onFailedMSG.onFailed(this,"Please upload first " + " " + isFirstUploaded.get().toString() + " document ...")
+        }
     }
 
 
-    private fun openImageChooser(position: Int) {
+    private fun openImageChooser() {
+        cropActivityResultLauncher.launch(null)
+    }
 
-        Intent(Intent.ACTION_PICK).also {
-            it.type = "image/*"
-
-            val mimeTypes = arrayOf("image/jpeg","image/png")
-            it.putExtra(Intent.EXTRA_MIME_TYPES,mimeTypes)
-
-            startActivityForResult(it, REQUEST_CODE_IMAGE_PICKER)
+    private val cropActivityResultContract = object : ActivityResultContract<Any?, Uri?>(){
+        override fun createIntent(context: Context, input: Any?): Intent {
+            return CropImage.activity()
+                .setAspectRatio(16,9)
+                .getIntent(this@RestaurantRegistrationActivity)
         }
+
+        override fun parseResult(resultCode: Int, intent: Intent?): Uri? {
+            return CropImage.getActivityResult(intent)?.uri
+        }
+
     }
 
     @RequiresApi(Build.VERSION_CODES.KITKAT)
@@ -402,7 +452,7 @@ class RestaurantRegistrationActivity : AppCompatActivity(),RestaurantViewModelLi
             when(requestCode){
                 REQUEST_CODE_IMAGE_PICKER -> {
                     selectedImage = data?.data
-                  //  Log.d("imagePath", "onActivityResult: image path $selectedImage")
+                   Log.d("imagePath", "onActivityResult: image path $selectedImage")
                    uploadImage()
                 }
             }
@@ -420,11 +470,21 @@ class RestaurantRegistrationActivity : AppCompatActivity(),RestaurantViewModelLi
             val parcelFileDescriptor =
                 contentResolver.openFileDescriptor(selectedImage!!, "r", null) ?: return
 
+            val file = File(cacheDir,selectedImage.toString())
+            if (!file.parentFile.exists()){
+                file.parentFile.mkdirs()
+                //  Log.d("imageUri", "uploadImage: from parent file $file")
+            }
+            else if (!file.exists()) {
+                // Log.d("imageUri", "uploadImage: from  file $file")
+                file.createNewFile()
+            }
+
             val inputStream = FileInputStream(parcelFileDescriptor.fileDescriptor)
-            val file = File(cacheDir, contentResolver.getFileName(selectedImage!!))
             val outputStream = FileOutputStream(file)
             inputStream.copyTo(outputStream)
 
+         //   Log.d("imageUri", "uploadImage:  before compress ${file.length()}")
 //
 //            val fullSizeBitmap : Bitmap = BitmapFactory.decodeFile(file.path)
 //
@@ -439,6 +499,8 @@ class RestaurantRegistrationActivity : AppCompatActivity(),RestaurantViewModelLi
                     format(Bitmap.CompressFormat.JPEG)
                     size(2_097_152) // 2 MB
                 }
+
+               // Log.d("imageUri", "uploadImage: after compress ${compressedImageFile.length()}")
 
                 // create RequestBody instance from file
                 val requestFile = RequestBody.create(
@@ -487,7 +549,7 @@ class RestaurantRegistrationActivity : AppCompatActivity(),RestaurantViewModelLi
 
     companion object{
 
-        private const val REQUEST_CODE_IMAGE_PICKER = 100
+        const val REQUEST_CODE_IMAGE_PICKER = 100
     }
 
     override fun onBackPressed() {

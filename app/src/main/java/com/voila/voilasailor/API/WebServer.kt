@@ -42,6 +42,21 @@ object WebServer {
     //get all requested information
     const val GET_ALL_REQUESTED_INFORMATION = BASE_URL + "getAllRequestedInfo"
 
+    //update driver personal information
+    const val POST_UPDATE_PERSONAL_INFORMATION = BASE_URL + "updatePersonalInformation"
+
+    //UPDATE address information
+    const val POST_UPDATE_ADDRESS_INFORMATION = BASE_URL + "updateAddressInformation"
+
+    //update vehicle information
+    const val POST_UPDATE_VEHICLE_INFORMATION = BASE_URL + "updateVehicleInformation"
+
+    //update kyc info
+    const val POST_UPDATE_KYC_INFORMATION = BASE_URL + "updateKYCDetails"
+
+    //update vehicle documents
+    const val POST_UPDATE_VEHICLE_DOCUMENTS = BASE_URL + "updateVehicleDocument"
+
     /*-------------------------- RESTAURANT REGISTRATION MODULE ----------------------------- */
 
     //add new restaurant owner details

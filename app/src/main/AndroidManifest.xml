@@ -24,6 +24,7 @@
         <activity
             android:name="com.theartofdev.edmodo.cropper.CropImageActivity"
             android:theme="@style/Base.Theme.AppCompat" />
+
         <activity
             android:name="com.voila.voilasailor.driverRegistration.DriverProfileActivity"
             android:exported="true" />
@@ -49,7 +50,12 @@
             </intent-filter>
         </activity>
 
-
+        <service android:name=".Helper.FirebaseMessageReceiver"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
 
         <meta-data
             android:name="preloaded_fonts"

@@ -89,9 +89,9 @@ dependencies {
     /*------------ Image cropper ------------*/
     implementation 'com.theartofdev.edmodo:android-image-cropper:2.8.0'
 
-    /* Android Navigation Architecture */
-    implementation "androidx.navigation:navigation-fragment-ktx:2.4.0-alpha07"
-    implementation "androidx.navigation:navigation-ui-ktx:2.4.0-alpha07"
+//    /* Android Navigation Architecture */
+//    implementation "androidx.navigation:navigation-fragment-ktx:2.4.0-alpha07"
+//    implementation "androidx.navigation:navigation-ui-ktx:2.4.0-alpha07"
 
     /* for pref and ktx */
     implementation "androidx.preference:preference-ktx:1.1.1"
@@ -103,5 +103,9 @@ dependencies {
     /* Glide to show images */
     implementation 'com.github.bumptech.glide:glide:4.12.0'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.12.0'
+
+    /*  step view */
+    implementation 'com.kofigyan.stateprogressbar:stateprogressbar:1.0.0'
+
 
 }

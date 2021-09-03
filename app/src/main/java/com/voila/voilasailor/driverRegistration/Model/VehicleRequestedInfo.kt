@@ -1,11 +1,16 @@
 package com.voila.voilasailor.driverRegistration.Model
 
 data class VehicleRequestedInfo(
-    val vehicle_RTO_registration_number: String,
+    var vehicle_RTO_registration_number: String,
     val vehicle_brand: String,
-    val vehicle_colour: String,
+    var vehicle_colour: String,
     val vehicle_make_year: String,
     val vehicle_model: String,
-    val vehicle_rc_number: String,
-    val vehicle_type: String
+    var vehicle_rc_number: String,
+    var vehicle_type: String,
+
+    var vehicleRTORegistrationNumber:String,
+    var vehicleBrand:String,
+    var vehicleColor:String,
+    var vehicleMakeYear:String,
 )

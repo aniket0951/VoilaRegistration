@@ -4,7 +4,6 @@ import android.app.Activity
 import android.app.ProgressDialog
 import android.content.Context
 import android.content.Intent
-import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -116,7 +115,7 @@ class RestaurantHomeViewModel(var context:Context) : ViewModel() {
 
                 val filter_type = list[position].filter_type
 
-                Log.d("filterType", "onItemClick: $filter_type")
+               // Log.d("filterType", "onItemClick: $filter_type")
 
                 jsonObject.addProperty("restaurant_token_id",Helper.getAuthToken.authToken(context))
                 jsonObject.addProperty("filter_type",filter_type)

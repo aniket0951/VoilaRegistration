@@ -4,10 +4,10 @@ import android.app.Activity
 import android.app.ProgressDialog
 import android.content.Context
 import android.content.Intent
-import android.util.Log
 import androidx.databinding.ObservableField
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.google.gson.JsonObject
 import com.voila.voilasailor.Helper.Helper
 import com.voila.voilasailor.Helper.NetworkStatus
 import com.voila.voilasailor.restaurantRegistration.RestaurantNetworkResponse.MenuUpdateResponse
@@ -15,7 +15,6 @@ import com.voila.voilasailor.restaurantRegistration.RestaurantNetworkResponse.Me
 import com.voila.voilasailor.restaurantRegistration.RestaurantRespository.UpdateMenuRepository
 import com.voila.voilasailor.restaurantRegistration.RestaurantViewModelListner.UpdateMenuViewModelListener
 import com.voila.voilasailor.restaurantRegistration.UI.RestaurantHomeScreenActivity
-import com.google.gson.JsonObject
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 
@@ -34,11 +33,12 @@ class UpdateMenuViewModel(var context: Context) : ViewModel() {
     lateinit var listener : UpdateMenuViewModelListener
 
     fun updateMenuItem(){
-        Log.d("dishMenu", "updateMenuItem: "+ dishName.get() + dishType.get() + dishPrice.get() + dishItem.get())
+       // Log.d("dishMenu", "updateMenuItem: "+ dishName.get() + dishType.get() + dishPrice.get() + dishItem.get())
     }
 
-    fun showDialog(){
-        progressDai = Helper.DialogsUtils.showProgressDialog(context,"Updating dish info")
+    fun cancelUpdate(){
+        val intent = Intent(context,RestaurantHomeScreenActivity::class.java)
+        context.startActivity(intent)
     }
     fun dismissDialog(){
         if (progressDai!=null) progressDai.dismiss()

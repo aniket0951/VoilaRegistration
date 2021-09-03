@@ -2,6 +2,7 @@ package com.voila.voilasailor.restaurantRegistration.Adpter
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.net.Uri
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.LayoutInflater
@@ -26,8 +27,12 @@ class GetDishRequiredDocsAdapter(var context: Context) : RecyclerView.Adapter<Ge
     private var mListener: OnItemClickListener? = null
 
     var isImageSelected : Boolean = false
+    var selectedImage : Uri? = null
+
+    var dishTypeText : String = ""
 
     private var lastSelectedPosition = -1
+    var imagePosition : Int = 0
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -77,7 +82,7 @@ class GetDishRequiredDocsAdapter(var context: Context) : RecyclerView.Adapter<Ge
         holder.radioButton.isChecked = lastSelectedPosition == position
 
         /*-- if image is selected successfully ----*/
-        if (isImageSelected) holder.docImage.setImageResource(R.drawable.ic_check)
+        if (isImageSelected) holder.docImage.setImageURI(selectedImage)
         else holder.docImage.setImageResource(R.drawable.ic_add)
     }
 
@@ -138,6 +143,20 @@ class GetDishRequiredDocsAdapter(var context: Context) : RecyclerView.Adapter<Ge
                 }
             })
 
+            radioButton.addTextChangedListener(object : TextWatcher {
+                override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+
+                }
+
+                override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                    dishRequiredItems[adapterPosition].dishTypeSelected = dishTypeText
+                }
+
+                override fun afterTextChanged(p0: Editable?) {
+
+                }
+            })
+
             /*------ select dish type by radio ------ */
             radioButton.setOnClickListener {
                 val copyOfLastCheckedPosition: Int = lastSelectedPosition
@@ -145,19 +164,18 @@ class GetDishRequiredDocsAdapter(var context: Context) : RecyclerView.Adapter<Ge
                 notifyItemChanged(copyOfLastCheckedPosition)
                 notifyItemChanged(lastSelectedPosition)
 
-                val t = radioButton.text.toString()
-                    .also { dishRequiredItems[layoutPosition].dishTypeSelected = it }
+                dishTypeText = radioButton.text.toString()
 
-//                Log.d(
-//                    "editValue",
-//                    "RadioButton: $t"
-//                )
+                dishRequiredItems[adapterPosition].dishTypeSelected = dishTypeText.trim()
+
+               // Log.d("radioText", "radio text : $dishTypeText"+ dishRequiredItems[adapterPosition].dishTypeSelected)
             }
 
             /*--------- To image upload ----------*/
             docImage.setOnClickListener {
                 if (mListener != null) {
                     val position = adapterPosition
+                    imagePosition = adapterPosition
                     if (position != RecyclerView.NO_POSITION) {
                         mListener!!.onItemClick(position)
                     }
@@ -181,8 +199,9 @@ class GetDishRequiredDocsAdapter(var context: Context) : RecyclerView.Adapter<Ge
         mListener = listener
     }
 
-    fun isImageSelected(position: Int){
+    fun isImageSelected(imageUri : Uri){
         this.isImageSelected = true
-        notifyItemChanged(position)
+        selectedImage = imageUri
+        notifyItemChanged(imagePosition)
     }
 }

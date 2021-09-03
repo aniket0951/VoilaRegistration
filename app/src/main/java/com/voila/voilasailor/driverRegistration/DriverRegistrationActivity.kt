@@ -3,6 +3,7 @@ package com.voila.voilasailor.driverRegistration
 import android.Manifest
 import android.annotation.SuppressLint
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
@@ -12,6 +13,8 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.Toast
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContract
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
@@ -23,6 +26,8 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.google.gson.JsonObject
+import com.kofigyan.stateprogressbar.StateProgressBar
+import com.theartofdev.edmodo.cropper.CropImage
 import com.voila.voilasailor.Helper.Helper
 import com.voila.voilasailor.R
 import com.voila.voilasailor.databinding.ActivityDriverRegistrationBinding
@@ -33,6 +38,7 @@ import com.voila.voilasailor.driverRegistration.ViewModelListener.DriverRegistra
 import com.voila.voilasailor.driverRegistration.viewModel.DriverRegistrationViewModel
 import com.voila.voilasailor.restaurantRegistration.RestaurantModel.NeedToProcessComplete
 import com.voila.voilasailor.restaurantRegistration.Util.getFileName
+import com.voila.voilasailor.restaurantRegistration.Util.toast
 import id.zelory.compressor.Compressor
 import id.zelory.compressor.constraint.format
 import id.zelory.compressor.constraint.quality
@@ -49,13 +55,6 @@ import java.io.File
 import java.io.FileInputStream
 import java.io.FileOutputStream
 
-
-
-
-
-
-
-
 class DriverRegistrationActivity : AppCompatActivity(), DriverRegistrationViewModelListener,
     DriverRegistrationAdapter.OnItemClickListener {
 
@@ -68,6 +67,8 @@ class DriverRegistrationActivity : AppCompatActivity(), DriverRegistrationViewMo
 
     var vehicleType = ObservableField<String>()
     var isVehicleRegistration : Boolean = false
+    private lateinit var cropActivityResultLauncher: ActivityResultLauncher<Any?>
+
 
     //list
     var mainNeedToProcessCompleteList = ArrayList<NeedToProcessComplete>()
@@ -79,6 +80,7 @@ class DriverRegistrationActivity : AppCompatActivity(), DriverRegistrationViewMo
     //get title of doc name
     private var docsTitle = ObservableField<String>()
 
+    @RequiresApi(Build.VERSION_CODES.KITKAT)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -97,6 +99,18 @@ class DriverRegistrationActivity : AppCompatActivity(), DriverRegistrationViewMo
             ),
             100
         )
+
+        cropActivityResultLauncher = registerForActivityResult(cropActivityResultContract){
+            it?.let { uri ->
+                selectedImage = uri
+               // Log.d("imageUri", "onCreate: $uri")
+                // binding.dishImage.setImageURI(uri)
+                uploadImage()
+            }
+            if (it == null){
+                toast("Do not use camera....")
+            }
+        }
     }
 
     override fun onRequestPermissionsResult(
@@ -235,35 +249,61 @@ class DriverRegistrationActivity : AppCompatActivity(), DriverRegistrationViewMo
             driverViewModel.progressStatus.set(it.processCompleteStatus.toString())
             when(it.processCompleteStatus){
                 "0"->{
+                    binding.stepBar.setMaxStateNumber(StateProgressBar.StateNumber.FIVE)
+                    binding.stepBar.setCurrentStateNumber(StateProgressBar.StateNumber.ONE)
+                    binding.stepBar.visibility = View.VISIBLE
                     binding.toolbar.title = "Basic Details"
                     driverViewModel.progressDailMSG.set("Please wait we are adding your basic information..")
                 }
                 "1" ->{
+
+                    binding.stepBar.setMaxStateNumber(StateProgressBar.StateNumber.FIVE)
+                    binding.stepBar.setCurrentStateNumber(StateProgressBar.StateNumber.TWO)
+                    binding.stepBar.visibility = View.VISIBLE
                     binding.toolbar.title = "Address Details"
                     driverViewModel.progressDailMSG.set("Please wait we are adding your address details..")
                 }
                 "2" -> {
+
+                    binding.stepBar.setMaxStateNumber(StateProgressBar.StateNumber.FIVE)
+                    binding.stepBar.setCurrentStateNumber(StateProgressBar.StateNumber.THREE)
+                    binding.stepBar.visibility = View.VISIBLE
                     binding.toolbar.title = "Document Details"
                     driverViewModel.progressDailMSG.set("Please wait we are adding your document..")
 
                 }
                 "3" -> {
+
+                    binding.stepBar.setMaxStateNumber(StateProgressBar.StateNumber.FIVE)
+                    binding.stepBar.setCurrentStateNumber(StateProgressBar.StateNumber.FOUR)
+                    binding.stepBar.visibility = View.VISIBLE
                     isVehicleRegistration = true
                     binding.toolbar.title = "Vehicle Details"
                     driverViewModel.progressDailMSG.set("Please wait we are adding your vehicle details..")
 
                 }
                 "4" -> {
+
+                    binding.stepBar.setMaxStateNumber(StateProgressBar.StateNumber.FIVE)
+                    binding.stepBar.setCurrentStateNumber(StateProgressBar.StateNumber.FIVE)
+                    binding.stepBar.visibility = View.VISIBLE
                     binding.toolbar.title = "Vehicle Images"
                     driverViewModel.progressDailMSG.set("Please wait we are adding your vehicle images..")
                 }
                 else -> {
+
+                    binding.stepBar.setMaxStateNumber(StateProgressBar.StateNumber.FIVE)
+                    binding.stepBar.setCurrentStateNumber(StateProgressBar.StateNumber.FIVE)
+                    binding.stepBar.visibility = View.VISIBLE
                     binding.toolbar.title = "Voila Registration"
                     driverViewModel.progressDailMSG.set("Please wait ...")
                 }
             }
         }
         else{
+            binding.stepBar.setMaxStateNumber(StateProgressBar.StateNumber.FIVE)
+            binding.stepBar.setCurrentStateNumber(StateProgressBar.StateNumber.ONE)
+            binding.stepBar.visibility = View.VISIBLE
             binding.toolbar.title = "Account under review"
         }
     }
@@ -271,7 +311,7 @@ class DriverRegistrationActivity : AppCompatActivity(), DriverRegistrationViewMo
     @SuppressLint("NotifyDataSetChanged")
     private fun showRegistrationForm(it: TrackDriverRegistrationProccessResponse) {
         setRegistrationTitle(it)
-
+        driverViewModel.dismissProgressDail()
         //storing list
         mainNeedToProcessCompleteList = it.needToProcessComplete as ArrayList<NeedToProcessComplete>
 
@@ -295,6 +335,7 @@ class DriverRegistrationActivity : AppCompatActivity(), DriverRegistrationViewMo
                     binding.recyclerView.adapter = adapter
                     adapter.notifyDataSetChanged()
 
+                    binding.btnSaveConfirm.visibility = View.GONE
                     adapter.setOnItemClickListener(this)
 
                 }
@@ -378,6 +419,8 @@ class DriverRegistrationActivity : AppCompatActivity(), DriverRegistrationViewMo
 
     private fun showUnderReviewAccount(it: TrackDriverRegistrationProccessResponse) {
 
+        binding.stepBar.visibility = View.GONE
+
         val underReviewURL : String = it.verificationData
         Glide.with(this).load(underReviewURL).into(binding.accountUnderReviewImg)
 
@@ -395,27 +438,41 @@ class DriverRegistrationActivity : AppCompatActivity(), DriverRegistrationViewMo
 
     override fun onItemClick(position: Int) {
         imagePosition = position
-
+        val isUploadFirst = ObservableField<String>()
         var title : String = mainNeedToProcessCompleteList[position].required_docs_name
         title = title.replace(" ".toRegex(), "_").toLowerCase()
 
         docsTitle.set(title)
+        isUploadFirst.set(mainNeedToProcessCompleteList[0].required_docs_name)
 
+        if (position == 0) {
+            openImageChooser(position)
 
-        openImageChooser(position)
+            //Log.d("postionDoc", "onItemClick: $position  $title")
+        }
+        else {
+           Helper.onFailedMSG.onFailed(this,"Please upload first " + " " + isUploadFirst.get().toString() + " document...." )
+        }
+
     }
 
     private fun openImageChooser(position: Int) {
-
-        Intent(Intent.ACTION_PICK).also {
-            it.type = "image/*"
-
-            val mimeTypes = arrayOf("image/jpeg","image/png")
-            it.putExtra(Intent.EXTRA_MIME_TYPES,mimeTypes)
-
-            startActivityForResult(it, REQUEST_CODE_IMAGE_PICKER)
-        }
+        cropActivityResultLauncher.launch(null)
     }
+
+    private val cropActivityResultContract = object : ActivityResultContract<Any?, Uri?>(){
+        override fun createIntent(context: Context, input: Any?): Intent {
+            return CropImage.activity()
+                .setAspectRatio(16,9)
+                .getIntent(this@DriverRegistrationActivity)
+        }
+
+        override fun parseResult(resultCode: Int, intent: Intent?): Uri? {
+            return CropImage.getActivityResult(intent)?.uri
+        }
+
+    }
+
 
     @RequiresApi(Build.VERSION_CODES.KITKAT)
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -443,18 +500,23 @@ class DriverRegistrationActivity : AppCompatActivity(), DriverRegistrationViewMo
             val parcelFileDescriptor =
                 contentResolver.openFileDescriptor(selectedImage!!, "r", null) ?: return
 
+            val file = File(cacheDir,selectedImage.toString())
+            if (!file.parentFile.exists()){
+                file.parentFile.mkdirs()
+                //  Log.d("imageUri", "uploadImage: from parent file $file")
+            }
+            else if (!file.exists()) {
+                // Log.d("imageUri", "uploadImage: from  file $file")
+                file.createNewFile()
+            }
+
             val inputStream = FileInputStream(parcelFileDescriptor.fileDescriptor)
-            val file = File(cacheDir, contentResolver.getFileName(selectedImage!!))
+           // val file = File(cacheDir, contentResolver.getFileName(selectedImage!!))
             val outputStream = FileOutputStream(file)
             inputStream.copyTo(outputStream)
 
-            Log.d("fileLength", "uploadImage before: ${file.length()}")
+           // Log.d("fileLength", "uploadImage before: ${file.length()}")
 
-//             val fullSizeBitmap : Bitmap = BitmapFactory.decodeFile(file.path)
-//
-//            val reduceBitmap : Bitmap? = ImageResizer.reduce.reduceBitmapSize(fullSizeBitmap,2048)
-//
-//            val reduceFile : File = getBitmapFile(reduceBitmap)
 
             GlobalScope.launch {
                 val compressedImageFile = Compressor.compress(this@DriverRegistrationActivity, file) {
@@ -463,7 +525,6 @@ class DriverRegistrationActivity : AppCompatActivity(), DriverRegistrationViewMo
                     format(Bitmap.CompressFormat.JPEG)
                     size(2_097_152) // 2 MB
                 }
-                Log.d("fileLength", "uploadImage: ${compressedImageFile.length()}")
                 // create RequestBody instance from file
                 val requestFile = RequestBody.create(
                     contentResolver.getType(selectedImage!!)?.let { it.toMediaTypeOrNull() },
@@ -519,5 +580,9 @@ class DriverRegistrationActivity : AppCompatActivity(), DriverRegistrationViewMo
         private const val REQUEST_CODE_IMAGE_PICKER = 100
     }
 
+    override fun onBackPressed() {
+        super.onBackPressed()
+        finishAffinity()
+    }
 
 }

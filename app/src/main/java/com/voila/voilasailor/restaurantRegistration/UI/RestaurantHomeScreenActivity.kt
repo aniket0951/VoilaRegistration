@@ -5,7 +5,6 @@ import android.app.AlertDialog
 import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
@@ -38,6 +37,7 @@ class RestaurantHomeScreenActivity : AppCompatActivity(), RestaurantHomeListener
 
     lateinit var adapter : GetAllMenusAdapter
     lateinit var filterDishAdapter: ApplyFilterOptionAdapter
+    var positions : Int = 0
 
     var isProfileFragmentOpen : Boolean = false
 
@@ -173,7 +173,19 @@ class RestaurantHomeScreenActivity : AppCompatActivity(), RestaurantHomeListener
 
     @SuppressLint("NotifyDataSetChanged")
     override fun onRemoveTheDishSuccess() {
-
+        restaurantHomeViewModel.dishRemoveObservable()
+            .observe(this, Observer {
+                if (it!=null){
+                    if (it.result){
+                        restaurantHomeViewModel.dismissProgressDai()
+                        onSuccess(it.message)
+                    }
+                    else{
+                        restaurantHomeViewModel.dismissProgressDai()
+                        onFailed("Dish not deleted please try again..")
+                    }
+                }
+            })
     }
 
     private fun showFilterDish(it: GetAllDishWithFilterOptionResponse) {
@@ -202,7 +214,6 @@ class RestaurantHomeScreenActivity : AppCompatActivity(), RestaurantHomeListener
             }
         })
 
-       // onSuccess(it.message)
     }
 
     private fun showAllMenus(it: GetMenusResponse) {
@@ -224,6 +235,8 @@ class RestaurantHomeScreenActivity : AppCompatActivity(), RestaurantHomeListener
 
         adapter.deleteMenuClickListener(object : GetAllMenusAdapter.OnDeleteListener {
             override fun onDeleteClick(position: Int) {
+                positions = position
+               // adapter.removeItem(position)
                 dishRemove(position,adapter)
             }
         })
@@ -245,8 +258,8 @@ class RestaurantHomeScreenActivity : AppCompatActivity(), RestaurantHomeListener
                 jsonObject.addProperty("id", this.adapter.menuList[position].id.toString())
 
                 restaurantHomeViewModel._dishRemove(jsonObject)
+                this.adapter.removeItem(position)
 
-                removeDishResponse(position,adapter)
             })
 
         builder1.setNegativeButton(
@@ -261,10 +274,10 @@ class RestaurantHomeScreenActivity : AppCompatActivity(), RestaurantHomeListener
 
     }
 
-    private fun dishRemoveFromFilter(position: Int, adapter: ApplyFilterOptionAdapter) {
+    private fun dishRemoveFromFilter(position: Int, filterAdapter: ApplyFilterOptionAdapter) {
 
         val builder1: AlertDialog.Builder = AlertDialog.Builder(this)
-        builder1.setMessage("Are you sure,you want to delete  " + adapter.filterDishList[position].dish_name.toString() + " ? ")
+        builder1.setMessage("Are you sure,you want to delete  " + filterAdapter.filterDishList[position].dish_name.toString() + " ? ")
         builder1.setCancelable(true)
 
         builder1.setPositiveButton(
@@ -273,11 +286,11 @@ class RestaurantHomeScreenActivity : AppCompatActivity(), RestaurantHomeListener
 
                 jsonObject.addProperty("restaurant_token_id",Helper.getAuthToken.authToken(this))
                 jsonObject.addProperty("restaurant_id",Helper.getRestaurantId.restaurantId(this))
-                jsonObject.addProperty("id", adapter.filterDishList[position].id.toString())
+                jsonObject.addProperty("id", filterAdapter.filterDishList[position].id.toString())
 
                 restaurantHomeViewModel._dishRemove(jsonObject)
-
-                removeFilterDishResponse(position,adapter)
+                filterAdapter.removeItem(position)
+                removeFilterDishResponse()
             })
 
         builder1.setNegativeButton(
@@ -292,7 +305,7 @@ class RestaurantHomeScreenActivity : AppCompatActivity(), RestaurantHomeListener
 
     }
 
-    private fun removeFilterDishResponse(position: Int, adapter: ApplyFilterOptionAdapter) {
+    private fun removeFilterDishResponse() {
         restaurantHomeViewModel.dishRemoveObservable()
             .observe(this, Observer {
                 if (it!=null){
@@ -300,11 +313,6 @@ class RestaurantHomeScreenActivity : AppCompatActivity(), RestaurantHomeListener
                         restaurantHomeViewModel.dismissProgressDai()
                         onSuccess(it.message)
 
-                        if (position!= null){
-
-                            adapter.removeItem(position)
-                        }
-                        // adapter.notifyDataSetChanged()
                     }
                     else{
                         restaurantHomeViewModel.dismissProgressDai()
@@ -314,29 +322,6 @@ class RestaurantHomeScreenActivity : AppCompatActivity(), RestaurantHomeListener
             })
     }
 
-    @SuppressLint("NotifyDataSetChanged")
-    private fun removeDishResponse(
-        position: Int,
-        adapter: GetAllMenusAdapter) {
-        restaurantHomeViewModel.dishRemoveObservable()
-            .observe(this, Observer {
-                if (it!=null){
-                    if (it.result){
-                        restaurantHomeViewModel.dismissProgressDai()
-                        onSuccess(it.message)
-
-                        if (position!= null){
-
-                            adapter.removeItem(position)
-                        }
-                    }
-                    else{
-                        restaurantHomeViewModel.dismissProgressDai()
-                        onFailed("Dish not deleted please try again..")
-                    }
-                }
-            })
-    }
 
     /*---- update the menu details ----*/
     private fun editMenuDetails(adapter: GetAllMenusAdapter, position: Int) {
@@ -349,7 +334,7 @@ class RestaurantHomeScreenActivity : AppCompatActivity(), RestaurantHomeListener
         intent.putExtra("menuUrl",adapter.menuList[position].menuUrl)
         intent.putExtra("dishId",adapter.menuList[position].id.toString())
 
-        Log.d("dishId", "editMenuDetails: ${adapter.menuList[position].id}")
+       // Log.d("dishId", "editMenuDetails: ${adapter.menuList[position].id}")
         startActivity(intent)
 
     }
@@ -365,7 +350,7 @@ class RestaurantHomeScreenActivity : AppCompatActivity(), RestaurantHomeListener
         intent.putExtra("menuUrl",adapter.filterDishList[position].menuUrl)
         intent.putExtra("dishId",adapter.filterDishList[position].id.toString())
 
-        Log.d("dishId", "editMenuDetails: ${adapter.filterDishList[position].id}")
+      //  Log.d("dishId", "editMenuDetails: ${adapter.filterDishList[position].id}")
         startActivity(intent)
 
     }
@@ -387,6 +372,8 @@ class RestaurantHomeScreenActivity : AppCompatActivity(), RestaurantHomeListener
             binding.filterImg.visibility = View.GONE
             binding.profileText.visibility = View.VISIBLE
 
+            binding.toolbar.title = "Account Under Review"
+
             restaurantHomeViewModel.dismissProgressDai()
         }
         else {
@@ -400,5 +387,6 @@ class RestaurantHomeScreenActivity : AppCompatActivity(), RestaurantHomeListener
     override fun onBackPressed() {
         super.onBackPressed()
         finishAffinity()
+        finish()
     }
 }

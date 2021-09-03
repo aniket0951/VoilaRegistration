@@ -3,16 +3,20 @@ package com.voila.voilasailor.restaurantRegistration.UI
 import android.Manifest
 import android.app.Activity
 import android.app.ProgressDialog
+import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContract
 import androidx.annotation.RequiresApi
 import androidx.core.app.ActivityCompat
 import androidx.databinding.DataBindingUtil
@@ -22,6 +26,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.gson.JsonObject
+import com.theartofdev.edmodo.cropper.CropImage
 import com.voila.voilasailor.Helper.Helper
 import com.voila.voilasailor.R
 import com.voila.voilasailor.databinding.FragmentProfileBinding
@@ -61,10 +66,13 @@ class ProfileFragment : Fragment(),ProfileListener {
     lateinit var adapter: ProfileDetailsAdapter
     var jsonObject : JsonObject = JsonObject()
 
+    private lateinit var cropActivityResultLauncher: ActivityResultLauncher<Any?>
+
+
     private var selectedImage : Uri? = null
     val imageTitle = ObservableField<String>()
 
-
+    @RequiresApi(Build.VERSION_CODES.KITKAT)
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -86,8 +94,19 @@ class ProfileFragment : Fragment(),ProfileListener {
             ),
             100)
 
+        cropActivityResultLauncher = registerForActivityResult(cropActivityResultContract){
+            it?.let { uri ->
+                selectedImage = uri
+                // Log.d("imageUri", "onCreate: $uri")
+                // binding.dishImage.setImageURI(uri)
+                uploadImage()
+            }
+            if (it == null){
+                onFailed("Do not use camera....")
+            }
+        }
 
-            return binding.root
+        return binding.root
     }
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
@@ -138,8 +157,11 @@ class ProfileFragment : Fragment(),ProfileListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         profileModel = activity?.run {
             ViewModelProviders.of(this,ProfileVewModelFactory(requireContext()))[ProfileDetailViewModel::class.java]
+
+
         } ?: throw Exception("Invalid Activity")
     }
 
@@ -311,21 +333,21 @@ class ProfileFragment : Fragment(),ProfileListener {
         adapter.restaurantOutdoorClickListener(object : ProfileDetailsAdapter.OnOutdoorClickListener {
             override fun onOutDoorItemClick(position: Int) {
                 imageTitle.set("restaurant_outdoor_photo")
-                openImageChooser(position)
+                openImageChooser()
             }
         })
 
         adapter.restaurantIndoorClickListener(object : ProfileDetailsAdapter.OnItemClickListener {
             override fun onItemClick(position: Int) {
                 imageTitle.set("restaurant_indoor_photo")
-                openImageChooser(position)
+                openImageChooser()
             }
         })
 
         adapter.restaurantLicenceClickListener(object : ProfileDetailsAdapter.OnLicenceClickListener {
             override fun onLicenceItemClick(position: Int) {
                 imageTitle.set("restaurant_licence_photo")
-                openImageChooser(position)
+                openImageChooser()
             }
         })
 
@@ -337,32 +359,36 @@ class ProfileFragment : Fragment(),ProfileListener {
         requireContext().toast(s)
     }
 
-    private fun openImageChooser(position: Int) {
-
-        Intent(Intent.ACTION_PICK).also {
-            it.type = "image/*"
-
-            val mimeTypes = arrayOf("image/jpeg","image/png")
-            it.putExtra(Intent.EXTRA_MIME_TYPES,mimeTypes)
-
-            startActivityForResult(it, REQUEST_CODE_IMAGE_PICKER)
+    private fun openImageChooser() {
+        cropActivityResultLauncher.launch(null)
+    }
+    private val cropActivityResultContract = object : ActivityResultContract<Any?, Uri?>(){
+        override fun createIntent(context: Context, input: Any?): Intent {
+            return CropImage.activity()
+                .setAspectRatio(16,9)
+                .getIntent(requireActivity())
         }
+
+        override fun parseResult(resultCode: Int, intent: Intent?): Uri? {
+            return CropImage.getActivityResult(intent)?.uri
+        }
+
     }
 
-    @RequiresApi(Build.VERSION_CODES.KITKAT)
     override  fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (resultCode == Activity.RESULT_OK){
             when(requestCode){
                 REQUEST_CODE_IMAGE_PICKER -> {
                     selectedImage = data?.data
-                    //  Log.d("imagePath", "onActivityResult: image path $selectedImage")
-                    uploadImage()
+                      Log.d("imagePath", "onActivityResult: image path $selectedImage")
+                   // uploadImage()
                 }
             }
         }
 
     }
+
 
     @RequiresApi(Build.VERSION_CODES.KITKAT)
     private  fun uploadImage() {
@@ -374,10 +400,22 @@ class ProfileFragment : Fragment(),ProfileListener {
             val parcelFileDescriptor =
                 requireActivity().contentResolver.openFileDescriptor(selectedImage!!, "r", null) ?: return
 
+            val file = File(requireActivity().cacheDir,selectedImage.toString())
+            if (!file.parentFile.exists()){
+                file.parentFile.mkdirs()
+                //  Log.d("imageUri", "uploadImage: from parent file $file")
+            }
+            else if (!file.exists()) {
+                // Log.d("imageUri", "uploadImage: from  file $file")
+                file.createNewFile()
+            }
+
             val inputStream = FileInputStream(parcelFileDescriptor.fileDescriptor)
-            val file = File(requireActivity().cacheDir, requireActivity().contentResolver.getFileName(selectedImage!!))
+           // val file = File(requireActivity().cacheDir, requireActivity().contentResolver.getFileName(selectedImage!!))
             val outputStream = FileOutputStream(file)
             inputStream.copyTo(outputStream)
+
+            Log.d("imageUri", "uploadImage:  before compress ${file.length()}")
 
 //            val fullSizeBitmap : Bitmap = BitmapFactory.decodeFile(file.path)
 //
@@ -392,14 +430,14 @@ class ProfileFragment : Fragment(),ProfileListener {
                     format(Bitmap.CompressFormat.JPEG)
                     size(2_097_152) // 2 MB
                 }
+                Log.d("imageUri", "uploadImage: after compress ${compressedImageFile.length()}")
 
-                // create RequestBody instance from file
+
                 val requestFile = RequestBody.create(
                     requireActivity().contentResolver.getType(selectedImage!!)?.let { it.toMediaTypeOrNull() },
                     compressedImageFile
                 )
 
-                // MultipartBody.Part is used to send also the actual file name
                 val body = MultipartBody.Part.createFormData("image", compressedImageFile.name, requestFile)
 
 
@@ -442,5 +480,7 @@ class ProfileFragment : Fragment(),ProfileListener {
     companion object{
 
         private const val REQUEST_CODE_IMAGE_PICKER = 100
+
     }
+
 }

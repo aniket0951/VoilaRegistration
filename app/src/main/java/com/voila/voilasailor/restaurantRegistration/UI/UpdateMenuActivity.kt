@@ -9,7 +9,6 @@ import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
@@ -47,17 +46,13 @@ import java.io.FileInputStream
 import java.io.FileOutputStream
 import java.util.*
 
-
-
-
-
 class UpdateMenuActivity : AppCompatActivity(), UpdateMenuViewModelListener {
 
     lateinit var  binding : ActivityUpdateMenuBinding
     private lateinit var updateMenuModel : UpdateMenuViewModel
 
     private lateinit var menuUrl:String
-    lateinit var dishTye:String
+    private lateinit var dishTye:String
     lateinit var dishId:String
 
     private var selectedImage : Uri? = null
@@ -66,9 +61,9 @@ class UpdateMenuActivity : AppCompatActivity(), UpdateMenuViewModelListener {
     private var map: HashMap<String, RequestBody> = HashMap<String, RequestBody>()
     private lateinit var body : MultipartBody.Part
 
+    private lateinit var cropActivityResultLauncher: ActivityResultLauncher<Any?>
     var jsonObject:JsonObject = JsonObject()
 
-    private lateinit var cropActivityResultLauncher: ActivityResultLauncher<Any?>
 
     @RequiresApi(Build.VERSION_CODES.KITKAT)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -138,12 +133,14 @@ class UpdateMenuActivity : AppCompatActivity(), UpdateMenuViewModelListener {
         cropActivityResultLauncher = registerForActivityResult(cropActivityResultContract){
             it?.let { uri ->
                 selectedImage = uri
-                Log.d("imageUri", "onCreate: $uri")
-                binding.dishImage.setImageURI(uri)
+                // Log.d("imageUri", "onCreate: $uri")
+                // binding.dishImage.setImageURI(uri)
                 uploadImage()
             }
+            if (it == null){
+                onFailed("Do not use camera....")
+            }
         }
-
 
         //get update result
         getMenuUpdateResult()
@@ -179,9 +176,10 @@ class UpdateMenuActivity : AppCompatActivity(), UpdateMenuViewModelListener {
     }
 
     private fun openImageChooser() {
-        cropActivityResultLauncher.launch(null)
 
+        cropActivityResultLauncher.launch(null)
     }
+
     private val cropActivityResultContract = object : ActivityResultContract<Any?, Uri?>(){
         override fun createIntent(context: Context, input: Any?): Intent {
             return CropImage.activity()

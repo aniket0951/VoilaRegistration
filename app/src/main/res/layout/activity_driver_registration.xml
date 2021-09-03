@@ -71,8 +71,23 @@
 
         </com.google.android.material.appbar.AppBarLayout>
 
+        <com.kofigyan.stateprogressbar.StateProgressBar
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:spb_stateBackgroundColor="@color/primary_color"
+            app:spb_stateForegroundColor="@color/color_claim_now_success_green"
+            app:spb_stateNumberBackgroundColor="@color/white"
+            app:spb_stateNumberForegroundColor="@color/white"
+            app:spb_currentStateDescriptionColor="@color/white"
+            app:spb_stateDescriptionColor="@color/white"
+            android:layout_marginTop="5dp"
+            android:id="@+id/step_bar"
+            android:visibility="gone"
+            app:spb_animateToCurrentProgressState="true"
+            app:spb_checkStateCompleted="true"/>
 
-    <!--Recycler view-->
+
+        <!--Recycler view-->
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -146,11 +161,27 @@
                     android:textSize="16sp"
                     android:fontFamily="@font/poppins_medium"
                     android:textColor="@color/black"
-                    android:id="@+id/profile_text"
                     android:layout_gravity="end"
-                    android:onClick="@{() -> driver.showProfileInformation()}"
+                    android:visibility="gone"
                     android:layout_marginRight="25dp"
                     android:layout_marginEnd="25dp" />
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:layout_width="120dp"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/two_color_bg_button"
+                    android:textColor="@color/white"
+                    android:text="@string/profile"
+                    android:fontFamily="@font/poppins_medium"
+                    android:textSize="16sp"
+                    android:layout_gravity="end"
+                    android:layout_marginRight="15dp"
+                    android:textAllCaps="false"
+                    android:visibility="visible"
+                    android:layout_marginBottom="15dp"
+                    android:onClick="@{() -> driver.showProfileInformation()}"
+                    android:id="@+id/profile_text"
+                    android:layout_marginEnd="15dp" />
 
                 <androidx.appcompat.widget.AppCompatImageView
                     android:layout_width="160dp"

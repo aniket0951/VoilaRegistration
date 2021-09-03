@@ -2,7 +2,6 @@ package com.voila.voilasailor.restaurantRegistration.Adpter
 
 import android.annotation.SuppressLint
 import android.content.Context
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -22,22 +21,25 @@ class GetAllMenusAdapter(var context: Context) : RecyclerView.Adapter<GetAllMenu
     private var mListener: OnItemClickListener? = null
     private var deleteListener : OnDeleteListener? = null
 
+    var deletePosition : Int = 0
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): GetAllMenusAdapter.ViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
         return ViewHolder(layoutInflater.inflate(R.layout.menu_items_layout, parent, false))
     }
 
+    @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: GetAllMenusAdapter.ViewHolder, position: Int) {
 
         when(menuList[position].dish_type){
             "Non Veg" -> {
 
-                holder.menuName.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_red_round, 0);
+                holder.menuName.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.non_veg, 0);
             }
 
             "Veg" -> {
 
-                holder.menuName.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_round, 0);
+                holder.menuName.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.veg_img, 0);
             }
         }
 
@@ -79,8 +81,10 @@ class GetAllMenusAdapter(var context: Context) : RecyclerView.Adapter<GetAllMenu
             deleteMenuDetails.setOnClickListener {
                 if (deleteListener!=null){
                     val position = adapterPosition
-                    if (position!=RecyclerView.NO_POSITION){
+                    deletePosition = adapterPosition
+                    if (position!= RecyclerView.NO_POSITION){
                         deleteListener!!.onDeleteClick(position)
+                     //   Log.d("listSize", "$deletePosition: ")
                     }
                 }
             }
@@ -116,18 +120,15 @@ class GetAllMenusAdapter(var context: Context) : RecyclerView.Adapter<GetAllMenu
         deleteListener = listener
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     fun removeItem(position: Int){
-        if (this.menuList.size > 0){
+        if (this.menuList.size!=deletePosition){
 
-            if (position < menuList.size){
-
-                Log.d("listSize", "removeItem before: ${menuList.size}")
-                this.menuList.remove(this.menuList[position])
-                notifyItemRemoved(position)
-                notifyItemRangeChanged(position, this.menuList.size)
-                Log.d("listSize", "removeItem after: ${menuList.size}")
-//                notifyItemRangeRemoved(position,this.menuList.size)
-            }
+   //         Log.d("listSize", "removeItem before: ${menuList.size}"+deletePosition)
+            this.menuList.removeAt(deletePosition)
+            notifyItemRemoved(deletePosition)
+            notifyItemRangeChanged(deletePosition, this.menuList.size)
+    //        Log.d("listSize", "removeItem after: ${menuList.size}")
         }
 
     }

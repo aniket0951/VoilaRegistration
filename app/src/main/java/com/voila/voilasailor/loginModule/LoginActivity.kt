@@ -1,12 +1,17 @@
 package com.voila.voilasailor.loginModule
 
+import android.annotation.SuppressLint
 import android.app.ProgressDialog
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
-import android.text.Editable
-import android.text.TextWatcher
-import android.util.Log
+import android.text.*
+import android.text.method.LinkMovementMethod
+import android.text.style.ClickableSpan
+import android.text.style.ForegroundColorSpan
 import android.view.View
 import android.widget.EditText
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
@@ -21,7 +26,6 @@ import com.voila.voilasailor.loginModule.LoginViewModelListner.LoginViewModelLis
 import com.voila.voilasailor.loginModule.loginViewModel.LoginViewModel
 import kotlinx.android.synthetic.main.activity_login.*
 
-
 class LoginActivity : AppCompatActivity(),LoginViewModelListener {
 
     lateinit var binding : ActivityLoginBinding
@@ -30,9 +34,9 @@ class LoginActivity : AppCompatActivity(),LoginViewModelListener {
     lateinit var helper: Helper
     private val registrationFor  = ObservableField<String>()
 
+    @SuppressLint("ResourceAsColor")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        //setContentView(R.layout.activity_login)
 
         binding = DataBindingUtil.setContentView(this, R.layout.activity_login)
         loginViewModel = ViewModelProviders.of(this, LoginViewModelFactory(this)).get(LoginViewModel::class.java)
@@ -40,12 +44,30 @@ class LoginActivity : AppCompatActivity(),LoginViewModelListener {
         loginViewModel.listner = this
         binding.executePendingBindings()
 
-       // binding.edtMobile.hint = "Enter mobile number"
+        val spannable = SpannableString("  By providing my phone number, I hereby agree & accept the Terms of Service & Privacy Policy in use of the Voila app.")
+        val ss = SpannableString(spannable)
+        val ssb = SpannableStringBuilder(spannable)
 
+        val fcsRed = ForegroundColorSpan(R.color.homeTitle)
+
+
+        ssb.setSpan(fcsRed, 60, 94, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+
+        binding.privacyPolice.text = ssb
+
+        binding.privacyPolice.makeLinks(
+            Pair("Terms of Service", View.OnClickListener {
+                val url = "https://voila-sailor.flycricket.io/terms.html"
+                startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(url)))
+            }),
+            Pair("Privacy Policy", View.OnClickListener {
+                val url = "https://voila-sailor.flycricket.io/terms.html"
+                startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(url)))
+            }))
 
         if (intent!=null){
             registrationFor.set(intent.getStringExtra("registrationFor"))
-            Log.d("registrationFor", "onCreate: " + registrationFor.get())
+            //Log.d("registrationFor", "onCreate: " + registrationFor.get())
         }
 
         val edit = arrayOf<EditText>(otp_edit_box1, otp_edit_box2, otp_edit_box3, otp_edit_box4)
@@ -57,6 +79,36 @@ class LoginActivity : AppCompatActivity(),LoginViewModelListener {
 
     }
 
+    private fun TextView.makeLinks(vararg links: Pair<String, View.OnClickListener>) {
+        val spannableString = SpannableString(this.text)
+        var startIndexOfLink = -1
+        for (link in links) {
+            val clickableSpan = object : ClickableSpan() {
+                @SuppressLint("ResourceAsColor")
+                override fun updateDrawState(textPaint: TextPaint) {
+
+                    textPaint.color = R.color.homeTitle
+
+                    textPaint.isUnderlineText = true
+                }
+
+                override fun onClick(view: View) {
+                    Selection.setSelection((view as TextView).text as Spannable, 0)
+                    view.invalidate()
+                    link.second.onClick(view)
+                }
+            }
+            startIndexOfLink = this.text.toString().indexOf(link.first, startIndexOfLink + 1)
+            spannableString.setSpan(
+                clickableSpan, startIndexOfLink, startIndexOfLink + link.first.length,
+                Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
+            )
+        }
+        this.movementMethod =
+            LinkMovementMethod.getInstance() // without LinkMovementMethod, link can not click
+        this.setText(spannableString, TextView.BufferType.SPANNABLE)
+    }
+
     // class to focus on the selected Edit Text
     class GenericTextWatcher(view: View, editText: Array<EditText>) :
         TextWatcher {
@@ -66,8 +118,10 @@ class LoginActivity : AppCompatActivity(),LoginViewModelListener {
             val text = editable.toString()
             when (view.id) {
                 R.id.otp_edit_box1 -> if (text.length == 1) editText[1].requestFocus()
-                R.id.otp_edit_box2 -> if (text.length == 1) editText[2].requestFocus() else if (text.isEmpty()) editText[0].requestFocus()
-                R.id.otp_edit_box3 -> if (text.length == 1) editText[3].requestFocus() else if (text.isEmpty()) editText[1].requestFocus()
+                R.id.otp_edit_box2 -> if (text.length == 1) editText[2].requestFocus()
+                else if (text.isEmpty()) editText[0].requestFocus()
+                R.id.otp_edit_box3 -> if (text.length == 1) editText[3].requestFocus()
+                else if (text.isEmpty()) editText[1].requestFocus()
                 R.id.otp_edit_box4 -> if (text.isEmpty()) editText[2].requestFocus()
             }
         }
@@ -79,7 +133,7 @@ class LoginActivity : AppCompatActivity(),LoginViewModelListener {
 
     override fun onOTPSendSuccess() {
         progressBar =  Helper.DialogsUtils.showProgressDialog(this, "Sending Otp Please wait...")
-        Log.d("sendOTP", "onOTPSendSuccess: otp send successfully")
+      //  Log.d("sendOTP", "onOTPSendSuccess: otp send successfully")
         loginViewModel.sendOtpResponseObservable()
             .observe(this, Observer {
                 if (it != null && it.result) {
@@ -101,6 +155,7 @@ class LoginActivity : AppCompatActivity(),LoginViewModelListener {
         binding.phoneNumberLayot.visibility = View.GONE
         binding.getOtpTextLayout.visibility = View.VISIBLE
         binding.mobileNumberText.text = loginViewModel.mobileNumber.get()
+        binding.privacyPolice.visibility = View.GONE
     }
 
     override fun onOTPSendFailed() {
@@ -117,7 +172,6 @@ class LoginActivity : AppCompatActivity(),LoginViewModelListener {
             .observe(this, Observer {
                 if (it!=null ){
                     if (it.result) {
-                       // progressBar.dismiss()
                         loginViewModel.saveUserLocally(it,registrationFor.get())
                     }
                     else{
@@ -134,5 +188,21 @@ class LoginActivity : AppCompatActivity(),LoginViewModelListener {
 
     override fun onUserSavedLocally() {
         Toast.makeText(this, "Login Successfully", Toast.LENGTH_SHORT).show()
+    }
+
+    override fun onResendOtpSuccessfully() {
+        loginViewModel.sendOtpResponseObservable()
+            .observe(this, Observer {
+                if (it!=null){
+                    if (it.result){
+                        loginViewModel.dismissDialog()
+                        loginViewModel.sessionId.set(it.details)
+                        Helper.onSuccessMSG.onSuccess(this,it.message)
+                    }
+                    else{
+                        Helper.onFailedMSG.onFailed(this,"Resend otp failed please try again...")
+                    }
+                }
+            })
     }
 }

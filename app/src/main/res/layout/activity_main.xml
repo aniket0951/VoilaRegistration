@@ -39,6 +39,10 @@
                 android:minHeight="?attr/actionBarSize"
                 android:theme="?attr/actionBarTheme"
                 tools:layout_editor_absoluteX="0dp"
+                app:title="Registration"
+                app:titleMarginStart="25dp"
+                app:titleTextColor="@color/white"
+                android:textSize="16sp"
                 tools:layout_editor_absoluteY="0dp" />
 
         </com.google.android.material.appbar.AppBarLayout>
@@ -60,8 +64,11 @@
                 android:layout_marginTop="10dp"
                 android:layout_marginStart="10dp"
                 android:textColor="@color/black"
+                android:drawableLeft="@drawable/driver_registration"
                 android:fontFamily="@font/poppins_medium"
-                android:layout_marginLeft="10dp" />
+                android:layout_marginLeft="10dp"
+                android:drawablePadding="15dp"
+                android:drawableStart="@drawable/driver_registration" />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:onClick="@{() -> main.registerAsRestaurant()}"
@@ -72,8 +79,11 @@
                 android:layout_marginTop="10dp"
                 android:layout_marginStart="10dp"
                 android:textColor="@color/black"
+                android:drawableLeft="@drawable/restaurant_registration"
                 android:fontFamily="@font/poppins_medium"
-                android:layout_marginLeft="10dp" />
+                android:layout_marginLeft="10dp"
+                android:drawablePadding="15dp"
+                android:drawableStart="@drawable/restaurant_registration" />
 
 
         </androidx.appcompat.widget.LinearLayoutCompat>

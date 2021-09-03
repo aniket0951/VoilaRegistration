@@ -1,11 +1,19 @@
 package com.voila.voilasailor.driverRegistration.Model
 
 data class AddressRequestedInfo(
-    val building_name: String,
-    val district: String,
-    val house_number: String,
-    val landmark: String,
-    val pin_code: String,
-    val state: String,
-    val street_name: String
+    var building_name: String,
+    var district: String,
+    var house_number: String,
+    var landmark: String,
+    var pin_code: String,
+    var state: String,
+    var street_name: String,
+
+    var houseNumber : String,
+    var buildingName : String,
+    var districtName : String,
+    var landMark:String,
+    var pinCode:String,
+    var states:String,
+    var streetName:String
 )

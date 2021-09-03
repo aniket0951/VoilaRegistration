@@ -7,9 +7,9 @@ import android.content.Context
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.text.Editable
+import android.text.InputType
 import android.text.TextWatcher
 import android.text.format.DateFormat
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
@@ -26,6 +26,9 @@ import kotlinx.android.synthetic.main.restaurant_details_layout.view.*
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
+
+
+
 
 class RestaurantDetailsAdapter(val context: Context) : RecyclerView.Adapter<RestaurantDetailsAdapter.ViewHolder>(){
 
@@ -47,6 +50,8 @@ class RestaurantDetailsAdapter(val context: Context) : RecyclerView.Adapter<Rest
 
     }
 
+
+    @SuppressLint("ClickableViewAccessibility")
     override fun onBindViewHolder(holder: RestaurantDetailsAdapter.ViewHolder, position: Int) {
 
         if (isImageLayoutShow){
@@ -63,14 +68,17 @@ class RestaurantDetailsAdapter(val context: Context) : RecyclerView.Adapter<Rest
             if (needToProcessComplete[position].required_docs_type.equals("time",true)){
                 holder.setTimeInterface()
                 holder.titleEdit.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_watch, 0);
+                holder.titleEdit.isFocusable = false
             }
 
             if (needToProcessComplete[position].required_docs_type.equals("calendar",true)){
                 holder.setCalanderInterface()
                 holder.titleEdit.setCompoundDrawablesWithIntrinsicBounds(0,0,R.drawable.ic_calendar,0)
+                holder.titleEdit.isFocusable = false
             }
 
             holder.title.text = needToProcessComplete[position].required_docs_name
+            holder.titleEdit.hint = needToProcessComplete[position].required_docs_name
             holder.titleEdit.setText(needToProcessComplete[position].editText)
         }
 
@@ -83,6 +91,7 @@ class RestaurantDetailsAdapter(val context: Context) : RecyclerView.Adapter<Rest
         return needToProcessComplete.size
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
 
         // edit layout use title and edit text
@@ -126,6 +135,19 @@ class RestaurantDetailsAdapter(val context: Context) : RecyclerView.Adapter<Rest
               //  Log.d("position", ": adapter position null")
             }
 
+            titleEdit.setOnTouchListener(View.OnTouchListener { view, motionEvent -> // your code here....
+                if (needToProcessComplete[adapterPosition].required_docs_input.equals("text", true)) {
+                    titleEdit.inputType = InputType.TYPE_CLASS_TEXT
+                }
+                if (needToProcessComplete[adapterPosition].required_docs_input.equals("number", true)) {
+                   titleEdit.inputType = InputType.TYPE_CLASS_NUMBER
+                }
+                if (needToProcessComplete[adapterPosition].required_docs_input.equals("email", true)) {
+                   titleEdit.inputType = InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS
+                }
+//            Log.d("inputChange", "onBindViewHolder: ${needToProcessComplete[position].required_docs_name}")
+                false
+            })
 
         }
 
@@ -207,7 +229,7 @@ class RestaurantDetailsAdapter(val context: Context) : RecyclerView.Adapter<Rest
                 tMinute = i1
                 val calendar = Calendar.getInstance()
                 calendar[0, 0, 0, tHour] = tMinute
-                Log.d("timerSelect", "onTimeSet: " + DateFormat.format("hh:mm aa", calendar))
+               // Log.d("timerSelect", "onTimeSet: " + DateFormat.format("hh:mm aa", calendar))
                 titleEdit.setText(DateFormat.format("hh:mm aa", calendar))
             }, 12, 0, false
         )

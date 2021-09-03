@@ -10,6 +10,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.voila.voilasailor.Adapter.RequireRestaurantDocsAdapter
 import com.voila.voilasailor.Adapter.RequiredDocsAdapter
 import com.voila.voilasailor.MainViewModelListener.MainViewModelListener
@@ -20,7 +21,6 @@ import com.voila.voilasailor.databinding.ActivityMainBinding
 import com.voila.voilasailor.loginModule.LoginActivity
 import com.voila.voilasailor.viewModel.MainActivityViewModel
 import com.voila.voilasailor.viewModel.MainViewModelFactory
-import com.google.android.material.bottomsheet.BottomSheetDialog
 import kotlinx.android.synthetic.main.required_docs_bottomsheet.*
 
 class MainActivity : AppCompatActivity() , MainViewModelListener {
@@ -36,7 +36,6 @@ class MainActivity : AppCompatActivity() , MainViewModelListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-       // setContentView(R.layout.activity_main)
 
         activityMainBinding = DataBindingUtil.setContentView(this, R.layout.activity_main)
         mainActivityViewModel = ViewModelProviders.of(this,MainViewModelFactory(this)).get(MainActivityViewModel::class.java)
@@ -63,7 +62,7 @@ class MainActivity : AppCompatActivity() , MainViewModelListener {
                 .observe(this, Observer {
                     if (it != null) {
                         showDocsRequiredList(it)
-                        mainActivityViewModel.getAllRequiredRestaurantObservable()
+                        mainActivityViewModel.getAppRequiredDocsObservable()
                             .removeObservers(this)
                     }
                 })
@@ -79,6 +78,8 @@ class MainActivity : AppCompatActivity() , MainViewModelListener {
         bottomSheetDialog.setCanceledOnTouchOutside(false)
         bottomSheetDialog.setCancelable(true)
 
+       //val  bottomSheetBehavior = BottomSheetBehavior.from(bottomSheetDialog.container);
+       // bottomSheetBehavior.state = BottomSheetBehavior.STATE_EXPANDED
 
         bottomSheetDialog.recycler_view.layoutManager = LinearLayoutManager(this)
 
@@ -106,8 +107,15 @@ class MainActivity : AppCompatActivity() , MainViewModelListener {
             val intent = Intent(this@MainActivity,LoginActivity::class.java)
             intent.putExtra("registrationFor",mainActivityViewModel.registrationFor.get())
             startActivity(intent)
+            finishAffinity()
         }
 
+        bottomSheetDialog.next.setOnClickListener {
+            val intent = Intent(this@MainActivity,LoginActivity::class.java)
+            intent.putExtra("registrationFor",mainActivityViewModel.registrationFor.get())
+            startActivity(intent)
+            finishAffinity()
+        }
         bottomSheetDialog.show()
     }
 
@@ -162,6 +170,14 @@ class MainActivity : AppCompatActivity() , MainViewModelListener {
             val intent = Intent(this@MainActivity,LoginActivity::class.java)
             intent.putExtra("registrationFor",mainActivityViewModel.registrationFor.get())
             startActivity(intent)
+            finishAffinity()
+        }
+
+        bottomSheetDialog.next.setOnClickListener {
+            val intent = Intent(this@MainActivity,LoginActivity::class.java)
+            intent.putExtra("registrationFor",mainActivityViewModel.registrationFor.get())
+            startActivity(intent)
+            finishAffinity()
         }
 
         bottomSheetDialog.show()

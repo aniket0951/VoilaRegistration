@@ -2,6 +2,7 @@ package com.voila.voilasailor.restaurantRegistration.Adpter
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -18,6 +19,7 @@ class ApplyFilterOptionAdapter(var context: Context) : RecyclerView.Adapter<Appl
      val filterDishList : ArrayList<FilterDish> = ArrayList()
     private var mListener: OnItemClickListener? = null
     private var deleteListener : OnDeleteListener? = null
+    private var deletePosition : Int = 0
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
@@ -34,12 +36,12 @@ class ApplyFilterOptionAdapter(var context: Context) : RecyclerView.Adapter<Appl
         when(filterDishList[position].dish_type){
             "Non Veg" -> {
 
-                holder.menuName.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_red_round, 0);
+                holder.menuName.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.non_veg, 0);
             }
 
             "Veg" -> {
 
-                holder.menuName.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_round, 0);
+                holder.menuName.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.veg_img, 0);
             }
         }
 
@@ -78,8 +80,10 @@ class ApplyFilterOptionAdapter(var context: Context) : RecyclerView.Adapter<Appl
             deleteMenuDetails.setOnClickListener {
                 if (deleteListener!=null){
                     val position = adapterPosition
+                    deletePosition = adapterPosition
                     if (position!=RecyclerView.NO_POSITION){
                         deleteListener!!.onDeleteClick(position)
+                        Log.d("listSize", "delete position: $deletePosition")
                     }
                 }
             }
@@ -110,17 +114,15 @@ class ApplyFilterOptionAdapter(var context: Context) : RecyclerView.Adapter<Appl
     }
 
     fun removeItem(position: Int){
-        if (this.filterDishList.size > 0){
+        if (this.filterDishList.size !=deletePosition){
 
-            if (position < filterDishList.size){
+                Log.d("listSize", "removeItem before: ${filterDishList.size}" + deletePosition)
+                this.filterDishList.removeAt(deletePosition)
+                notifyItemRemoved(deletePosition)
+                notifyItemRangeChanged(deletePosition, this.filterDishList.size)
 
-               // Log.d("listSize", "removeItem before: ${filterDishList.size}")
-                this.filterDishList.remove(this.filterDishList[position])
-                notifyItemRemoved(position)
-                notifyItemRangeChanged(position, this.filterDishList.size)
-               // Log.d("listSize", "removeItem after: ${filterDishList.size}")
-//                notifyItemRangeRemoved(position,this.menuList.size)
-            }
+                Log.d("listSize", "removeItem after: ${filterDishList.size}")
+
         }
 
     }

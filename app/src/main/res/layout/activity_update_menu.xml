@@ -385,6 +385,7 @@
                         android:textAllCaps="false"
                         android:layout_marginBottom="15dp"
                         android:id="@+id/btn_cancel"
+                        android:onClick="@{() -> updatemodel.cancelUpdate()}"
                         android:layout_marginEnd="10dp" />
 
                     <androidx.appcompat.widget.AppCompatButton
