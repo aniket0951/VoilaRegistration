@@ -2,10 +2,19 @@ package com.voila.voilasailor
 
 
 
+import android.Manifest
 import android.content.Intent
+import android.content.pm.PackageManager
+import android.net.Uri
+import android.os.Build
 import android.os.Bundle
+import android.provider.Settings
 import android.view.View
+import android.widget.Toast
+import androidx.annotation.NonNull
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
@@ -19,6 +28,7 @@ import com.voila.voilasailor.NetworkResponse.GetAllRequiredDocsResponse
 import com.voila.voilasailor.NetworkResponse.GetAllRestaurantDocsResponse
 import com.voila.voilasailor.databinding.ActivityMainBinding
 import com.voila.voilasailor.loginModule.LoginActivity
+import com.voila.voilasailor.restaurantRegistration.Util.toast
 import com.voila.voilasailor.viewModel.MainActivityViewModel
 import com.voila.voilasailor.viewModel.MainViewModelFactory
 import kotlinx.android.synthetic.main.required_docs_bottomsheet.*
@@ -32,7 +42,16 @@ class MainActivity : AppCompatActivity() , MainViewModelListener {
     lateinit var mainActivityViewModel: MainActivityViewModel
     lateinit var bottomSheetDialog : BottomSheetDialog
 
+    private var isRestaurant : Boolean = false
+    private var isDriver : Boolean = false
+    var isRestaurantBottom : Boolean = false
+    var isDriverBottom : Boolean = false
+    private val REQUEST_APP_SETTINGS = 168
 
+    private val requiredPermissions = arrayOf(
+        Manifest.permission.READ_SMS,
+        Manifest.permission.RECEIVE_SMS
+    )
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,16 +63,69 @@ class MainActivity : AppCompatActivity() , MainViewModelListener {
         mainActivityViewModel.checkUserLogin()
         activityMainBinding.executePendingBindings()
 
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            ActivityCompat.requestPermissions(
+                this, arrayOf(
+                    Manifest.permission.RECEIVE_SMS,
+                    Manifest.permission.READ_SMS
+                ),
+                100)
+        }
+
         activityMainBinding.recyclerView.layoutManager = LinearLayoutManager(this)
 
     }
 
-    override fun onSuccess() {
+
+    @RequiresApi(Build.VERSION_CODES.M)
+    fun hasPermissions(@NonNull vararg permissions: String?): Boolean {
+        for (permission in permissions) if (PackageManager.PERMISSION_GRANTED != checkSelfPermission(
+                permission!!
+            )
+        ) return false
+        return true
+    }
+
+    @RequiresApi(Build.VERSION_CODES.M)
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+
+        if (requestCode == REQUEST_APP_SETTINGS) {
+            if (hasPermissions(*requiredPermissions)) {
+                Toast.makeText(this, "All permissions granted!", Toast.LENGTH_SHORT).show();
+            }
+        }
+
+        super.onActivityResult(requestCode, resultCode, data)
+
 
     }
 
-    override fun onFailed() {
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        when (requestCode) {
+            REQUEST_APP_SETTINGS -> if (grantResults.isNotEmpty() && grantResults[0] === PackageManager.PERMISSION_GRANTED && grantResults[1] === PackageManager.PERMISSION_GRANTED) {
+                // User checks permission.
+                mainActivityViewModel.checkUserLogin()
+            }
+            else {
+                toast("permission denied please try again")
+            }
+        }
 
+    }
+
+
+    @RequiresApi(Build.VERSION_CODES.M)
+    override fun onResume() {
+        super.onResume()
+        if (hasPermissions(*requiredPermissions)){
+            if (isRestaurant && !isRestaurantBottom){
+                mainActivityViewModel.registerAsRestaurant()
+            }
+            if (isDriver && !isDriverBottom){
+                mainActivityViewModel.registerAsDriver()
+            }
+        }
     }
 
     override fun onDriverRequiredDocs() {
@@ -170,14 +242,14 @@ class MainActivity : AppCompatActivity() , MainViewModelListener {
             val intent = Intent(this@MainActivity,LoginActivity::class.java)
             intent.putExtra("registrationFor",mainActivityViewModel.registrationFor.get())
             startActivity(intent)
-            finishAffinity()
+           // finishAffinity()
         }
 
         bottomSheetDialog.next.setOnClickListener {
             val intent = Intent(this@MainActivity,LoginActivity::class.java)
             intent.putExtra("registrationFor",mainActivityViewModel.registrationFor.get())
             startActivity(intent)
-            finishAffinity()
+          //  finishAffinity()
         }
 
         bottomSheetDialog.show()

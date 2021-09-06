@@ -3,12 +3,14 @@ package com.voila.voilasailor.loginModule
 import android.annotation.SuppressLint
 import android.app.ProgressDialog
 import android.content.Intent
+import android.content.IntentFilter
 import android.net.Uri
 import android.os.Bundle
 import android.text.*
 import android.text.method.LinkMovementMethod
 import android.text.style.ClickableSpan
 import android.text.style.ForegroundColorSpan
+import android.util.Log
 import android.view.View
 import android.widget.EditText
 import android.widget.TextView
@@ -19,6 +21,8 @@ import androidx.databinding.ObservableField
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.voila.voilasailor.Helper.Helper
+import com.voila.voilasailor.Helper.SmsReceiver
+import com.voila.voilasailor.Helper.UpdateOTPReceiver
 import com.voila.voilasailor.R
 import com.voila.voilasailor.databinding.ActivityLoginBinding
 import com.voila.voilasailor.loginModule.LoginViewModelFactory.LoginViewModelFactory
@@ -33,6 +37,15 @@ class LoginActivity : AppCompatActivity(),LoginViewModelListener {
     lateinit var progressBar : ProgressDialog
     lateinit var helper: Helper
     private val registrationFor  = ObservableField<String>()
+
+    private var mUpdateOtpReceiver: UpdateOTPReceiver? = null
+    private var mSmsReceiver: SmsReceiver? = null
+
+    var isLastOtp : Boolean = false
+
+    interface SmsListener {
+        fun messageReceived(messageText: String?)
+    }
 
     @SuppressLint("ResourceAsColor")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -77,6 +90,24 @@ class LoginActivity : AppCompatActivity(),LoginViewModelListener {
         otp_edit_box3.addTextChangedListener(GenericTextWatcher(otp_edit_box3, edit))
         otp_edit_box4.addTextChangedListener(GenericTextWatcher(otp_edit_box4, edit))
 
+        binding.otpEditBox4.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+
+            }
+
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+               // Log.d("otpReader", "onTextChanged: ${binding.otpEditBox4.text.toString()}")
+                isLastOtp = true
+            }
+
+            override fun afterTextChanged(p0: Editable?) {
+                if (isLastOtp){
+                    isLastOtp = false
+                    loginViewModel.verifyTheOtp()
+                  //  Log.d("otpReader", "afterTextChanged: ${binding.otpEditBox4.text.toString()}")
+                }
+            }
+        })
     }
 
     private fun TextView.makeLinks(vararg links: Pair<String, View.OnClickListener>) {
@@ -188,6 +219,28 @@ class LoginActivity : AppCompatActivity(),LoginViewModelListener {
 
     override fun onUserSavedLocally() {
         Toast.makeText(this, "Login Successfully", Toast.LENGTH_SHORT).show()
+    }
+
+    override fun onStart() {
+        super.onStart()
+        mUpdateOtpReceiver = UpdateOTPReceiver()
+        registerReceiver(mUpdateOtpReceiver, IntentFilter("UPDATE_OTP"))
+        registerSMSReceiver()
+
+        mUpdateOtpReceiver?.bindListener(object : SmsListener {
+            override fun messageReceived(messageText: String?) {
+                // Log.d("SMSReads", "messageReceived: from sms listener from on Start $messageText")
+                otp_edit_box1.setText(messageText!!.substring(0))
+                otp_edit_box2.setText(messageText!!.substring(1))
+                otp_edit_box3.setText(messageText!!.substring(2))
+                otp_edit_box4.setText(messageText!!.substring(3))
+            }
+        })
+    }
+
+    private fun registerSMSReceiver() {
+        mSmsReceiver = SmsReceiver()
+        registerReceiver(mSmsReceiver, IntentFilter("android.provider.Telephony.SMS_RECEIVED"))
     }
 
     override fun onResendOtpSuccessfully() {
