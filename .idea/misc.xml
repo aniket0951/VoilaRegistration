@@ -36,8 +36,18 @@
         <entry key="..\:/Users/anike/AndroidStudioProjects/VoilaRegistration/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.23333333333333334" />
         <entry key="..\:/Users/anike/AndroidStudioProjects/VoilaRegistration/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" value="0.1" />
         <entry key="..\:/Users/anike/AppData/Local/Android/Sdk/platforms/android-31/data/res/layout/simple_dropdown_item_1line.xml" value="0.22083333333333333" />
+        <entry key="..\:/Users/anike/StudioProjects/Voila-Sailor/app/src/main/res/layout/driver_registration_layout.xml" value="0.10696266397578204" />
+        <entry key="..\:/Users/anike/StudioProjects/VoilaRegistration/app/src/main/res/drawable/ic_doc_require_img.xml" value="0.2" />
+        <entry key="..\:/Users/anike/StudioProjects/VoilaRegistration/app/src/main/res/drawable/ic_menu_update.xml" value="0.20462962962962963" />
+        <entry key="..\:/Users/anike/StudioProjects/VoilaRegistration/app/src/main/res/layout/activity_driver_profile.xml" value="0.2" />
         <entry key="..\:/Users/anike/StudioProjects/VoilaRegistration/app/src/main/res/layout/activity_login.xml" value="0.136" />
+        <entry key="..\:/Users/anike/StudioProjects/VoilaRegistration/app/src/main/res/layout/activity_main.xml" value="0.16" />
+        <entry key="..\:/Users/anike/StudioProjects/VoilaRegistration/app/src/main/res/layout/all_required_docs.xml" value="0.22083333333333333" />
+        <entry key="..\:/Users/anike/StudioProjects/VoilaRegistration/app/src/main/res/layout/driver_profile_details.xml" value="0.2" />
+        <entry key="..\:/Users/anike/StudioProjects/VoilaRegistration/app/src/main/res/layout/fragment_profile.xml" value="0.22083333333333333" />
+        <entry key="..\:/Users/anike/StudioProjects/VoilaRegistration/app/src/main/res/layout/owne_details_layout.xml" value="0.14814814814814814" />
         <entry key="..\:/Users/anike/StudioProjects/VoilaRegistration/app/src/main/res/layout/required_docs_bottomsheet.xml" value="0.10696266397578204" />
+        <entry key="..\:/Users/anike/StudioProjects/VoilaRegistration/app/src/main/res/layout/restaurant_details_layout.xml" value="0.10696266397578204" />
       </map>
     </option>
   </component>

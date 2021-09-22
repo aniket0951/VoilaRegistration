@@ -26,7 +26,7 @@ import com.voila.voilasailor.restaurantRegistration.RestaurantNetworkResponse.Ge
 import com.voila.voilasailor.restaurantRegistration.RestaurantNetworkResponse.GetMenusResponse
 import com.voila.voilasailor.restaurantRegistration.RestaurantNetworkResponse.IsAccountVerifyResponse
 import com.voila.voilasailor.restaurantRegistration.RestaurantViewModelListner.RestaurantHomeListener
-import com.voila.voilasailor.restaurantRegistration.Util.toast
+import com.voila.voilasailor.restaurantRegistration.Util.toasts
 import com.voila.voilasailor.restaurantRegistration.restaurantViewModel.RestaurantHomeViewModel
 
 
@@ -92,11 +92,11 @@ class RestaurantHomeScreenActivity : AppCompatActivity(), RestaurantHomeListener
     }
 
     override fun onSuccess(s: String) {
-        this.toast(s)
+        this.toasts(s)
     }
 
     override fun onFailed(s: String) {
-       this.toast(s)
+       this.toasts(s)
     }
 
     override fun onIsAccountVerify() {

@@ -6,7 +6,9 @@ import android.app.DatePickerDialog
 import android.content.Context
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
+import android.os.Build
 import android.text.Editable
+import android.text.InputType
 import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.MotionEvent
@@ -29,8 +31,13 @@ import kotlinx.android.synthetic.main.restaurant_details_layout.view.*
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
+import android.widget.Toast
 
+import android.util.Patterns
 
+import android.widget.EditText
+import android.text.InputFilter
+import android.text.InputFilter.LengthFilter
 
 
 class DriverRegistrationAdapter(var context: Context) : RecyclerView.Adapter<DriverRegistrationAdapter.ViewHolder>() {
@@ -172,6 +179,21 @@ class DriverRegistrationAdapter(var context: Context) : RecyclerView.Adapter<Dri
                 titleEdit.hint = needToProcessComplete[position].required_docs_name
                 titleEdit.setText(needToProcessComplete[position].editText)
 
+                titleEdit.setOnTouchListener(View.OnTouchListener { view, motionEvent -> // your code here....
+                    if (needToProcessComplete[adapterPosition].required_docs_input.equals("text", true)) {
+                        titleEdit.inputType = InputType.TYPE_CLASS_TEXT
+                    }
+                    if (needToProcessComplete[adapterPosition].required_docs_input.equals("number", true)) {
+                        titleEdit.inputType = InputType.TYPE_CLASS_NUMBER
+                        val maxLength = 10
+                        titleEdit.filters = arrayOf<InputFilter>(LengthFilter(maxLength))
+                    }
+                    if (needToProcessComplete[adapterPosition].required_docs_input.equals("email", true)) {
+                        titleEdit.inputType = InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS
+                    }
+                    false
+                })
+
                 autoCompleteTextView.setOnClickListener {
                     when {
                         needToProcessComplete[position].required_docs_name.equals("State",true) -> {
@@ -213,7 +235,7 @@ class DriverRegistrationAdapter(var context: Context) : RecyclerView.Adapter<Dri
         fun setDateInterface(){
 
             titleEdit.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_calendar, 0);
-
+            titleEdit.isFocusable = false
             titleEdit.setOnTouchListener(View.OnTouchListener { v, event ->
                 val DRAWABLE_LEFT = 0
                 val DRAWABLE_TOP = 1
@@ -235,17 +257,20 @@ class DriverRegistrationAdapter(var context: Context) : RecyclerView.Adapter<Dri
                     cal.set(Calendar.MONTH, monthOfYear)
                     cal.set(Calendar.DAY_OF_MONTH, dayOfMonth)
 
-                    val myFormat = "dd.MM.yyyy" // mention the format you need
-                    val sdf = SimpleDateFormat(myFormat, Locale.US)
+                    var myFormat = "dd/MM/YYYY" // mention the format you need
+                    val sdf = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                        SimpleDateFormat(myFormat, Locale.US)
+                    } else {
 
-                    titleEdit.setText(String.format( sdf.format(cal.time)))
+                        myFormat = "dd/MM/yyyy"
+                        SimpleDateFormat(myFormat, Locale.US)
+                    }
+
+                titleEdit.setText(String.format( sdf.format(cal.time)))
 
                 }
         }
-
-
     }
-
 
 
     private fun showCalender(setDateListener: DatePickerDialog.OnDateSetListener) {

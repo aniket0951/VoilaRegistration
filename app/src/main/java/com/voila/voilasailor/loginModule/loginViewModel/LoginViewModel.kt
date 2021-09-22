@@ -16,6 +16,7 @@ import com.voila.voilasailor.loginModule.Model.UserDetail
 import com.voila.voilasailor.loginModule.NetworkResponse.OtpVerificationResponse
 import com.voila.voilasailor.loginModule.NetworkResponse.SendOtpResponse
 import com.voila.voilasailor.restaurantRegistration.RestaurantRegistrationActivity
+import com.voila.voilasailor.restaurantRegistration.Util.toasts
 
 class LoginViewModel(var context: Context) : ViewModel() {
 
@@ -34,13 +35,22 @@ class LoginViewModel(var context: Context) : ViewModel() {
 
     //send otp
     fun sendOTP(){
-        if(mobileNumber.get()!=null &&mobileNumber.get()?.isEmpty()!!){
-            listner.onOTPSendFailed()
-           // Log.d("sendOTP", "sendOTP: number empty")
-        }
-        else{
+//        if(mobileNumber.get()!=null &&mobileNumber.get()?.isEmpty()!!){
+//            //
+//           // Log.d("sendOTP", "sendOTP: number empty
+//            Helper.onFailedMSG.onFailed(context,"Please enter the mobile number")
+//        }
+//        else{
+//            mobileNumber.get()?.let { sendOtp(it) }
+//            listner.onOTPSendSuccess()
+//        }
+
+        if (mobileNumber.get()!=null && mobileNumber.get()!!.isNotEmpty() && mobileNumber.get()!!.length ==10){
             mobileNumber.get()?.let { sendOtp(it) }
-            listner.onOTPSendSuccess()
+           listner.onOTPSendSuccess()
+        }
+        else {
+            Helper.onSuccessMSG.onSuccess(context,"Please enter your mobile number to proceed further.")
         }
     }
 
@@ -102,13 +112,19 @@ class LoginViewModel(var context: Context) : ViewModel() {
 
     //move a home screen by check login for
     private fun moveOnHomeScreen(get: String?) {
-        if (get.toString() == "Driver"){
-            val intent = Intent(context,DriverRegistrationActivity::class.java)
-            context.startActivity(intent)
-        }
-        else{
-            val intent = Intent(context,RestaurantRegistrationActivity::class.java)
-            context.startActivity(intent)
+        when {
+            get.toString() == "Driver" -> {
+                val intent = Intent(context,DriverRegistrationActivity::class.java)
+                context.startActivity(intent)
+            }
+            get.toString() == "DeliverPartner" -> {
+                val intent = Intent(context,DriverRegistrationActivity::class.java)
+                context.startActivity(intent)
+            }
+            else -> {
+                val intent = Intent(context,RestaurantRegistrationActivity::class.java)
+                context.startActivity(intent)
+            }
         }
     }
 

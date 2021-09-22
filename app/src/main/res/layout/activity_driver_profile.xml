@@ -75,70 +75,83 @@
 
         <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:orientation="vertical"
             android:id="@+id/text_parent_layout"
+            android:layout_gravity="center"
+            android:gravity="center"
             >
 
             <androidx.appcompat.widget.AppCompatTextView
-                android:layout_width="wrap_content"
+                android:layout_width="260dp"
                 android:layout_height="wrap_content"
                 android:text="@string/basic_information"
                 android:textSize="16sp"
                 android:fontFamily="@font/poppins_medium"
-                android:textColor="@color/black"
                 android:layout_marginTop="5dp"
-                android:layout_marginStart="10dp"
-                android:layout_marginLeft="10dp"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:padding="10dp"
+                android:textColor="@color/white"
+                android:background="@drawable/two_color_bg_button"
                 android:onClick="@{() -> profile.isBasicInformation()}"
                 />
 
             <androidx.appcompat.widget.AppCompatTextView
-                android:layout_width="wrap_content"
+                android:layout_width="260dp"
                 android:layout_height="wrap_content"
                 android:text="@string/address_information"
                 android:textSize="16sp"
                 android:fontFamily="@font/poppins_medium"
-                android:textColor="@color/black"
-                android:layout_marginTop="5dp"
-                android:layout_marginStart="10dp"
-                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:padding="10dp"
+                android:textColor="@color/white"
+                android:background="@drawable/two_color_bg_button"
                 android:onClick="@{() -> profile.isAddressInformation()}"/>
 
             <androidx.appcompat.widget.AppCompatTextView
-                android:layout_width="wrap_content"
+                android:layout_width="260dp"
                 android:layout_height="wrap_content"
                 android:text="@string/kyc_information"
                 android:textSize="16sp"
                 android:fontFamily="@font/poppins_medium"
-                android:textColor="@color/black"
-                android:layout_marginTop="5dp"
-                android:layout_marginStart="10dp"
-                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:padding="10dp"
+                android:textColor="@color/white"
+                android:background="@drawable/two_color_bg_button"
                 android:onClick="@{() -> profile.isKYCInformation()}"/>
 
             <androidx.appcompat.widget.AppCompatTextView
-                android:layout_width="wrap_content"
+                android:layout_width="260dp"
                 android:layout_height="wrap_content"
                 android:text="@string/vehicle_information"
                 android:textSize="16sp"
                 android:fontFamily="@font/poppins_medium"
-                android:textColor="@color/black"
-                android:layout_marginTop="5dp"
-                android:layout_marginStart="10dp"
-                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:padding="10dp"
+                android:textColor="@color/white"
+                android:background="@drawable/two_color_bg_button"
+
                 android:onClick="@{() -> profile.isVehicleInformation()}"/>
 
             <androidx.appcompat.widget.AppCompatTextView
-                android:layout_width="wrap_content"
+                android:layout_width="260dp"
                 android:layout_height="wrap_content"
                 android:text="@string/vehicle_documents"
                 android:textSize="16sp"
                 android:fontFamily="@font/poppins_medium"
-                android:textColor="@color/black"
-                android:layout_marginTop="5dp"
-                android:layout_marginStart="10dp"
-                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:padding="10dp"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:textColor="@color/white"
+                android:background="@drawable/two_color_bg_button"
                 android:onClick="@{() -> profile.isVehicleDocuments()}"/>
 
 

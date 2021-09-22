@@ -38,7 +38,7 @@ import com.voila.voilasailor.driverRegistration.ViewModelListener.DriverRegistra
 import com.voila.voilasailor.driverRegistration.viewModel.DriverRegistrationViewModel
 import com.voila.voilasailor.restaurantRegistration.RestaurantModel.NeedToProcessComplete
 import com.voila.voilasailor.restaurantRegistration.Util.getFileName
-import com.voila.voilasailor.restaurantRegistration.Util.toast
+import com.voila.voilasailor.restaurantRegistration.Util.toasts
 import id.zelory.compressor.Compressor
 import id.zelory.compressor.constraint.format
 import id.zelory.compressor.constraint.quality
@@ -108,16 +108,12 @@ class DriverRegistrationActivity : AppCompatActivity(), DriverRegistrationViewMo
                 uploadImage()
             }
             if (it == null){
-                toast("Do not use camera....")
+                toasts("Do not use camera....")
             }
         }
     }
 
-    override fun onRequestPermissionsResult(
-        requestCode: Int,
-        permissions: Array<out String>,
-        grantResults: IntArray
-    ) {
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         when (requestCode) {
             100 -> if (grantResults.isNotEmpty() && grantResults[0] === PackageManager.PERMISSION_GRANTED && grantResults[1] === PackageManager.PERMISSION_GRANTED) {
@@ -191,8 +187,9 @@ class DriverRegistrationActivity : AppCompatActivity(), DriverRegistrationViewMo
                     if (it!=null){
                         if (it.result){
                             driverViewModel.dismissProgressDail()
-                            Helper.onSuccessMSG.onSuccess(this@DriverRegistrationActivity,it.message)
+                            Helper.onSuccessMSG.onSuccess(this@DriverRegistrationActivity,"Document uploaded success")
                             driverViewModel._trackDriverRegistration()
+                           // removeResponseFromObservable(driverViewModel.addKYCDocumentObservable())
                         }
                         else{
                             driverViewModel.dismissProgressDail()
@@ -231,7 +228,7 @@ class DriverRegistrationActivity : AppCompatActivity(), DriverRegistrationViewMo
                     if (it!=null){
                         if (it.result){
                             driverViewModel.dismissProgressDail()
-                            Helper.onSuccessMSG.onSuccess(this@DriverRegistrationActivity,it.message)
+                            Helper.onSuccessMSG.onSuccess(this@DriverRegistrationActivity,"Document uploaded successfully")
                             driverViewModel._trackDriverRegistration()
                         }
                         else{
@@ -412,6 +409,9 @@ class DriverRegistrationActivity : AppCompatActivity(), DriverRegistrationViewMo
             //adding request token in json object
             jsonObject.addProperty("request_token", Helper.getAuthToken.authToken(this))
 
+            if (Helper.IsPartner.isDeliveryPartner(this)){
+                jsonObject.addProperty("is_deliver_partner","partner")
+            }
 
             driverViewModel.addUserRegistrationProcess(jsonObject)
         }
@@ -458,6 +458,9 @@ class DriverRegistrationActivity : AppCompatActivity(), DriverRegistrationViewMo
 
     private fun openImageChooser(position: Int) {
         cropActivityResultLauncher.launch(null)
+
+        driverViewModel.addVehicleProfileObservable().removeObservers(this)
+
     }
 
     private val cropActivityResultContract = object : ActivityResultContract<Any?, Uri?>(){

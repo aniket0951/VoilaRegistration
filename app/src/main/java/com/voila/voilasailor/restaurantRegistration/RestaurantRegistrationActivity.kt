@@ -41,7 +41,7 @@ import com.voila.voilasailor.restaurantRegistration.RestaurantNetworkResponse.Tr
 import com.voila.voilasailor.restaurantRegistration.RestaurantViewModelListner.RestaurantViewModelListener
 import com.voila.voilasailor.restaurantRegistration.Util.getFileName
 import com.voila.voilasailor.restaurantRegistration.Util.snackbar
-import com.voila.voilasailor.restaurantRegistration.Util.toast
+import com.voila.voilasailor.restaurantRegistration.Util.toasts
 import com.voila.voilasailor.restaurantRegistration.restaurantViewModel.RestaurantRegistrationViewModel
 import id.zelory.compressor.Compressor
 import id.zelory.compressor.constraint.format
@@ -148,7 +148,7 @@ class RestaurantRegistrationActivity : AppCompatActivity(),RestaurantViewModelLi
            .observe(this, Observer {
                if (it != null && it.result) {
                    showRegistrationFormToUser(it)
-                   toast("From All Required Info")
+                   toasts("From All Required Info")
                }
                else onFailed("Basic Details Not Found")
            })
@@ -379,6 +379,10 @@ class RestaurantRegistrationActivity : AppCompatActivity(),RestaurantViewModelLi
                         restaurantViewModel.dismissProgressDai()
                         onSuccess(it.message)
                         restaurantViewModel.trackRegistrationProcess()
+                    }
+                    else{
+                        restaurantViewModel.dismissProgressDai()
+                        Helper.onFailedMSG.onFailed(this,it.message)
                     }
 
                 }

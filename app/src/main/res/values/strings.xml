@@ -49,6 +49,9 @@
     <string name="update">Update</string>
     <string name="_91">+91</string>
     <string name="resend_otp">Resend otp</string>
+    <string name="welcome">Welcome to Voila Sailor</string>
+    <string name="deliver_partner">Deliver Partner</string>
+    <string name="full_name">full name</string>
 
     <!-- Menu items -->
     <string-array name="menuItems">

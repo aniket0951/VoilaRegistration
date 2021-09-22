@@ -31,7 +31,7 @@ import com.voila.voilasailor.driverRegistration.ViewModelFactory.DriverProfileVi
 import com.voila.voilasailor.driverRegistration.ViewModelListener.DriverProfileViewModelListener
 import com.voila.voilasailor.driverRegistration.viewModel.DriverProfileViewModel
 import com.voila.voilasailor.restaurantRegistration.RestaurantRegistrationActivity
-import com.voila.voilasailor.restaurantRegistration.Util.toast
+import com.voila.voilasailor.restaurantRegistration.Util.toasts
 import id.zelory.compressor.Compressor
 import id.zelory.compressor.constraint.format
 import id.zelory.compressor.constraint.quality
@@ -47,7 +47,6 @@ import okhttp3.RequestBody
 import java.io.File
 import java.io.FileInputStream
 import java.io.FileOutputStream
-
 
 class DriverProfileActivity : AppCompatActivity(), DriverProfileViewModelListener,
     DriverProfileAdapter.OnBasicUpdateClick, DriverProfileAdapter.OnAddressUpdateClick,
@@ -115,9 +114,6 @@ class DriverProfileActivity : AppCompatActivity(), DriverProfileViewModelListene
 
     }
 
-    override fun onRequestedInformation() {
-
-    }
 
     override fun onBasicInfo() {
         profileViewModel.getRequestedInfoObservable()
@@ -300,12 +296,12 @@ class DriverProfileActivity : AppCompatActivity(), DriverProfileViewModelListene
                 if (it!=null){
                     if (it.result){
                         profileViewModel.dismissDialog()
-                        toast(it.message)
+                        toasts(it.message)
                         profileViewModel.moveOnHomeScreen()
                     }
                     else{
                         profileViewModel.dismissDialog()
-                        toast("Information not updated please try again")
+                        toasts("Information not updated please try again")
                     }
                 }
             })
@@ -317,12 +313,12 @@ class DriverProfileActivity : AppCompatActivity(), DriverProfileViewModelListene
                 if (it!=null){
                     if (it.result){
                         profileViewModel.dismissDialog()
-                        toast(it.message)
+                        toasts(it.message)
                         profileViewModel.moveOnHomeScreen()
                     }
                     else{
                         profileViewModel.dismissDialog()
-                        toast("Information not updated please try again")
+                        toasts("Information not updated please try again")
                     }
                 }
             })
@@ -334,12 +330,12 @@ class DriverProfileActivity : AppCompatActivity(), DriverProfileViewModelListene
                 if (it!=null){
                     if (it.result){
                         profileViewModel.dismissDialog()
-                        toast(it.message)
+                        toasts(it.message)
                         profileViewModel.moveOnHomeScreen()
                     }
                     else{
                         profileViewModel.dismissDialog()
-                        toast("Information not updated please try again")
+                        toasts("Information not updated please try again")
                     }
                 }
             })
@@ -352,12 +348,12 @@ class DriverProfileActivity : AppCompatActivity(), DriverProfileViewModelListene
                     if (it!=null){
                         if (it.result){
                             profileViewModel.dismissDialog()
-                            toast(it.message)
+                            toasts(it.message)
                             profileViewModel.moveOnHomeScreen()
                         }
                         else{
                             profileViewModel.dismissDialog()
-                            toast("Information not updated please try again")
+                            toasts("Information not updated please try again")
                         }
                     }
                 })
@@ -372,12 +368,12 @@ class DriverProfileActivity : AppCompatActivity(), DriverProfileViewModelListene
                     if (it!=null){
                         if (it.result){
                             profileViewModel.dismissDialog()
-                            toast(it.message)
+                            toasts(it.message)
                             profileViewModel.moveOnHomeScreen()
                         }
                         else{
                             profileViewModel.dismissDialog()
-                            toast("Information not updated please try again")
+                            toasts("Information not updated please try again")
                         }
                     }
                 })
@@ -498,7 +494,7 @@ class DriverProfileActivity : AppCompatActivity(), DriverProfileViewModelListene
             when(requestCode){
                 RestaurantRegistrationActivity.REQUEST_CODE_IMAGE_PICKER -> {
                     selectedImage = data?.data
-                    Log.d("imagePath", "onActivityResult: image path $selectedImage")
+                   // Log.d("imagePath", "onActivityResult: image path $selectedImage")
                     uploadImage()
                 }
             }
@@ -537,7 +533,7 @@ class DriverProfileActivity : AppCompatActivity(), DriverProfileViewModelListene
             val outputStream = FileOutputStream(file)
             inputStream.copyTo(outputStream)
 
-             Log.d("fileLength", "uploadImage before: ${file.length()}")
+            // Log.d("fileLength", "uploadImage before: ${file.length()}")
 
 
             GlobalScope.launch {
@@ -553,7 +549,7 @@ class DriverProfileActivity : AppCompatActivity(), DriverProfileViewModelListene
                     compressedImageFile
                 )
 
-                 Log.d("fileLength", "uploadImage after select: ${compressedImageFile.length()}")
+                // Log.d("fileLength", "uploadImage after select: ${compressedImageFile.length()}")
 
                 // MultipartBody.Part is used to send also the actual file name
                 val body = MultipartBody.Part.createFormData("image", compressedImageFile.name, requestFile)

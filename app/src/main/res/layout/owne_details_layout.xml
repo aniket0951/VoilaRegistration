@@ -512,16 +512,20 @@
         >
 
         <androidx.appcompat.widget.AppCompatTextView
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Restaurant Indoor Photo"
             android:layout_marginTop="10dp"
             android:textSize="16sp"
+            android:id="@+id/txt_restaurant_indoor"
             android:layout_marginStart="20dp"
             android:layout_marginLeft="20dp"
             android:fontFamily="@font/poppins_medium"
             android:textColor="@color/black"
-            />
+            android:layout_marginEnd="20dp"
+            android:layout_marginRight="20dp"
+            android:drawableEnd="@drawable/ic_menu_update"
+            android:drawableRight="@drawable/ic_menu_update" />
         <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="match_parent"
             android:layout_height="210dp"
@@ -544,15 +548,20 @@
         </androidx.appcompat.widget.LinearLayoutCompat>
 
         <androidx.appcompat.widget.AppCompatTextView
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Restaurant Outdoor Photo"
             android:layout_marginTop="10dp"
             android:textSize="16sp"
+            android:id="@+id/txt_restaurant_outdoor"
             android:layout_marginStart="20dp"
             android:layout_marginLeft="20dp"
             android:fontFamily="@font/poppins_medium"
             android:textColor="@color/black"
+            android:layout_marginEnd="20dp"
+            android:layout_marginRight="20dp"
+            android:drawableEnd="@drawable/ic_menu_update"
+            android:drawableRight="@drawable/ic_menu_update"
             />
         <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="match_parent"
@@ -578,7 +587,7 @@
         </androidx.appcompat.widget.LinearLayoutCompat>
 
         <androidx.appcompat.widget.AppCompatTextView
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Restaurant Licence Photo"
             android:layout_marginTop="10dp"
@@ -587,6 +596,11 @@
             android:layout_marginLeft="20dp"
             android:fontFamily="@font/poppins_medium"
             android:textColor="@color/black"
+            android:layout_marginEnd="20dp"
+            android:id="@+id/txt_restaurant_licence"
+            android:layout_marginRight="20dp"
+            android:drawableEnd="@drawable/ic_menu_update"
+            android:drawableRight="@drawable/ic_menu_update"
             />
 
         <androidx.appcompat.widget.LinearLayoutCompat
