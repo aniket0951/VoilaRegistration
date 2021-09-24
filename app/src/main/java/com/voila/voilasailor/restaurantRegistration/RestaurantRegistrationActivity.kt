@@ -217,6 +217,9 @@ class RestaurantRegistrationActivity : AppCompatActivity(),RestaurantViewModelLi
                         }
 
                     }
+                    else{
+                        onFailed("Failed Please check your internet connection or try again")
+                    }
                 })
     }
 
@@ -386,6 +389,9 @@ class RestaurantRegistrationActivity : AppCompatActivity(),RestaurantViewModelLi
                     }
 
                 }
+                else{
+                    onFailed("Failed Please check your internet connection or try again")
+                }
             })
     }
 
@@ -396,7 +402,7 @@ class RestaurantRegistrationActivity : AppCompatActivity(),RestaurantViewModelLi
                     if (it!=null ){
                         if (it.result){
                             restaurantViewModel.dismissProgressDai()
-                            onSuccess(it.message)
+                            onSuccess("Document uploaded successfully")
                             restaurantViewModel.trackRegistrationProcess()
                             isShowSnackBar = true
                         }
@@ -404,6 +410,9 @@ class RestaurantRegistrationActivity : AppCompatActivity(),RestaurantViewModelLi
                             restaurantViewModel.dismissProgressDai()
                             onFailed("Please try again the image is not uploaded")
                         }
+                    }
+                    else{
+                        onFailed("Failed Please check your internet connection or try again")
                     }
                 })
         }

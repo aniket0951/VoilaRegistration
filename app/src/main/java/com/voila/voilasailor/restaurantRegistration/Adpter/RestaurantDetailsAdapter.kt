@@ -12,6 +12,7 @@ import android.text.InputFilter
 import android.text.InputType
 import android.text.TextWatcher
 import android.text.format.DateFormat
+import android.util.Patterns
 import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
@@ -38,7 +39,7 @@ class RestaurantDetailsAdapter(val context: Context) : RecyclerView.Adapter<Rest
     private var mListener: OnItemClickListener? = null
     private lateinit var setDateListener : DatePickerDialog.OnDateSetListener
 
-
+    var isEmailValidation : Boolean = false
     var isImageLayoutShow : Boolean = false
 
     override fun onCreateViewHolder(
@@ -116,7 +117,20 @@ class RestaurantDetailsAdapter(val context: Context) : RecyclerView.Adapter<Rest
                 }
 
                 override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                    needToProcessComplete[adapterPosition].editText = titleEdit.text.toString()
+                    if (isEmailValidation){
+                        val email = titleEdit.text.toString()
+                        if (email.isNotEmpty() && Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+                            needToProcessComplete[adapterPosition].editText = titleEdit.text.toString()
+
+                        }
+                        else {
+                            titleEdit.requestFocus()
+                            titleEdit.error = "Please enter valid email"
+                        }
+                    }
+                    else{
+                        needToProcessComplete[adapterPosition].editText = titleEdit.text.toString()
+                    }
                    // Log.d("adapterText", "onTextChanged: " +  needToProcessComplete[adapterPosition] + titleEdit.text.toString() )
                 }
 
@@ -139,14 +153,17 @@ class RestaurantDetailsAdapter(val context: Context) : RecyclerView.Adapter<Rest
             titleEdit.setOnTouchListener(View.OnTouchListener { view, motionEvent -> // your code here....
                 if (needToProcessComplete[adapterPosition].required_docs_input.equals("text", true)) {
                     titleEdit.inputType = InputType.TYPE_CLASS_TEXT
+                    isEmailValidation = false
                 }
                 if (needToProcessComplete[adapterPosition].required_docs_input.equals("number", true)) {
-                   titleEdit.inputType = InputType.TYPE_CLASS_NUMBER
+                    isEmailValidation = false
+                    titleEdit.inputType = InputType.TYPE_CLASS_NUMBER
                     val maxLength = 10
                     titleEdit.filters = arrayOf<InputFilter>(InputFilter.LengthFilter(maxLength))
                 }
                 if (needToProcessComplete[adapterPosition].required_docs_input.equals("email", true)) {
-                   titleEdit.inputType = InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS
+                    isEmailValidation = true
+                    titleEdit.inputType = InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS
                 }
 //            Log.d("inputChange", "onBindViewHolder: ${needToProcessComplete[position].required_docs_name}")
                 false

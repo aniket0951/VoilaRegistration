@@ -18,7 +18,7 @@
         android:layout_height="match_parent"
         android:orientation="vertical"
         android:background="@color/off_white"
-        android:backgroundTint="@color/off_white"
+        android:backgroundTint="@color/white"
         tools:context=".driverRegistration.DriverProfileActivity">
 
         <!-- AppBar layout for using Toolbar as AppBar -->

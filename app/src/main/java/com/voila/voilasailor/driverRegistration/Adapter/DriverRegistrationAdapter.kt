@@ -49,7 +49,7 @@ class DriverRegistrationAdapter(var context: Context) : RecyclerView.Adapter<Dri
     var isAutoComplete = ObservableField<String>()
 
     var isImageLayoutShow : Boolean = false
-
+    var isEmailValidation : Boolean = false
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
@@ -111,8 +111,20 @@ class DriverRegistrationAdapter(var context: Context) : RecyclerView.Adapter<Dri
                 }
 
                 override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                    needToProcessComplete[adapterPosition].editText = titleEdit.text.toString()
-                   //  Log.d("adapterText", "onTextChanged: " +  needToProcessComplete[adapterPosition] + titleEdit.text.toString() )
+                    if (isEmailValidation){
+                        val email = titleEdit.text.toString()
+                        if (email.isNotEmpty() && Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+                            needToProcessComplete[adapterPosition].editText = titleEdit.text.toString()
+
+                        }
+                        else {
+                            titleEdit.requestFocus()
+                            titleEdit.error = "Please enter valid email"
+                        }
+                    }
+                    else {
+                        needToProcessComplete[adapterPosition].editText = titleEdit.text.toString()
+                    }//  Log.d("adapterText", "onTextChanged: " +  needToProcessComplete[adapterPosition] + titleEdit.text.toString() )
                 }
 
                 override fun afterTextChanged(s: Editable?) {
@@ -182,13 +194,16 @@ class DriverRegistrationAdapter(var context: Context) : RecyclerView.Adapter<Dri
                 titleEdit.setOnTouchListener(View.OnTouchListener { view, motionEvent -> // your code here....
                     if (needToProcessComplete[adapterPosition].required_docs_input.equals("text", true)) {
                         titleEdit.inputType = InputType.TYPE_CLASS_TEXT
+                        isEmailValidation = false
                     }
                     if (needToProcessComplete[adapterPosition].required_docs_input.equals("number", true)) {
                         titleEdit.inputType = InputType.TYPE_CLASS_NUMBER
                         val maxLength = 10
                         titleEdit.filters = arrayOf<InputFilter>(LengthFilter(maxLength))
+                        isEmailValidation = false
                     }
                     if (needToProcessComplete[adapterPosition].required_docs_input.equals("email", true)) {
+                        isEmailValidation = true
                         titleEdit.inputType = InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS
                     }
                     false

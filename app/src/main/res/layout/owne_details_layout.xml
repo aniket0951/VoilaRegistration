@@ -4,6 +4,8 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
+    android:background="@color/white"
+    android:backgroundTint="@color/white"
     >
 
     <!--  Owner details Layout -->
@@ -26,6 +28,9 @@
             android:layout_marginTop="10dp"
             android:layout_marginLeft="10dp"
             android:id="@+id/title"
+            android:drawableLeft="@drawable/star_validation"
+            android:drawableStart="@drawable/star_validation"
+            android:drawablePadding="5dp"
             />
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/simple_edit_layout"
@@ -63,6 +68,9 @@
             android:layout_marginTop="10dp"
             android:layout_marginLeft="10dp"
             android:id="@+id/owner_contact_title"
+            android:drawableLeft="@drawable/star_validation"
+            android:drawableStart="@drawable/star_validation"
+            android:drawablePadding="5dp"
             />
         <com.google.android.material.textfield.TextInputLayout
             android:theme="@style/textInputLayoutAppearance"
@@ -99,6 +107,9 @@
             android:layout_marginTop="10dp"
             android:layout_marginLeft="10dp"
             android:id="@+id/owner_email_title"
+            android:drawableLeft="@drawable/star_validation"
+            android:drawableStart="@drawable/star_validation"
+            android:drawablePadding="5dp"
             />
         <com.google.android.material.textfield.TextInputLayout
             android:theme="@style/textInputLayoutAppearance"
@@ -135,6 +146,9 @@
             android:layout_marginTop="10dp"
             android:layout_marginLeft="10dp"
             android:id="@+id/owner_current_address_title"
+            android:drawableLeft="@drawable/star_validation"
+            android:drawableStart="@drawable/star_validation"
+            android:drawablePadding="5dp"
             />
         <com.google.android.material.textfield.TextInputLayout
             android:theme="@style/textInputLayoutAppearance"
@@ -171,6 +185,9 @@
             android:layout_marginTop="10dp"
             android:layout_marginLeft="10dp"
             android:id="@+id/owner_permant_address_title"
+            android:drawableLeft="@drawable/star_validation"
+            android:drawableStart="@drawable/star_validation"
+            android:drawablePadding="5dp"
             />
         <com.google.android.material.textfield.TextInputLayout
             android:theme="@style/textInputLayoutAppearance"
@@ -220,6 +237,9 @@
             android:layout_marginTop="10dp"
             android:layout_marginLeft="10dp"
             android:id="@+id/restaurant_name_title"
+            android:drawableLeft="@drawable/star_validation"
+            android:drawableStart="@drawable/star_validation"
+            android:drawablePadding="5dp"
             />
         <com.google.android.material.textfield.TextInputLayout
             android:theme="@style/textInputLayoutAppearance"
@@ -256,6 +276,9 @@
             android:layout_marginTop="10dp"
             android:layout_marginLeft="10dp"
             android:id="@+id/restaurant_email_title"
+            android:drawableLeft="@drawable/star_validation"
+            android:drawableStart="@drawable/star_validation"
+            android:drawablePadding="5dp"
             />
         <com.google.android.material.textfield.TextInputLayout
             android:theme="@style/textInputLayoutAppearance"
@@ -292,6 +315,9 @@
             android:layout_marginTop="10dp"
             android:layout_marginLeft="10dp"
             android:id="@+id/restaurant_contact_no_title"
+            android:drawableLeft="@drawable/star_validation"
+            android:drawableStart="@drawable/star_validation"
+            android:drawablePadding="5dp"
             />
         <com.google.android.material.textfield.TextInputLayout
             android:theme="@style/textInputLayoutAppearance"
@@ -327,6 +353,9 @@
             android:textColor="@color/black"
             android:layout_marginTop="10dp"
             android:layout_marginLeft="10dp"
+            android:drawableLeft="@drawable/star_validation"
+            android:drawableStart="@drawable/star_validation"
+            android:drawablePadding="5dp"
             android:id="@+id/restaurant_opening_time_title"
             />
         <com.google.android.material.textfield.TextInputLayout
@@ -364,6 +393,9 @@
             android:layout_marginTop="10dp"
             android:layout_marginLeft="10dp"
             android:id="@+id/restaurant_close_time_title"
+            android:drawableLeft="@drawable/star_validation"
+            android:drawableStart="@drawable/star_validation"
+            android:drawablePadding="5dp"
             />
         <com.google.android.material.textfield.TextInputLayout
             android:theme="@style/textInputLayoutAppearance"
@@ -400,6 +432,9 @@
             android:layout_marginTop="10dp"
             android:layout_marginLeft="10dp"
             android:id="@+id/restaurant_website_title"
+            android:drawableLeft="@drawable/star_validation"
+            android:drawableStart="@drawable/star_validation"
+            android:drawablePadding="5dp"
             />
         <com.google.android.material.textfield.TextInputLayout
             android:theme="@style/textInputLayoutAppearance"
@@ -435,6 +470,9 @@
             android:textColor="@color/black"
             android:layout_marginTop="10dp"
             android:layout_marginLeft="10dp"
+            android:drawableLeft="@drawable/star_validation"
+            android:drawableStart="@drawable/star_validation"
+            android:drawablePadding="5dp"
             android:id="@+id/restaurant_establishment_year_title"
             />
         <com.google.android.material.textfield.TextInputLayout
@@ -472,6 +510,9 @@
             android:layout_marginTop="10dp"
             android:layout_marginLeft="10dp"
             android:id="@+id/restaurant_cuisines_type_title"
+            android:drawableLeft="@drawable/star_validation"
+            android:drawableStart="@drawable/star_validation"
+            android:drawablePadding="5dp"
             />
         <com.google.android.material.textfield.TextInputLayout
             android:theme="@style/textInputLayoutAppearance"
@@ -525,7 +566,10 @@
             android:layout_marginEnd="20dp"
             android:layout_marginRight="20dp"
             android:drawableEnd="@drawable/ic_menu_update"
-            android:drawableRight="@drawable/ic_menu_update" />
+            android:drawableRight="@drawable/ic_menu_update"
+            android:drawableLeft="@drawable/star_validation"
+            android:drawableStart="@drawable/star_validation"
+            android:drawablePadding="5dp"/>
         <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="match_parent"
             android:layout_height="210dp"
@@ -562,6 +606,9 @@
             android:layout_marginRight="20dp"
             android:drawableEnd="@drawable/ic_menu_update"
             android:drawableRight="@drawable/ic_menu_update"
+            android:drawableLeft="@drawable/star_validation"
+            android:drawableStart="@drawable/star_validation"
+            android:drawablePadding="5dp"
             />
         <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="match_parent"
@@ -601,8 +648,10 @@
             android:layout_marginRight="20dp"
             android:drawableEnd="@drawable/ic_menu_update"
             android:drawableRight="@drawable/ic_menu_update"
+            android:drawableLeft="@drawable/star_validation"
+            android:drawableStart="@drawable/star_validation"
+            android:drawablePadding="5dp"
             />
-
         <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="match_parent"
             android:layout_height="210dp"

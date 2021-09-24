@@ -17,8 +17,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:background="@color/off_white"
-        android:backgroundTint="@color/off_white"
+        android:background="@color/white"
+        android:backgroundTint="@color/white"
         tools:context=".driverRegistration.DriverRegistrationActivity">
 
         <!-- AppBar layout for using Toolbar as AppBar -->
@@ -150,7 +150,8 @@
                 android:orientation="vertical"
                 android:layout_gravity="center"
                 android:gravity="center"
-                android:background="@color/off_white"
+                android:background="@color/white"
+                android:backgroundTint="@color/white"
                 android:id="@+id/layout_account_under_review"
                 >
 
