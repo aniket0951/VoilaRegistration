@@ -130,7 +130,7 @@ interface ApiService {
 
     //get all requested information before account is verify
     @GET(WebServer.GET_ALL_REQUESTED_INFORMATION)
-    fun getAllRequestedInformation(@Query("api_token")api_token: String?,@Query("request_token")request_token: String) : Observable<DriverRequestedInfoResponse>??
+    fun getAllRequestedInformation(@Query("api_token")api_token: String?,@Query("request_token")request_token: String) : Observable<DriverRequestedInfoResponse>?
 
     //update personal info
     @POST(WebServer.POST_UPDATE_PERSONAL_INFORMATION)
@@ -151,6 +151,16 @@ interface ApiService {
     @Multipart
     @POST(WebServer.POST_UPDATE_VEHICLE_DOCUMENTS)
     fun updateVehicleDocuments(@Part image :MultipartBody.Part,@Part("title")title: RequestBody,@Part("request_token")request_token: RequestBody) : Observable<AddVehicleProfileResponse?>?
+
+    //get system rate card
+    @GET(WebServer.GET_SYSTEM_RATE_CARD)
+    fun getSystemRateCard(@Query("auth_token")auth_token:String): Observable<SystemRateCardResponse?>?
+
+    @POST(WebServer.POST_CONFORM_RATE_CARD)
+    fun conformRateCard(@Body jsonObject: JsonObject): Observable<ConformRateCardResponse?>?
+
+    @POST(WebServer.POST_CUSTOM_RATE_CARD)
+    fun getCustomRateCard(@Body jsonObject: JsonObject): Observable<CustomRateCardResponse?>?
 
     /*----------------------------------------------  FILTER OPTIONS --------------------------------*/
 

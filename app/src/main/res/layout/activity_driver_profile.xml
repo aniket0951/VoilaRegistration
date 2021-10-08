@@ -73,86 +73,271 @@
         </com.google.android.material.appbar.AppBarLayout>
 
 
+        <!--        New layout with options  -->
         <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
+            android:background="@color/off_white"
             android:id="@+id/text_parent_layout"
-            android:layout_gravity="center"
-            android:gravity="center"
             >
 
-            <androidx.appcompat.widget.AppCompatTextView
-                android:layout_width="260dp"
-                android:layout_height="wrap_content"
-                android:text="@string/basic_information"
-                android:textSize="16sp"
-                android:fontFamily="@font/poppins_medium"
-                android:layout_marginTop="5dp"
-                android:layout_gravity="center"
-                android:gravity="center"
-                android:padding="10dp"
-                android:textColor="@color/white"
-                android:background="@drawable/two_color_bg_button"
-                android:onClick="@{() -> profile.isBasicInformation()}"
-                />
+            <!--  basic information and address info layout -->
 
-            <androidx.appcompat.widget.AppCompatTextView
-                android:layout_width="260dp"
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/address_information"
-                android:textSize="16sp"
-                android:fontFamily="@font/poppins_medium"
-                android:layout_marginTop="10dp"
-                android:layout_gravity="center"
-                android:gravity="center"
-                android:padding="10dp"
-                android:textColor="@color/white"
-                android:background="@drawable/two_color_bg_button"
-                android:onClick="@{() -> profile.isAddressInformation()}"/>
+                android:orientation="horizontal"
+                >
 
-            <androidx.appcompat.widget.AppCompatTextView
-                android:layout_width="260dp"
+                <androidx.cardview.widget.CardView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:cardElevation="10dp"
+                    app:cardCornerRadius="20dp"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="10dp"
+                    app:cardBackgroundColor="@color/primary_color"
+                    app:cardMaxElevation="12dp"
+                    app:cardPreventCornerOverlap="true"
+                    android:onClick="@{() -> profile.isBasicInformation()}"
+                    >
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:src="@drawable/basic_info"
+                        android:id="@+id/img"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginTop="15dp"
+                        android:layout_marginBottom="15dp"
+                        android:contentDescription="@string/app_name" />
+
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/basic_information2"
+                        android:layout_gravity="bottom|center_horizontal|center"
+                        android:layout_marginTop="40dp"
+                        android:layout_marginBottom="20dp"
+                        android:textSize="18sp"
+                        android:textStyle="bold"
+                        android:padding="12dp"
+                        android:fontFamily="@font/poppins_medium"
+                        android:textColor="@color/white"
+                        />
+
+                </androidx.cardview.widget.CardView>
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_gravity="end"
+                    android:gravity="end"
+                    android:layout_marginRight="15dp"
+                    android:layout_marginEnd="15dp"
+                    android:layout_marginTop="10dp"
+                    >
+
+                    <androidx.cardview.widget.CardView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:cardElevation="10dp"
+                        app:cardCornerRadius="20dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginStart="35dp"
+                        android:layout_marginLeft="35dp"
+                        app:cardBackgroundColor="@color/primary_color"
+                        app:cardMaxElevation="12dp"
+                        app:cardPreventCornerOverlap="true"
+                        android:onClick="@{() -> profile.isAddressInformation()}"
+                        >
+
+                        <androidx.appcompat.widget.AppCompatImageView
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:src="@drawable/address_new"
+                            android:id="@+id/img2"
+                            android:layout_gravity="center_horizontal"
+                            android:layout_marginTop="15dp"
+                            android:layout_marginBottom="15dp"
+                            android:contentDescription="@string/app_name" />
+
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/address_information2"
+                            android:layout_gravity="bottom|center_horizontal"
+                            android:layout_marginTop="40dp"
+                            android:layout_marginBottom="20dp"
+                            android:textSize="18sp"
+                            android:textStyle="bold"
+                            android:padding="12dp"
+                            android:fontFamily="@font/poppins_medium"
+                            android:textColor="@color/white"
+                            />
+
+                    </androidx.cardview.widget.CardView>
+
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+            <!--   kyc information and vehicle information -->
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/kyc_information"
-                android:textSize="16sp"
-                android:fontFamily="@font/poppins_medium"
-                android:layout_marginTop="10dp"
-                android:layout_gravity="center"
-                android:gravity="center"
-                android:padding="10dp"
-                android:textColor="@color/white"
-                android:background="@drawable/two_color_bg_button"
-                android:onClick="@{() -> profile.isKYCInformation()}"/>
+                android:orientation="horizontal"
+                >
 
-            <androidx.appcompat.widget.AppCompatTextView
-                android:layout_width="260dp"
+                <androidx.cardview.widget.CardView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:cardElevation="10dp"
+                    app:cardCornerRadius="20dp"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="10dp"
+                    app:cardBackgroundColor="@color/primary_color"
+                    app:cardMaxElevation="12dp"
+                    app:cardPreventCornerOverlap="true"
+                    android:onClick="@{() -> profile.isKYCInformation()}"
+                    >
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:src="@drawable/kyc_infromation"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginTop="15dp"
+                        android:layout_marginBottom="15dp"
+                        android:contentDescription="@string/app_name" />
+
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/kyc_information2"
+                        android:layout_gravity="bottom|center_horizontal"
+                        android:layout_marginTop="40dp"
+                        android:layout_marginBottom="20dp"
+                        android:textSize="18sp"
+                        android:textStyle="bold"
+                        android:padding="12dp"
+                        android:fontFamily="@font/poppins_medium"
+                        android:textColor="@color/white"
+                        />
+
+                </androidx.cardview.widget.CardView>
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_gravity="end"
+                    android:gravity="end"
+                    android:layout_marginRight="15dp"
+                    android:layout_marginEnd="15dp"
+                    android:layout_marginTop="10dp"
+                    >
+
+                    <androidx.cardview.widget.CardView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:cardElevation="10dp"
+                        app:cardCornerRadius="20dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginStart="35dp"
+                        android:layout_marginLeft="35dp"
+                        app:cardBackgroundColor="@color/primary_color"
+                        app:cardMaxElevation="12dp"
+                        app:cardPreventCornerOverlap="true"
+                        android:onClick="@{() -> profile.isVehicleInformation()}"
+                        >
+
+                        <androidx.appcompat.widget.AppCompatImageView
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:src="@drawable/vehicle_information"
+                            android:layout_gravity="center_horizontal"
+                            android:layout_marginTop="15dp"
+                            android:layout_marginBottom="15dp"
+                            android:contentDescription="@string/app_name" />
+
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/vehicle_information2"
+                            android:layout_gravity="bottom|center_horizontal"
+                            android:layout_marginTop="40dp"
+                            android:layout_marginBottom="20dp"
+                            android:textSize="18sp"
+                            android:textStyle="bold"
+                            android:padding="12dp"
+                            android:fontFamily="@font/poppins_medium"
+                            android:textColor="@color/white"
+                            />
+
+                    </androidx.cardview.widget.CardView>
+
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+            <!--  vehicle document  and rate card -->
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/vehicle_information"
-                android:textSize="16sp"
-                android:fontFamily="@font/poppins_medium"
-                android:layout_marginTop="10dp"
-                android:layout_gravity="center"
-                android:gravity="center"
-                android:padding="10dp"
-                android:textColor="@color/white"
-                android:background="@drawable/two_color_bg_button"
+                android:orientation="horizontal"
+                >
 
-                android:onClick="@{() -> profile.isVehicleInformation()}"/>
+                <androidx.cardview.widget.CardView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:cardElevation="10dp"
+                    app:cardCornerRadius="20dp"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="10dp"
+                    app:cardBackgroundColor="@color/primary_color"
+                    app:cardMaxElevation="12dp"
+                    app:cardPreventCornerOverlap="true"
+                    android:onClick="@{() -> profile.isVehicleDocuments()}"
+                    >
 
-            <androidx.appcompat.widget.AppCompatTextView
-                android:layout_width="260dp"
-                android:layout_height="wrap_content"
-                android:text="@string/vehicle_documents"
-                android:textSize="16sp"
-                android:fontFamily="@font/poppins_medium"
-                android:layout_marginTop="10dp"
-                android:padding="10dp"
-                android:layout_gravity="center"
-                android:gravity="center"
-                android:textColor="@color/white"
-                android:background="@drawable/two_color_bg_button"
-                android:onClick="@{() -> profile.isVehicleDocuments()}"/>
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:src="@drawable/vehicle_document"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginTop="15dp"
+                        android:layout_marginBottom="15dp"
+                        android:contentDescription="@string/app_name" />
+
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/vehicle_documents2"
+                        android:layout_gravity="bottom|center_horizontal"
+                        android:layout_marginTop="40dp"
+                        android:layout_marginBottom="20dp"
+                        android:textSize="18sp"
+                        android:textStyle="bold"
+                        android:padding="12dp"
+                        android:fontFamily="@font/poppins_medium"
+                        android:textColor="@color/white"
+                        />
+
+                </androidx.cardview.widget.CardView>
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
 
 
         </androidx.appcompat.widget.LinearLayoutCompat>

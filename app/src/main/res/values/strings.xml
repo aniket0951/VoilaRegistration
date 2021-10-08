@@ -9,6 +9,7 @@
     <string name="we_require_for_registration_below">We require for registration below documents is necessary .</string>
     <string name="kyc_documents">KYC DOCUMENTS</string>
     <string name="vehicle_documents">VEHICLE DOCUMENTS</string>
+    <string name="vehicle_documents2">Vehicle \nDocuments</string>
     <string name="contine">Continue</string>
     <string name="sign_up_to_voila">Sign up with Voila</string>
     <string name="enter_mobile_text">Enter your mobile number to create account.</string>
@@ -29,20 +30,37 @@
     <string name="select_vehicle_type">select vehicle type</string>
     <string name="select_date">select date</string>
     <string name="basic_information">Basic Information</string>
+    <string name="basic_information2">Basic \nInformation</string>
+    <string name="address_information2">Address \nInformation</string>
     <string name="address_information">Address Information</string>
     <string name="kyc_information">KYC Information</string>
+    <string name="kyc_information2">KYC \nInformation</string>
     <string name="vehicle_information">Vehicle Information</string>
+    <string name="vehicle_information2">Vehicle \nInformation</string>
     <string name="next">NEXT</string>
     <string name="select_vehicle_color">select vehicle color</string>
 
+    <string name="rate_card">Rate \Card</string>
+
+    <!--  Rate card -->
+    <string name="system_rate">Use System Rate Card</string>
+    <string name="custom_rate">Use Custom Rate Card</string>
+    <string name="system_rate_description">
+        This rates are predefine from voila.
+        All rates are fixed here you can not change your rates.
+        Company provide you in build and default rates to follow them.
+    </string>
+    <string name="custom_rate_description">
+        You can change here rate as per your requirements
+    </string>
+    
     <!-- privacy police -->
     <string name="privacy_police">
 
        By providing my phone number, I hereby agree &amp; accept the Terms of Service &amp; Privacy Policy in use of the Voila app.
     </string>
 
-    <string name="terms"
-        >
+    <string name="terms">
         Terms of Service &amp; Privacy Policy
     </string>
 
@@ -52,6 +70,9 @@
     <string name="welcome">Welcome to Voila Sailor</string>
     <string name="deliver_partner">Deliver Partner</string>
     <string name="full_name">full name</string>
+    <string name="confirm_system_rate">Confirm System Rate</string>
+    <string name="confirm_conform_rate">Conform Custom Rate</string>
+    <string name="change_rate_card">Change Rate Card</string>
 
     <!-- Menu items -->
     <string-array name="menuItems">

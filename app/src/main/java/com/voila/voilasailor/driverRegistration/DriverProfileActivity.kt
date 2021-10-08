@@ -410,7 +410,7 @@ class DriverProfileActivity : AppCompatActivity(), DriverProfileViewModelListene
        // super.onBackPressed()
         if (!binding.recyclerView.isVisible){
             startActivity(Intent(this,DriverRegistrationActivity::class.java))
-
+            finish()
         }
         else{
 
@@ -419,6 +419,7 @@ class DriverProfileActivity : AppCompatActivity(), DriverProfileViewModelListene
 
             binding.recyclerView.visibility = View.GONE
         }
+
     }
 
     override fun onBasicUpdateClick(position: Int) {
@@ -610,4 +611,6 @@ class DriverProfileActivity : AppCompatActivity(), DriverProfileViewModelListene
         docName.set("licence_back_photo")
         openImage()
     }
+
+
 }
