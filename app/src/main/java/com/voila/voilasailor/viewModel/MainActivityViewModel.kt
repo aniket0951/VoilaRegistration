@@ -9,6 +9,7 @@ import android.widget.Toast
 import androidx.databinding.ObservableField
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.voila.voilasailor.Helper.NetworkChangeReceiver
 import com.voila.voilasailor.MainViewModelListener.MainViewModelListener
 import com.voila.voilasailor.NetworkResponse.GetAllRequiredDocsResponse
 import com.voila.voilasailor.NetworkResponse.GetAllRestaurantDocsResponse
@@ -29,6 +30,11 @@ class MainActivityViewModel(var context: Context) : ViewModel(){
 
     var isLoading : Boolean = false
 
+    fun isNetworkStateCheck(){
+        val intent = Intent(context,NetworkChangeReceiver::class.java)
+        context.startService(intent)
+    }
+
     fun registerAsDriver(){
         listener.onDriverRequiredDocs()
         registrationFor.set("Driver")
@@ -40,7 +46,13 @@ class MainActivityViewModel(var context: Context) : ViewModel(){
         listener.onRestaurantRequiredDocs()
         registrationFor.set("Restaurant")
         getAllRequiredRestaurantDocs("Restaurant")
-        Log.d("clickCheck", "registerAsRestaurant: register restaurant click")
+      //  Log.d("clickCheck", "registerAsRestaurant: register restaurant click")
+    }
+
+    fun registerAsDeliverPartner(){
+        listener.onDriverRequiredDocs()
+        registrationFor.set("DeliverPartner")
+        getAllRequiredDocs("Driver")
     }
 
     fun checkUserLogin(){
@@ -55,7 +67,7 @@ class MainActivityViewModel(var context: Context) : ViewModel(){
             isLoading = true
             Toast.makeText(context, "Login Required...", Toast.LENGTH_SHORT).show()
         }
-        else if(registrationForCheck.get().equals("Driver")){
+        else if(registrationForCheck.get().equals("Driver") || registrationForCheck.get().equals("DeliverPartner")){
             val intent = Intent(context,DriverRegistrationActivity::class.java)
             context.startActivity(intent)
             (context as Activity).finishAffinity()

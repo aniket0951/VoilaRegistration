@@ -39,7 +39,7 @@ import com.voila.voilasailor.restaurantRegistration.RestaurantModel.RestaurantPr
 import com.voila.voilasailor.restaurantRegistration.RestaurantNetworkResponse.GetRestaurantRequestedInfoResponse
 import com.voila.voilasailor.restaurantRegistration.RestaurantViewModelListner.ProfileListener
 import com.voila.voilasailor.restaurantRegistration.Util.getFileName
-import com.voila.voilasailor.restaurantRegistration.Util.toast
+import com.voila.voilasailor.restaurantRegistration.Util.toasts
 import com.voila.voilasailor.restaurantRegistration.restaurantViewModel.ProfileDetailViewModel
 import id.zelory.compressor.Compressor
 import id.zelory.compressor.constraint.format
@@ -76,7 +76,7 @@ class ProfileFragment : Fragment(),ProfileListener {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         // Inflate the layout for this fragment
         binding = DataBindingUtil.inflate(inflater,R.layout.fragment_profile, container, false)
         binding.profile = profileModel
@@ -166,7 +166,7 @@ class ProfileFragment : Fragment(),ProfileListener {
     }
 
     override fun onSuccess(s:String) {
-        requireContext().toast(s)
+        requireContext().toasts(s)
     }
 
     override fun onOwnerDetailsSuccess() {
@@ -356,7 +356,7 @@ class ProfileFragment : Fragment(),ProfileListener {
     }
 
     override fun onFailed(s:String) {
-        requireContext().toast(s)
+        requireContext().toasts(s)
     }
 
     private fun openImageChooser() {

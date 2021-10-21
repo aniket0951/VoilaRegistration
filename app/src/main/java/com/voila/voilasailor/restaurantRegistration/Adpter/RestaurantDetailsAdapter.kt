@@ -6,14 +6,18 @@ import android.app.TimePickerDialog
 import android.content.Context
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
+import android.os.Build
 import android.text.Editable
+import android.text.InputFilter
 import android.text.InputType
 import android.text.TextWatcher
 import android.text.format.DateFormat
+import android.util.Patterns
 import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
+import androidx.annotation.RequiresApi
 import androidx.appcompat.widget.AppCompatEditText
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.appcompat.widget.AppCompatTextView
@@ -27,9 +31,6 @@ import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
 
-
-
-
 class RestaurantDetailsAdapter(val context: Context) : RecyclerView.Adapter<RestaurantDetailsAdapter.ViewHolder>(){
 
     var ownerRequiredDoc: ArrayList<RestaurantOwnerRequiredDoc> = ArrayList<RestaurantOwnerRequiredDoc>()
@@ -38,7 +39,7 @@ class RestaurantDetailsAdapter(val context: Context) : RecyclerView.Adapter<Rest
     private var mListener: OnItemClickListener? = null
     private lateinit var setDateListener : DatePickerDialog.OnDateSetListener
 
-
+    var isEmailValidation : Boolean = false
     var isImageLayoutShow : Boolean = false
 
     override fun onCreateViewHolder(
@@ -51,6 +52,7 @@ class RestaurantDetailsAdapter(val context: Context) : RecyclerView.Adapter<Rest
     }
 
 
+    @RequiresApi(Build.VERSION_CODES.N)
     @SuppressLint("ClickableViewAccessibility")
     override fun onBindViewHolder(holder: RestaurantDetailsAdapter.ViewHolder, position: Int) {
 
@@ -115,7 +117,20 @@ class RestaurantDetailsAdapter(val context: Context) : RecyclerView.Adapter<Rest
                 }
 
                 override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                    needToProcessComplete[adapterPosition].editText = titleEdit.text.toString()
+                    if (isEmailValidation){
+                        val email = titleEdit.text.toString()
+                        if (email.isNotEmpty() && Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+                            needToProcessComplete[adapterPosition].editText = titleEdit.text.toString()
+
+                        }
+                        else {
+                            titleEdit.requestFocus()
+                            titleEdit.error = "Please enter valid email"
+                        }
+                    }
+                    else{
+                        needToProcessComplete[adapterPosition].editText = titleEdit.text.toString()
+                    }
                    // Log.d("adapterText", "onTextChanged: " +  needToProcessComplete[adapterPosition] + titleEdit.text.toString() )
                 }
 
@@ -138,12 +153,17 @@ class RestaurantDetailsAdapter(val context: Context) : RecyclerView.Adapter<Rest
             titleEdit.setOnTouchListener(View.OnTouchListener { view, motionEvent -> // your code here....
                 if (needToProcessComplete[adapterPosition].required_docs_input.equals("text", true)) {
                     titleEdit.inputType = InputType.TYPE_CLASS_TEXT
+                    isEmailValidation = false
                 }
                 if (needToProcessComplete[adapterPosition].required_docs_input.equals("number", true)) {
-                   titleEdit.inputType = InputType.TYPE_CLASS_NUMBER
+                    isEmailValidation = false
+                    titleEdit.inputType = InputType.TYPE_CLASS_NUMBER
+                    val maxLength = 10
+                    titleEdit.filters = arrayOf<InputFilter>(InputFilter.LengthFilter(maxLength))
                 }
                 if (needToProcessComplete[adapterPosition].required_docs_input.equals("email", true)) {
-                   titleEdit.inputType = InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS
+                    isEmailValidation = true
+                    titleEdit.inputType = InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS
                 }
 //            Log.d("inputChange", "onBindViewHolder: ${needToProcessComplete[position].required_docs_name}")
                 false
@@ -170,6 +190,7 @@ class RestaurantDetailsAdapter(val context: Context) : RecyclerView.Adapter<Rest
             )
         }
 
+        @RequiresApi(Build.VERSION_CODES.N)
         @SuppressLint("ClickableViewAccessibility")
         fun setCalanderInterface(){
             titleEdit.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_calendar, 0);
@@ -195,8 +216,16 @@ class RestaurantDetailsAdapter(val context: Context) : RecyclerView.Adapter<Rest
                 cal.set(Calendar.MONTH, monthOfYear)
                 cal.set(Calendar.DAY_OF_MONTH, dayOfMonth)
 
-                val myFormat = "dd.MM.yyyy" // mention the format you need
-                val sdf = SimpleDateFormat(myFormat, Locale.US)
+//                val myFormat = "dd.MM.yyyy" // mention the format you need
+                var myFormat = "dd/MM/YYYY"
+                val sdf = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+
+                    SimpleDateFormat(myFormat, Locale.US)
+                } else {
+
+                     myFormat = "dd.MM.yyyy"
+                    SimpleDateFormat(myFormat, Locale.US)
+                }
 
                 titleEdit.setText(String.format( sdf.format(cal.time)))
 

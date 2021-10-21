@@ -17,8 +17,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:background="@color/off_white"
-        android:backgroundTint="@color/off_white"
+        android:background="@color/white"
+        android:backgroundTint="@color/white"
         tools:context=".driverRegistration.DriverRegistrationActivity">
 
         <!-- AppBar layout for using Toolbar as AppBar -->
@@ -90,7 +90,7 @@
         <!--Recycler view-->
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         >
 
         <androidx.appcompat.widget.LinearLayoutCompat
@@ -150,7 +150,8 @@
                 android:orientation="vertical"
                 android:layout_gravity="center"
                 android:gravity="center"
-                android:background="@color/off_white"
+                android:background="@color/white"
+                android:backgroundTint="@color/white"
                 android:id="@+id/layout_account_under_review"
                 >
 
@@ -177,7 +178,7 @@
                     android:layout_gravity="end"
                     android:layout_marginRight="15dp"
                     android:textAllCaps="false"
-                    android:visibility="visible"
+                    android:visibility="gone"
                     android:layout_marginBottom="15dp"
                     android:onClick="@{() -> driver.showProfileInformation()}"
                     android:id="@+id/profile_text"
@@ -207,6 +208,13 @@
 
             </androidx.appcompat.widget.LinearLayoutCompat>
 
+            <androidx.fragment.app.FragmentContainerView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/fragment_view"
+                android:visibility="gone"
+                android:layout_gravity="center"
+                />
 
         </androidx.appcompat.widget.LinearLayoutCompat>
 

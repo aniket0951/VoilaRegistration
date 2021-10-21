@@ -4,8 +4,8 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:background="@color/off_white"
-    android:backgroundTint="@color/off_white"
+    android:background="@color/white"
+    android:backgroundTint="@color/white"
     >
 
     <ScrollView
@@ -32,7 +32,7 @@
                 <androidx.appcompat.widget.AppCompatTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="full name"
+                    android:text="@string/full_name"
                     android:textSize="16sp"
                     android:layout_marginStart="10dp"
                     android:textColor="@color/black"
@@ -41,7 +41,10 @@
                     android:id="@+id/title"
                     android:fontFamily="@font/poppins_medium"
                     android:textStyle="bold"
-                    />
+                    android:drawableLeft="@drawable/star_validation"
+                    android:drawableStart="@drawable/star_validation"
+                    android:drawablePadding="5dp"
+                     />
                 <com.google.android.material.textfield.TextInputLayout
                     android:theme="@style/textInputLayoutAppearance"
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
@@ -50,7 +53,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="10dp"
                     android:layout_marginEnd="10dp"
-                    android:layout_marginTop="10dp"
+                    android:layout_marginTop="5dp"
                     >
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/full_name_edt"
@@ -79,6 +82,9 @@
                     android:id="@+id/email_title"
                     android:fontFamily="@font/poppins_medium"
                     android:textStyle="bold"
+                    android:drawableLeft="@drawable/star_validation"
+                    android:drawableStart="@drawable/star_validation"
+                    android:drawablePadding="5dp"
                     />
                 <com.google.android.material.textfield.TextInputLayout
                     android:theme="@style/textInputLayoutAppearance"
@@ -88,7 +94,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="10dp"
                     android:layout_marginEnd="10dp"
-                    android:layout_marginTop="10dp"
+                    android:layout_marginTop="5dp"
                     >
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/email_edt"
@@ -117,6 +123,9 @@
                     android:id="@+id/contact_number_title"
                     android:fontFamily="@font/poppins_medium"
                     android:textStyle="bold"
+                    android:drawableLeft="@drawable/star_validation"
+                    android:drawableStart="@drawable/star_validation"
+                    android:drawablePadding="5dp"
                     />
                 <com.google.android.material.textfield.TextInputLayout
                     android:theme="@style/textInputLayoutAppearance"
@@ -126,14 +135,13 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="10dp"
                     android:layout_marginEnd="10dp"
-                    android:layout_marginTop="10dp"
+                    android:layout_marginTop="5dp"
                     >
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/contact_number_edt"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:freezesText="true"
-                        android:inputType="text"
                         android:textColorHint="@color/black"
                         android:singleLine="true"
                         android:textColor="@color/black"
@@ -155,8 +163,10 @@
                     android:id="@+id/date_of_birth_title"
                     android:fontFamily="@font/poppins_medium"
                     android:textStyle="bold"
+                    android:drawableLeft="@drawable/star_validation"
+                    android:drawableStart="@drawable/star_validation"
+                    android:drawablePadding="5dp"
                     />
-
                 <com.google.android.material.textfield.TextInputLayout
                     android:theme="@style/textInputLayoutAppearance"
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
@@ -165,7 +175,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="10dp"
                     android:layout_marginEnd="10dp"
-                    android:layout_marginTop="10dp"
+                    android:layout_marginTop="5dp"
                     >
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/date_of_birth_edt"
@@ -225,6 +235,9 @@
                     android:id="@+id/house_number_title"
                     android:fontFamily="@font/poppins_medium"
                     android:textStyle="bold"
+                    android:drawableLeft="@drawable/star_validation"
+                    android:drawableStart="@drawable/star_validation"
+                    android:drawablePadding="5dp"
                     />
                 <com.google.android.material.textfield.TextInputLayout
                     android:theme="@style/textInputLayoutAppearance"
@@ -234,7 +247,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="10dp"
                     android:layout_marginEnd="10dp"
-                    android:layout_marginTop="10dp"
+                    android:layout_marginTop="5dp"
                     >
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/house_number_edt"
@@ -263,6 +276,9 @@
                     android:id="@+id/building_name_title"
                     android:fontFamily="@font/poppins_medium"
                     android:textStyle="bold"
+                    android:drawableLeft="@drawable/star_validation"
+                    android:drawableStart="@drawable/star_validation"
+                    android:drawablePadding="5dp"
                     />
                 <com.google.android.material.textfield.TextInputLayout
                     android:theme="@style/textInputLayoutAppearance"
@@ -272,7 +288,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="10dp"
                     android:layout_marginEnd="10dp"
-                    android:layout_marginTop="10dp"
+                    android:layout_marginTop="5dp"
                     >
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/building_name_edt"
@@ -301,6 +317,9 @@
                     android:id="@+id/street_name_title"
                     android:fontFamily="@font/poppins_medium"
                     android:textStyle="bold"
+                    android:drawableLeft="@drawable/star_validation"
+                    android:drawableStart="@drawable/star_validation"
+                    android:drawablePadding="5dp"
                     />
                 <com.google.android.material.textfield.TextInputLayout
                     android:theme="@style/textInputLayoutAppearance"
@@ -310,7 +329,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="10dp"
                     android:layout_marginEnd="10dp"
-                    android:layout_marginTop="10dp"
+                    android:layout_marginTop="5dp"
                     >
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/street_name_edt"
@@ -339,6 +358,9 @@
                     android:id="@+id/landmark_title"
                     android:fontFamily="@font/poppins_medium"
                     android:textStyle="bold"
+                    android:drawableLeft="@drawable/star_validation"
+                    android:drawableStart="@drawable/star_validation"
+                    android:drawablePadding="5dp"
                     />
                 <com.google.android.material.textfield.TextInputLayout
                     android:theme="@style/textInputLayoutAppearance"
@@ -348,7 +370,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="10dp"
                     android:layout_marginEnd="10dp"
-                    android:layout_marginTop="10dp"
+                    android:layout_marginTop="5dp"
                     >
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/landmark_edt"
@@ -377,6 +399,9 @@
                     android:id="@+id/state_title"
                     android:fontFamily="@font/poppins_medium"
                     android:textStyle="bold"
+                    android:drawableLeft="@drawable/star_validation"
+                    android:drawableStart="@drawable/star_validation"
+                    android:drawablePadding="5dp"
                     />
                 <com.google.android.material.textfield.TextInputLayout
                     android:theme="@style/textInputLayoutAppearance"
@@ -386,7 +411,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="10dp"
                     android:layout_marginEnd="10dp"
-                    android:layout_marginTop="10dp">
+                    android:layout_marginTop="5dp">
 
                     <AutoCompleteTextView
                         android:layout_width="match_parent"
@@ -410,6 +435,9 @@
                     android:id="@+id/district_title"
                     android:fontFamily="@font/poppins_medium"
                     android:textStyle="bold"
+                    android:drawableLeft="@drawable/star_validation"
+                    android:drawableStart="@drawable/star_validation"
+                    android:drawablePadding="5dp"
                     />
                 <com.google.android.material.textfield.TextInputLayout
                     android:theme="@style/textInputLayoutAppearance"
@@ -419,7 +447,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="10dp"
                     android:layout_marginEnd="10dp"
-                    android:layout_marginTop="10dp"
+                    android:layout_marginTop="5dp"
                     >
 
                     <AutoCompleteTextView
@@ -444,6 +472,9 @@
                     android:id="@+id/pin_code_title"
                     android:fontFamily="@font/poppins_medium"
                     android:textStyle="bold"
+                    android:drawableLeft="@drawable/star_validation"
+                    android:drawableStart="@drawable/star_validation"
+                    android:drawablePadding="5dp"
                     />
                 <com.google.android.material.textfield.TextInputLayout
                     android:theme="@style/textInputLayoutAppearance"
@@ -453,7 +484,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="10dp"
                     android:layout_marginEnd="10dp"
-                    android:layout_marginTop="10dp"
+                    android:layout_marginTop="5dp"
                     >
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/pin_code_edt"
@@ -500,16 +531,23 @@
                 >
 
                 <androidx.appcompat.widget.AppCompatTextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Aadhar Front Photo"
                     android:layout_marginTop="10dp"
                     android:textSize="16sp"
+                    android:id="@+id/txt_aadhar_front_photo"
                     android:layout_marginStart="20dp"
                     android:layout_marginLeft="20dp"
                     android:fontFamily="@font/poppins_medium"
                     android:textColor="@color/black"
-                    />
+                    android:layout_marginEnd="20dp"
+                    android:layout_marginRight="20dp"
+                    android:drawableEnd="@drawable/ic_menu_update"
+                    android:drawableRight="@drawable/ic_menu_update"
+                    android:drawableLeft="@drawable/star_validation"
+                    android:drawableStart="@drawable/star_validation"
+                    android:drawablePadding="5dp"/>
                 <androidx.appcompat.widget.LinearLayoutCompat
                     android:layout_width="match_parent"
                     android:layout_height="200dp"
@@ -532,15 +570,23 @@
                 </androidx.appcompat.widget.LinearLayoutCompat>
 
                 <androidx.appcompat.widget.AppCompatTextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Aadhar Back Photo"
                     android:layout_marginTop="10dp"
                     android:textSize="16sp"
+                    android:id="@+id/txt_aadhar_back_photo"
                     android:layout_marginStart="20dp"
                     android:layout_marginLeft="20dp"
                     android:fontFamily="@font/poppins_medium"
                     android:textColor="@color/black"
+                    android:layout_marginEnd="20dp"
+                    android:layout_marginRight="20dp"
+                    android:drawableEnd="@drawable/ic_menu_update"
+                    android:drawableRight="@drawable/ic_menu_update"
+                    android:drawableLeft="@drawable/star_validation"
+                    android:drawableStart="@drawable/star_validation"
+                    android:drawablePadding="5dp"
                     />
                 <androidx.appcompat.widget.LinearLayoutCompat
                     android:layout_width="match_parent"
@@ -564,15 +610,23 @@
                 </androidx.appcompat.widget.LinearLayoutCompat>
 
                 <androidx.appcompat.widget.AppCompatTextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Licence Front Photo"
                     android:layout_marginTop="10dp"
                     android:textSize="16sp"
+                    android:id="@+id/txt_licence_front_photo"
                     android:layout_marginStart="20dp"
                     android:layout_marginLeft="20dp"
                     android:fontFamily="@font/poppins_medium"
                     android:textColor="@color/black"
+                    android:layout_marginEnd="20dp"
+                    android:layout_marginRight="20dp"
+                    android:drawableEnd="@drawable/ic_menu_update"
+                    android:drawableRight="@drawable/ic_menu_update"
+                    android:drawableLeft="@drawable/star_validation"
+                    android:drawableStart="@drawable/star_validation"
+                    android:drawablePadding="5dp"
                     />
                 <androidx.appcompat.widget.LinearLayoutCompat
                     android:layout_width="match_parent"
@@ -596,7 +650,7 @@
                 </androidx.appcompat.widget.LinearLayoutCompat>
 
                 <androidx.appcompat.widget.AppCompatTextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Licence Back Photo"
                     android:layout_marginTop="10dp"
@@ -605,6 +659,14 @@
                     android:layout_marginLeft="20dp"
                     android:fontFamily="@font/poppins_medium"
                     android:textColor="@color/black"
+                    android:id="@+id/txt_licence_back_photo"
+                    android:layout_marginEnd="20dp"
+                    android:layout_marginRight="20dp"
+                    android:drawableLeft="@drawable/star_validation"
+                    android:drawableStart="@drawable/star_validation"
+                    android:drawablePadding="5dp"
+                    android:drawableEnd="@drawable/ic_menu_update"
+                    android:drawableRight="@drawable/ic_menu_update"
                     />
                 <androidx.appcompat.widget.LinearLayoutCompat
                     android:layout_width="match_parent"
@@ -651,6 +713,9 @@
                     android:layout_marginLeft="10dp"
                     android:fontFamily="@font/poppins_medium"
                     android:textStyle="bold"
+                    android:drawableLeft="@drawable/star_validation"
+                    android:drawableStart="@drawable/star_validation"
+                    android:drawablePadding="5dp"
                     />
                 <com.google.android.material.textfield.TextInputLayout
                     android:theme="@style/textInputLayoutAppearance"
@@ -660,7 +725,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="10dp"
                     android:layout_marginEnd="10dp"
-                    android:layout_marginTop="10dp"
+                    android:layout_marginTop="5dp"
                     >
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/vehicle_RTO_registration_number_edt"
@@ -689,6 +754,9 @@
                     android:id="@+id/vehicle_rc_number_title"
                     android:fontFamily="@font/poppins_medium"
                     android:textStyle="bold"
+                    android:drawableLeft="@drawable/star_validation"
+                    android:drawableStart="@drawable/star_validation"
+                    android:drawablePadding="5dp"
                     />
                 <com.google.android.material.textfield.TextInputLayout
                     android:theme="@style/textInputLayoutAppearance"
@@ -698,7 +766,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="10dp"
                     android:layout_marginEnd="10dp"
-                    android:layout_marginTop="10dp"
+                    android:layout_marginTop="5dp"
                     >
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/vehicle_rc_number_edt"
@@ -727,6 +795,9 @@
                     android:id="@+id/vehicle_colour_title"
                     android:fontFamily="@font/poppins_medium"
                     android:textStyle="bold"
+                    android:drawableLeft="@drawable/star_validation"
+                    android:drawableStart="@drawable/star_validation"
+                    android:drawablePadding="5dp"
                     />
                 <com.google.android.material.textfield.TextInputLayout
                     android:theme="@style/textInputLayoutAppearance"
@@ -736,7 +807,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="10dp"
                     android:layout_marginEnd="10dp"
-                    android:layout_marginTop="10dp"
+                    android:layout_marginTop="5dp"
                     >
 
                     <AutoCompleteTextView
@@ -763,6 +834,9 @@
                     android:id="@+id/vehicle_make_year_title"
                     android:fontFamily="@font/poppins_medium"
                     android:textStyle="bold"
+                    android:drawableLeft="@drawable/star_validation"
+                    android:drawableStart="@drawable/star_validation"
+                    android:drawablePadding="5dp"
                     />
                 <com.google.android.material.textfield.TextInputLayout
                     android:theme="@style/textInputLayoutAppearance"
@@ -772,7 +846,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="10dp"
                     android:layout_marginEnd="10dp"
-                    android:layout_marginTop="10dp"
+                    android:layout_marginTop="5dp"
                     >
 
                     <AutoCompleteTextView
@@ -797,6 +871,9 @@
                     android:id="@+id/vehicle_type_title"
                     android:fontFamily="@font/poppins_medium"
                     android:textStyle="bold"
+                    android:drawableLeft="@drawable/star_validation"
+                    android:drawableStart="@drawable/star_validation"
+                    android:drawablePadding="5dp"
                     />
                 <com.google.android.material.textfield.TextInputLayout
                     android:theme="@style/textInputLayoutAppearance"
@@ -806,7 +883,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="10dp"
                     android:layout_marginEnd="10dp"
-                    android:layout_marginTop="10dp"
+                    android:layout_marginTop="5dp"
                     >
                     <AutoCompleteTextView
                         android:layout_width="match_parent"
@@ -830,6 +907,9 @@
                     android:id="@+id/vehicle_brand_title"
                     android:fontFamily="@font/poppins_medium"
                     android:textStyle="bold"
+                    android:drawableLeft="@drawable/star_validation"
+                    android:drawableStart="@drawable/star_validation"
+                    android:drawablePadding="5dp"
                     />
                 <com.google.android.material.textfield.TextInputLayout
                     android:theme="@style/textInputLayoutAppearance"
@@ -839,7 +919,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="10dp"
                     android:layout_marginEnd="10dp"
-                    android:layout_marginTop="10dp"
+                    android:layout_marginTop="5dp"
                     >
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/vehicle_brand_edt"
@@ -868,6 +948,9 @@
                     android:id="@+id/vehicle_model_title"
                     android:fontFamily="@font/poppins_medium"
                     android:textStyle="bold"
+                    android:drawableLeft="@drawable/star_validation"
+                    android:drawableStart="@drawable/star_validation"
+                    android:drawablePadding="5dp"
                     />
                 <com.google.android.material.textfield.TextInputLayout
                     android:theme="@style/textInputLayoutAppearance"
@@ -877,7 +960,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="10dp"
                     android:layout_marginEnd="10dp"
-                    android:layout_marginTop="10dp"
+                    android:layout_marginTop="5dp"
                     >
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/vehicle_model_edt"
@@ -924,7 +1007,7 @@
                 >
 
                 <androidx.appcompat.widget.AppCompatTextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Vehicle Front Photo"
                     android:layout_marginTop="10dp"
@@ -933,6 +1016,14 @@
                     android:layout_marginLeft="20dp"
                     android:fontFamily="@font/poppins_medium"
                     android:textColor="@color/black"
+                    android:layout_marginEnd="20dp"
+                    android:layout_marginRight="20dp"
+                    android:id="@+id/txt_vehicle_front_photo"
+                    android:drawableEnd="@drawable/ic_menu_update"
+                    android:drawableRight="@drawable/ic_menu_update"
+                    android:drawableLeft="@drawable/star_validation"
+                    android:drawableStart="@drawable/star_validation"
+                    android:drawablePadding="5dp"
                     />
                 <androidx.appcompat.widget.LinearLayoutCompat
                     android:layout_width="match_parent"
@@ -956,7 +1047,7 @@
                 </androidx.appcompat.widget.LinearLayoutCompat>
 
                 <androidx.appcompat.widget.AppCompatTextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Vehicle RC"
                     android:layout_marginTop="10dp"
@@ -965,6 +1056,14 @@
                     android:layout_marginLeft="20dp"
                     android:fontFamily="@font/poppins_medium"
                     android:textColor="@color/black"
+                    android:id="@+id/txt_vehicle_rc"
+                    android:layout_marginEnd="20dp"
+                    android:layout_marginRight="20dp"
+                    android:drawableEnd="@drawable/ic_menu_update"
+                    android:drawableRight="@drawable/ic_menu_update"
+                    android:drawableLeft="@drawable/star_validation"
+                    android:drawableStart="@drawable/star_validation"
+                    android:drawablePadding="5dp"
                     />
                 <androidx.appcompat.widget.LinearLayoutCompat
                     android:layout_width="match_parent"
@@ -988,7 +1087,7 @@
                 </androidx.appcompat.widget.LinearLayoutCompat>
 
                 <androidx.appcompat.widget.AppCompatTextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Vehicle Insurance"
                     android:layout_marginTop="10dp"
@@ -997,6 +1096,14 @@
                     android:layout_marginLeft="20dp"
                     android:fontFamily="@font/poppins_medium"
                     android:textColor="@color/black"
+                    android:id="@+id/txt_vehicle_insurance"
+                    android:layout_marginEnd="20dp"
+                    android:layout_marginRight="20dp"
+                    android:drawableEnd="@drawable/ic_menu_update"
+                    android:drawableRight="@drawable/ic_menu_update"
+                    android:drawableLeft="@drawable/star_validation"
+                    android:drawableStart="@drawable/star_validation"
+                    android:drawablePadding="5dp"
                     />
                 <androidx.appcompat.widget.LinearLayoutCompat
                     android:layout_width="match_parent"
@@ -1020,7 +1127,7 @@
                 </androidx.appcompat.widget.LinearLayoutCompat>
 
                 <androidx.appcompat.widget.AppCompatTextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Vehicle Permit"
                     android:layout_marginTop="10dp"
@@ -1029,6 +1136,14 @@
                     android:layout_marginLeft="20dp"
                     android:fontFamily="@font/poppins_medium"
                     android:textColor="@color/black"
+                    android:id="@+id/txt_vehicle_permit"
+                    android:layout_marginEnd="20dp"
+                    android:layout_marginRight="20dp"
+                    android:drawableEnd="@drawable/ic_menu_update"
+                    android:drawableRight="@drawable/ic_menu_update"
+                    android:drawableLeft="@drawable/star_validation"
+                    android:drawableStart="@drawable/star_validation"
+                    android:drawablePadding="5dp"
                     />
                 <androidx.appcompat.widget.LinearLayoutCompat
                     android:layout_width="match_parent"

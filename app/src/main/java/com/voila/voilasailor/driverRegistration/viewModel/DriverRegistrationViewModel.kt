@@ -16,6 +16,7 @@ import com.voila.voilasailor.driverRegistration.Repository.DriverRegistrationRep
 import com.voila.voilasailor.driverRegistration.ViewModelListener.DriverRegistrationViewModelListener
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
+import rx.Subscription
 
 class DriverRegistrationViewModel(var context: Context):ViewModel() {
 
@@ -42,7 +43,7 @@ class DriverRegistrationViewModel(var context: Context):ViewModel() {
 
     //track driver registration
     fun _trackDriverRegistration(){
-        if (NetworkStatus.getInstance(context)!!?.isOnline()){
+        if (NetworkStatus.getInstance(context)!!.isOnline()){
 
             progressDail = Helper.DialogsUtils.showProgressDialog(context,"Please wait we are track your  registration process")
             trackDriverRegistrationProcess(Helper.getAuthToken.authToken(context))

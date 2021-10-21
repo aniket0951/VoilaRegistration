@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@color/off_white"
-    android:backgroundTint="@color/off_white"
+    android:backgroundTint="@color/white"
     android:orientation="vertical">
 
     <!-- Layout for title and edit text-->
@@ -28,6 +28,9 @@
             android:id="@+id/title"
             android:fontFamily="@font/poppins_medium"
             android:textStyle="bold"
+            android:drawableLeft="@drawable/star_validation"
+            android:drawableStart="@drawable/star_validation"
+            android:drawablePadding="5dp"
             />
 
         <com.google.android.material.textfield.TextInputLayout
@@ -39,7 +42,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
             android:layout_marginEnd="10dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="5dp"
             >
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/edt_info"
@@ -108,6 +111,9 @@
             android:layout_marginTop="10dp"
             android:layout_marginLeft="10dp"
             android:id="@+id/doc_title"
+            android:drawableLeft="@drawable/star_validation"
+            android:drawableStart="@drawable/star_validation"
+            android:drawablePadding="5dp"
             />
 
         <androidx.appcompat.widget.LinearLayoutCompat

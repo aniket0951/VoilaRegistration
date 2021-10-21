@@ -25,19 +25,21 @@ class RequiredDocsAdapter(val context: Context) : RecyclerView.Adapter<RequiredD
 
     override fun onBindViewHolder(holder: RequiredDocsAdapter.ViewHolder, position: Int) {
 
-        if (position < kycList.size){
-            holder.docsName.text = kycList[position].required_docs_name
-           // Log.d("address", "onBindViewHolder: " + kycList[position].required_docs_name)
-
-        }
-        else{
-           holder.docsName.text = vehicleList.get(position - kycList.size).required_docs_name
-        }
+//        if (position < kycList.size){
+//            holder.docsName.text = kycList[position].required_docs_name
+//           // Log.d("address", "onBindViewHolder: " + kycList[position].required_docs_name)
+//
+//        }
+//        else{
+//           holder.docsName.text = vehicleList.get(position - kycList.size).required_docs_name
+//        }
+        holder.docsName.text = vehicleList[position].required_docs_name
     }
 
     override fun getItemCount(): Int {
 
-        return kycList.size + vehicleList.size
+       // return kycList.size + vehicleList.size
+        return vehicleList.size
     }
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {

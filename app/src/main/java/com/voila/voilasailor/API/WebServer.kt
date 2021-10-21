@@ -57,6 +57,15 @@ object WebServer {
     //update vehicle documents
     const val POST_UPDATE_VEHICLE_DOCUMENTS = BASE_URL + "updateVehicleDocument"
 
+    /*-- get system rate card -- */
+    const val GET_SYSTEM_RATE_CARD = BASE_URL + "getSystemRates"
+
+    /*--- confirm a rate card ---*/
+    const val  POST_CONFORM_RATE_CARD = BASE_URL + "createCustomeRateCard"
+
+    /*-- get custom rate card --*/
+    const val POST_CUSTOM_RATE_CARD = BASE_URL + "getDriverVehicleInfo"
+
     /*-------------------------- RESTAURANT REGISTRATION MODULE ----------------------------- */
 
     //add new restaurant owner details

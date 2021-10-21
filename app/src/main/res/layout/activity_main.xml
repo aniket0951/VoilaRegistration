@@ -15,7 +15,7 @@
 
     <androidx.appcompat.widget.LinearLayoutCompat
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="fill_parent"
         android:focusable="false"
         android:orientation="vertical"
         android:focusableInTouchMode="false"
@@ -51,51 +51,83 @@
 
         <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="fill_parent"
             android:orientation="vertical"
+            android:layout_gravity="center"
+            android:gravity="center"
             >
 
             <androidx.appcompat.widget.AppCompatTextView
-                android:onClick="@{() -> main.registerAsDriver()}"
                 android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:text="@string/welcome"
+                android:textSize="18sp"
+                android:fontFamily="@font/poppins_medium"
+                android:textColor="@color/primary_color"
+                />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:onClick="@{() -> main.registerAsDriver()}"
+                android:layout_width="260dp"
                 android:layout_height="wrap_content"
                 android:text="@string/register_as_driver"
                 android:textSize="16sp"
+                android:layout_gravity="center"
+                android:padding="12dp"
+                android:textAllCaps="false"
                 android:layout_marginTop="10dp"
-                android:layout_marginStart="10dp"
-                android:textColor="@color/black"
-                android:drawableLeft="@drawable/driver_registration"
+                android:textColor="@color/white"
+                android:drawableLeft="@drawable/new_driver"
                 android:fontFamily="@font/poppins_medium"
-                android:layout_marginLeft="10dp"
-                android:drawablePadding="15dp"
-                android:drawableStart="@drawable/driver_registration" />
+                android:background="@drawable/two_color_bg_button"
+                android:drawableStart="@drawable/new_driver" />
 
-            <androidx.appcompat.widget.AppCompatTextView
+            <androidx.appcompat.widget.AppCompatButton
+                android:onClick="@{() -> main.registerAsDeliverPartner()}"
+                android:layout_width="260dp"
+                android:layout_height="wrap_content"
+                android:text="@string/deliver_partner"
+                android:textSize="16sp"
+                android:layout_gravity="center"
+                android:padding="12dp"
+                android:textAllCaps="false"
+                android:layout_marginTop="10dp"
+                android:textColor="@color/white"
+                android:drawableLeft="@drawable/new_driver"
+                android:fontFamily="@font/poppins_medium"
+                android:background="@drawable/two_color_bg_button"
+                android:drawableStart="@drawable/new_driver" />
+
+
+            <androidx.appcompat.widget.AppCompatButton
                 android:onClick="@{() -> main.registerAsRestaurant()}"
-                android:layout_width="wrap_content"
+                android:layout_width="260dp"
                 android:layout_height="wrap_content"
                 android:text="@string/register_as_restaurant"
+                android:layout_gravity="center"
+                android:padding="8dp"
+                android:textAllCaps="false"
                 android:textSize="16sp"
                 android:layout_marginTop="10dp"
-                android:layout_marginStart="10dp"
-                android:textColor="@color/black"
-                android:drawableLeft="@drawable/restaurant_registration"
+                android:textColor="@color/white"
+                android:drawableLeft="@drawable/new_restaurant"
                 android:fontFamily="@font/poppins_medium"
-                android:layout_marginLeft="10dp"
-                android:drawablePadding="15dp"
-                android:drawableStart="@drawable/restaurant_registration" />
+                android:background="@drawable/two_color_bg_button"
+                android:drawableStart="@drawable/new_restaurant" />
 
+            <ProgressBar
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="40dp"
+                android:id="@+id/progress_bar_bar"
+                android:visibility="gone"
+                />
 
         </androidx.appcompat.widget.LinearLayoutCompat>
 
-        <ProgressBar
-            android:layout_width="60dp"
-            android:layout_height="60dp"
-            android:layout_gravity="center"
-            android:layout_marginTop="40dp"
-            android:id="@+id/progress_bar_bar"
-            android:visibility="gone"
-            />
         
         <!-- showing docs list -->
         <androidx.appcompat.widget.LinearLayoutCompat

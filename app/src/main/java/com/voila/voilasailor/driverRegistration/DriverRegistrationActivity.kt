@@ -7,19 +7,24 @@ import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
+import android.graphics.Color
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
+import android.view.Menu
+import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContract
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
 import androidx.core.app.ActivityCompat
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ObservableField
+import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.GridLayoutManager
@@ -37,26 +42,28 @@ import com.voila.voilasailor.driverRegistration.ViewModelFactory.DriverRegistrat
 import com.voila.voilasailor.driverRegistration.ViewModelListener.DriverRegistrationViewModelListener
 import com.voila.voilasailor.driverRegistration.viewModel.DriverRegistrationViewModel
 import com.voila.voilasailor.restaurantRegistration.RestaurantModel.NeedToProcessComplete
-import com.voila.voilasailor.restaurantRegistration.Util.getFileName
-import com.voila.voilasailor.restaurantRegistration.Util.toast
+import com.voila.voilasailor.restaurantRegistration.Util.toasts
 import id.zelory.compressor.Compressor
 import id.zelory.compressor.constraint.format
 import id.zelory.compressor.constraint.quality
 import id.zelory.compressor.constraint.resolution
 import id.zelory.compressor.constraint.size
+import kotlinx.android.synthetic.main.activity_driver_registration.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
-import java.io.ByteArrayOutputStream
 import java.io.File
 import java.io.FileInputStream
 import java.io.FileOutputStream
 
+
 class DriverRegistrationActivity : AppCompatActivity(), DriverRegistrationViewModelListener,
     DriverRegistrationAdapter.OnItemClickListener {
+
+    private val TAG_FRAGMENT = "TAG_FRAGMENT"
 
     lateinit var binding  : ActivityDriverRegistrationBinding
     lateinit var driverViewModel : DriverRegistrationViewModel
@@ -90,6 +97,11 @@ class DriverRegistrationActivity : AppCompatActivity(), DriverRegistrationViewMo
         driverViewModel.listener = this
         driverViewModel._trackDriverRegistration()
 
+        val toolbar: Toolbar = findViewById<View>(R.id.toolbar) as Toolbar
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            toolbar.overflowIcon?.setTint(Color.WHITE)
+        }
+        setSupportActionBar(toolbar)
         binding.executePendingBindings()
 
         ActivityCompat.requestPermissions(
@@ -108,16 +120,36 @@ class DriverRegistrationActivity : AppCompatActivity(), DriverRegistrationViewMo
                 uploadImage()
             }
             if (it == null){
-                toast("Do not use camera....")
+                toasts("Do not use camera....")
             }
         }
     }
 
-    override fun onRequestPermissionsResult(
-        requestCode: Int,
-        permissions: Array<out String>,
-        grantResults: IntArray
-    ) {
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.driver_menu, menu);
+        return true;
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.profile -> {
+                driverViewModel.showProfileInformation()
+                true
+            }
+            R.id.rate_card -> {
+                layout_account_under_review.visibility = View.GONE
+                val fm : FragmentManager = supportFragmentManager
+                val myFragment : RateCardFragment = RateCardFragment()
+                binding.fragmentView.visibility = View.VISIBLE
+                toolbar.title = "Rate Card"
+                fm.beginTransaction().replace(R.id.fragment_view, myFragment,TAG_FRAGMENT).addToBackStack("tag").commit()
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
+    }
+
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         when (requestCode) {
             100 -> if (grantResults.isNotEmpty() && grantResults[0] === PackageManager.PERMISSION_GRANTED && grantResults[1] === PackageManager.PERMISSION_GRANTED) {
@@ -191,8 +223,9 @@ class DriverRegistrationActivity : AppCompatActivity(), DriverRegistrationViewMo
                     if (it!=null){
                         if (it.result){
                             driverViewModel.dismissProgressDail()
-                            Helper.onSuccessMSG.onSuccess(this@DriverRegistrationActivity,it.message)
+                            Helper.onSuccessMSG.onSuccess(this@DriverRegistrationActivity,"Document uploaded success")
                             driverViewModel._trackDriverRegistration()
+                           // removeResponseFromObservable(driverViewModel.addKYCDocumentObservable())
                         }
                         else{
                             driverViewModel.dismissProgressDail()
@@ -231,7 +264,7 @@ class DriverRegistrationActivity : AppCompatActivity(), DriverRegistrationViewMo
                     if (it!=null){
                         if (it.result){
                             driverViewModel.dismissProgressDail()
-                            Helper.onSuccessMSG.onSuccess(this@DriverRegistrationActivity,it.message)
+                            Helper.onSuccessMSG.onSuccess(this@DriverRegistrationActivity,"Document uploaded successfully")
                             driverViewModel._trackDriverRegistration()
                         }
                         else{
@@ -412,6 +445,9 @@ class DriverRegistrationActivity : AppCompatActivity(), DriverRegistrationViewMo
             //adding request token in json object
             jsonObject.addProperty("request_token", Helper.getAuthToken.authToken(this))
 
+            if (Helper.IsPartner.isDeliveryPartner(this)){
+                jsonObject.addProperty("is_deliver_partner","partner")
+            }
 
             driverViewModel.addUserRegistrationProcess(jsonObject)
         }
@@ -433,7 +469,7 @@ class DriverRegistrationActivity : AppCompatActivity(), DriverRegistrationViewMo
         binding.recyclerViewParentLayout.visibility = View.GONE
         binding.layoutAccountUnderReview.visibility = View.VISIBLE
 
-        binding.profileText.visibility = View.VISIBLE
+        binding.profileText.visibility = View.GONE
     }
 
     override fun onItemClick(position: Int) {
@@ -447,8 +483,6 @@ class DriverRegistrationActivity : AppCompatActivity(), DriverRegistrationViewMo
 
         if (position == 0) {
             openImageChooser(position)
-
-            //Log.d("postionDoc", "onItemClick: $position  $title")
         }
         else {
            Helper.onFailedMSG.onFailed(this,"Please upload first " + " " + isUploadFirst.get().toString() + " document...." )
@@ -458,6 +492,9 @@ class DriverRegistrationActivity : AppCompatActivity(), DriverRegistrationViewMo
 
     private fun openImageChooser(position: Int) {
         cropActivityResultLauncher.launch(null)
+
+        driverViewModel.addVehicleProfileObservable().removeObservers(this)
+
     }
 
     private val cropActivityResultContract = object : ActivityResultContract<Any?, Uri?>(){
@@ -559,30 +596,22 @@ class DriverRegistrationActivity : AppCompatActivity(), DriverRegistrationViewMo
         }
     }
 
-    private fun getBitmapFile(reduceBitmap: Bitmap?): File {
-
-        val file : File = File(cacheDir, selectedImage?.let { contentResolver.getFileName(it) })
-        file.createNewFile()
-        val bos : ByteArrayOutputStream = ByteArrayOutputStream()
-        reduceBitmap?.compress(Bitmap.CompressFormat.JPEG,0,bos)
-        val bitmapData : ByteArray = bos.toByteArray()
-
-        val fos : FileOutputStream = FileOutputStream(file)
-        fos.write(bitmapData)
-        fos.flush()
-        fos.close()
-
-        return file
-    }
-
     companion object{
 
         private const val REQUEST_CODE_IMAGE_PICKER = 100
+        private const val SIMPLE_TEST = 100
     }
 
     override fun onBackPressed() {
         super.onBackPressed()
-        finishAffinity()
+        val fragment: RateCardFragment? =
+            supportFragmentManager.findFragmentByTag(TAG_FRAGMENT) as RateCardFragment?
+        fragment?.allowReturnTransitionOverlap
+        toolbar.title = "Voila Sailor"
+        layout_account_under_review.visibility = View.VISIBLE
+        fragment?.isRateChange?.set(false)
+//        finishAffinity()
+
     }
 
 }

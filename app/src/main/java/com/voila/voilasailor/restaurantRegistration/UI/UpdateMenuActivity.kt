@@ -27,7 +27,7 @@ import com.voila.voilasailor.databinding.ActivityUpdateMenuBinding
 import com.voila.voilasailor.restaurantRegistration.RestaurantFactory.UpdateMenuViewModelFactory
 import com.voila.voilasailor.restaurantRegistration.RestaurantViewModelListner.UpdateMenuViewModelListener
 import com.voila.voilasailor.restaurantRegistration.Util.getFileName
-import com.voila.voilasailor.restaurantRegistration.Util.toast
+import com.voila.voilasailor.restaurantRegistration.Util.toasts
 import com.voila.voilasailor.restaurantRegistration.restaurantViewModel.UpdateMenuViewModel
 import id.zelory.compressor.Compressor
 import id.zelory.compressor.constraint.format
@@ -297,11 +297,11 @@ class UpdateMenuActivity : AppCompatActivity(), UpdateMenuViewModelListener {
     }
 
     override fun onFailed(string: String) {
-        toast(string)
+        toasts(string)
     }
 
     override fun onSuccess(string: String) {
-        toast(string)
+        toasts(string)
     }
 
     override fun onMenuUpdateWithImage() {

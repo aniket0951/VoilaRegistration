@@ -168,6 +168,7 @@ class LoginActivity : AppCompatActivity(),LoginViewModelListener {
         loginViewModel.sendOtpResponseObservable()
             .observe(this, Observer {
                 if (it != null && it.result) {
+                    Log.d("MyOtp", "onOTPSendSuccess: ${it.otp}")
                     if (it.details.equals("Insufficient Account Balance",ignoreCase = true)){
                         onOTPSendFailed()
                     }
@@ -223,19 +224,22 @@ class LoginActivity : AppCompatActivity(),LoginViewModelListener {
 
     override fun onStart() {
         super.onStart()
-        mUpdateOtpReceiver = UpdateOTPReceiver()
-        registerReceiver(mUpdateOtpReceiver, IntentFilter("UPDATE_OTP"))
-        registerSMSReceiver()
 
-        mUpdateOtpReceiver?.bindListener(object : SmsListener {
-            override fun messageReceived(messageText: String?) {
-                // Log.d("SMSReads", "messageReceived: from sms listener from on Start $messageText")
-                otp_edit_box1.setText(messageText!!.substring(0))
-                otp_edit_box2.setText(messageText!!.substring(1))
-                otp_edit_box3.setText(messageText!!.substring(2))
-                otp_edit_box4.setText(messageText!!.substring(3))
-            }
-        })
+        /*----- fun remove for privacy policy issue -------- */
+
+//        mUpdateOtpReceiver = UpdateOTPReceiver()
+//        registerReceiver(mUpdateOtpReceiver, IntentFilter("UPDATE_OTP"))
+//        registerSMSReceiver()
+//
+//        mUpdateOtpReceiver?.bindListener(object : SmsListener {
+//            override fun messageReceived(messageText: String?) {
+//                // Log.d("SMSReads", "messageReceived: from sms listener from on Start $messageText")
+//                otp_edit_box1.setText(messageText!!.substring(0))
+//                otp_edit_box2.setText(messageText!!.substring(1))
+//                otp_edit_box3.setText(messageText!!.substring(2))
+//                otp_edit_box4.setText(messageText!!.substring(3))
+//            }
+//        })
     }
 
     private fun registerSMSReceiver() {
@@ -257,5 +261,10 @@ class LoginActivity : AppCompatActivity(),LoginViewModelListener {
                     }
                 }
             })
+    }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+        finish()
     }
 }
