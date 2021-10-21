@@ -599,6 +599,7 @@ class DriverRegistrationActivity : AppCompatActivity(), DriverRegistrationViewMo
     companion object{
 
         private const val REQUEST_CODE_IMAGE_PICKER = 100
+        private const val SIMPLE_TEST = 100
     }
 
     override fun onBackPressed() {
