@@ -4,9 +4,14 @@ import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.content.DialogInterface
 import android.content.Intent
+import android.graphics.Color
+import android.os.Build
 import android.os.Bundle
+import android.view.MenuItem
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
+import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.Observer
@@ -17,6 +22,7 @@ import com.google.gson.JsonObject
 import com.voila.voilasailor.Helper.Helper
 import com.voila.voilasailor.R
 import com.voila.voilasailor.databinding.ActivityRestaurantHomeScreenBinding
+import com.voila.voilasailor.driverRegistration.RateCardFragment
 import com.voila.voilasailor.restaurantRegistration.Adpter.ApplyFilterOptionAdapter
 import com.voila.voilasailor.restaurantRegistration.Adpter.GetAllMenusAdapter
 import com.voila.voilasailor.restaurantRegistration.RestaurantFactory.RestaurantHomeViewModelFactory
@@ -28,6 +34,7 @@ import com.voila.voilasailor.restaurantRegistration.RestaurantNetworkResponse.Is
 import com.voila.voilasailor.restaurantRegistration.RestaurantViewModelListner.RestaurantHomeListener
 import com.voila.voilasailor.restaurantRegistration.Util.toasts
 import com.voila.voilasailor.restaurantRegistration.restaurantViewModel.RestaurantHomeViewModel
+import kotlinx.android.synthetic.main.activity_driver_registration.*
 
 
 class RestaurantHomeScreenActivity : AppCompatActivity(), RestaurantHomeListener {
@@ -35,11 +42,14 @@ class RestaurantHomeScreenActivity : AppCompatActivity(), RestaurantHomeListener
     private lateinit var restaurantHomeViewModel: RestaurantHomeViewModel
     private lateinit var binding: ActivityRestaurantHomeScreenBinding
 
+    private val TAG_FRAGMENT = "TAG_FRAGMENT"
+
     lateinit var adapter : GetAllMenusAdapter
     lateinit var filterDishAdapter: ApplyFilterOptionAdapter
     var positions : Int = 0
 
     var isProfileFragmentOpen : Boolean = false
+    var isTrackVerifyFramentOpen : Boolean = false
 
     var jsonObject:JsonObject = JsonObject()
 
@@ -51,6 +61,11 @@ class RestaurantHomeScreenActivity : AppCompatActivity(), RestaurantHomeListener
         binding.restaurantHome = restaurantHomeViewModel
         restaurantHomeViewModel.listener = this
 
+        val toolbar: Toolbar = findViewById<View>(R.id.toolbar) as Toolbar
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            toolbar.overflowIcon?.setTint(Color.WHITE)
+        }
+        setSupportActionBar(toolbar)
 
         restaurantHomeViewModel.isAccountVerifyOrNot(Helper.getAuthToken.authToken(this))
         binding.recyclerView.layoutManager = LinearLayoutManager(this)
@@ -75,6 +90,49 @@ class RestaurantHomeScreenActivity : AppCompatActivity(), RestaurantHomeListener
 
     }
 
+    // show a registartion process when profile click
+    fun showProfile(){
+        val fm : FragmentManager = supportFragmentManager
+        val myFragment : ProfileFragment = ProfileFragment()
+        fm.beginTransaction().replace(R.id.fragment_view, myFragment).commit()
+
+        isProfileFragmentOpen = true
+        binding.fragmentView.visibility = View.VISIBLE
+        binding.layoutAccountUnderReview.visibility = View.GONE
+        binding.optionsParentLayout.visibility = View.GONE
+
+        binding.toolbar.title = "Registration process"
+        binding.imageView.visibility = View.VISIBLE
+    }
+
+    override fun onCreateOptionsMenu(menu: android.view.Menu?): Boolean {
+        menuInflater.inflate(R.menu.restaurant, menu)
+        return super.onCreateOptionsMenu(menu)
+
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.profile -> {
+                showProfile()
+                true
+            }
+            R.id.track_verification -> {
+                layout_account_under_review.visibility = View.GONE
+                binding.optionsParentLayout.visibility = View.GONE
+                val fm : FragmentManager = supportFragmentManager
+                val myFragment : TrackVerificationFragment = TrackVerificationFragment()
+                binding.fragmentView.visibility = View.VISIBLE
+                toolbar.title = "Track Verification"
+                fm.beginTransaction().replace(R.id.fragment_view, myFragment,TAG_FRAGMENT).addToBackStack(null).commit()
+                isTrackVerifyFramentOpen = true
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
+    }
+
+
     private fun backImageClickEvent() {
         if (isProfileFragmentOpen){
             val fragment = ProfileFragment()
@@ -83,6 +141,23 @@ class RestaurantHomeScreenActivity : AppCompatActivity(), RestaurantHomeListener
             binding.fragmentView.visibility = View.GONE
             binding.layoutAccountUnderReview.visibility = View.VISIBLE
             binding.optionsParentLayout.visibility = View.VISIBLE
+            isProfileFragmentOpen = false
+
+            binding.toolbar.title = "Menu Card"
+            binding.imageView.visibility = View.GONE
+
+        }
+        else{
+            val fragment = ProfileFragment()
+            supportFragmentManager.beginTransaction().remove(fragment).commit()
+
+            binding.fragmentView.visibility = View.GONE
+            binding.layoutAccountUnderReview.visibility = View.VISIBLE
+            binding.optionsParentLayout.visibility = View.VISIBLE
+
+            binding.fragmentView.isVisible= false
+            isTrackVerifyFramentOpen = false
+            isProfileFragmentOpen = false
 
             binding.toolbar.title = "Menu Card"
             binding.imageView.visibility = View.GONE
@@ -322,7 +397,6 @@ class RestaurantHomeScreenActivity : AppCompatActivity(), RestaurantHomeListener
             })
     }
 
-
     /*---- update the menu details ----*/
     private fun editMenuDetails(adapter: GetAllMenusAdapter, position: Int) {
         val intent = Intent(this,UpdateMenuActivity::class.java)
@@ -371,6 +445,7 @@ class RestaurantHomeScreenActivity : AppCompatActivity(), RestaurantHomeListener
 
             binding.filterImg.visibility = View.GONE
             binding.profileText.visibility = View.VISIBLE
+            binding.btnSaveConfirm.visibility = View.GONE
 
             binding.toolbar.title = "Account Under Review"
 
@@ -385,8 +460,43 @@ class RestaurantHomeScreenActivity : AppCompatActivity(), RestaurantHomeListener
     }
 
     override fun onBackPressed() {
-        super.onBackPressed()
-        finishAffinity()
-        finish()
+        if (isTrackVerifyFramentOpen) {
+            val fm: FragmentManager = supportFragmentManager
+            val myFragment: TrackVerificationFragment =
+                fm.findFragmentById(R.id.fragment_view) as TrackVerificationFragment
+
+            if(myFragment.isVisible){
+                if (isTrackVerifyFramentOpen){
+                    backImageClickEvent()
+                }
+                else{
+                    finishAffinity()
+                }
+            }
+            else{
+                finishAffinity()
+            }
+        }
+        else if (isProfileFragmentOpen) {
+            val fm2: FragmentManager = supportFragmentManager
+            val profileFragment: ProfileFragment =
+                fm2.findFragmentById(R.id.fragment_view) as ProfileFragment
+
+            if (profileFragment.isVisible){
+                if (isProfileFragmentOpen){
+                    backImageClickEvent()
+                }
+                else{
+                    finishAffinity()
+                }
+            }
+            else{
+                finishAffinity()
+            }
+        }
+        else{
+            finishAffinity()
+        }
+
     }
 }

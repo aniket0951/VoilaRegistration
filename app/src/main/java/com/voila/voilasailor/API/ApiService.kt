@@ -99,7 +99,9 @@ interface ApiService {
     fun updateRestaurantDocument(@Part image :MultipartBody.Part,@Part("title")title: RequestBody,@Part("request_token")request_token: RequestBody) : Observable<AddRestaurantPhotoResponse?>?
 
 
-
+    // to track restaurant verification
+    @GET(WebServer.GET_RESTAURANT_VERIFICATION_TRACKER)
+    fun getRestaurantVerification(@Query("api_token") api_token: String?,@Query("tag") tag:String?, @Query("request_token")request_token:String?) : Observable<RestaurantVerificationTrackResponse?>?
 
 
     /*----------------------------------------------  DRIVER MODULE --------------------------------*/

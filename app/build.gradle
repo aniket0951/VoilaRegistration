@@ -14,8 +14,8 @@ android {
         applicationId "com.voila.voilasailor"
         minSdkVersion 16
         targetSdkVersion 31
-        versionCode 6
-        versionName "1.0.5"
+        versionCode 7
+        versionName "1.0.6"
         multiDexEnabled true
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -107,5 +107,7 @@ dependencies {
     /*  step view */
     implementation 'com.kofigyan.stateprogressbar:stateprogressbar:1.0.0'
 
+    /* circle image view */
+    implementation 'de.hdodenhof:circleimageview:3.1.0'
 
 }

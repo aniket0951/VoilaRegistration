@@ -339,7 +339,7 @@ class RestaurantRegistrationActivity : AppCompatActivity(),RestaurantViewModelLi
 
     //set registration title on toolbar
     private fun setRegistrationTitle(it: TrackRegistrationProcessResponse) {
-        Log.d("processCode", "setRegistrationTitle: ${it.processCompleteStatus}")
+        //Log.d("processCode", "setRegistrationTitle: ${it.processCompleteStatus}")
         if (it.processCompleteStatus!=null){
             when(it.processCompleteStatus){
 

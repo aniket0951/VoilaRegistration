@@ -107,6 +107,9 @@ object WebServer {
     //update restaurant documents
     const val POST_UPDATE_RESTAURANT_DOCUMENT = BASE_URL + "updateRestaurantProfile"
 
+   // restaurant verification tracker
+   const val GET_RESTAURANT_VERIFICATION_TRACKER = BASE_URL + "restaurantVerificationTracker"
+
     /*------------------------ FILTER OPTIONS -----------------*/
 
     //get filter options
