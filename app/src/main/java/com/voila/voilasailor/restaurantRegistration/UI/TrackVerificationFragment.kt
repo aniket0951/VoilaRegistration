@@ -1,5 +1,6 @@
 package com.voila.voilasailor.restaurantRegistration.UI
 
+import android.graphics.Color
 import android.media.MediaParser
 import android.os.Bundle
 import android.util.Log
@@ -15,7 +16,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.voila.voilasailor.R
-import com.voila.voilasailor.databinding.FragmentTrackVerificationBinding
 import com.voila.voilasailor.restaurantRegistration.Adpter.TrackVerificationAdapter
 import com.voila.voilasailor.restaurantRegistration.RestaurantFactory.ProfileVewModelFactory
 import com.voila.voilasailor.restaurantRegistration.RestaurantFactory.RestaurantHomeViewModelFactory
@@ -32,12 +32,22 @@ import com.voila.voilasailor.restaurantRegistration.restaurantViewModel.Restaura
 import com.voila.voilasailor.restaurantRegistration.restaurantViewModel.RestaurantRegistrationViewModel
 
 
+import androidx.core.content.ContextCompat
+
+import com.voila.voilasailor.databinding.FragmentTrackVerificationBinding
+import android.app.Activity
+
+
+
+
+
 class TrackVerificationFragment : Fragment(), TrackVerificationListner {
 
     lateinit var trackVerificationAdapter: TrackVerificationAdapter
 
     lateinit var binding: FragmentTrackVerificationBinding
     lateinit var viewmodel:RestaurantRegistrationViewModel
+    var pendingPosition:Int = 0
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -48,7 +58,12 @@ class TrackVerificationFragment : Fragment(), TrackVerificationListner {
         viewmodel.trackListener = this
         binding.executePendingBindings()
 
-        viewmodel.trackVerificationProcess()
+        val tag = requireArguments().getString("tag")
+        val authToken = requireArguments().getString("auth_token")
+
+
+        viewmodel.trackVerificationProcess(tag!!, authToken!!)
+
 
         binding.recyclerView.layoutManager = LinearLayoutManager(requireContext())
 
@@ -94,17 +109,21 @@ class TrackVerificationFragment : Fragment(), TrackVerificationListner {
             for (i in trac_data.indices){
                 info_list= trac_data[i].InformationVerification as ArrayList<InformationVerification>
             }
-
+            pendingPosition = info_list.size
             if (info_list!=null && info_list.isNotEmpty() && info_list.size>0) {
                 var sub_doc_list :ArrayList<DocumentVerification> = ArrayList()
                 for (count in info_list.indices){
                     sub_doc_list = info_list[count].DocumentVerification as ArrayList<DocumentVerification>
+
                 }
-                Log.d("TrackVerification", "trackVerification: $sub_doc_list")
-                trackVerificationAdapter = TrackVerificationAdapter(this.requireContext())
-                trackVerificationAdapter.TrackVerification(info_list, sub_doc_list)
-                binding.recyclerView.adapter = trackVerificationAdapter
-                viewmodel.dismissProgressDai()
+
+                val activity: Activity? = activity
+                if (activity != null && isAdded) {
+                    trackVerificationAdapter = TrackVerificationAdapter(this.requireActivity())
+                    trackVerificationAdapter.TrackVerification(info_list)
+                    binding.recyclerView.adapter = trackVerificationAdapter
+                    viewmodel.dismissProgressDai()
+                }
 
             }
             else{

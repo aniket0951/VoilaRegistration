@@ -8,5 +8,8 @@
     <item  android:id="@+id/rate_card"
         android:title="Rate Card"/>
 
+    <item android:id="@+id/track_verification"
+        android:title="Track Verification"
+        />
 
 </menu>

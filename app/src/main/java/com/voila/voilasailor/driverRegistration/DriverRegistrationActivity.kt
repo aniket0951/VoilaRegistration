@@ -42,6 +42,7 @@ import com.voila.voilasailor.driverRegistration.ViewModelFactory.DriverRegistrat
 import com.voila.voilasailor.driverRegistration.ViewModelListener.DriverRegistrationViewModelListener
 import com.voila.voilasailor.driverRegistration.viewModel.DriverRegistrationViewModel
 import com.voila.voilasailor.restaurantRegistration.RestaurantModel.NeedToProcessComplete
+import com.voila.voilasailor.restaurantRegistration.UI.TrackVerificationFragment
 import com.voila.voilasailor.restaurantRegistration.Util.toasts
 import id.zelory.compressor.Compressor
 import id.zelory.compressor.constraint.format
@@ -76,6 +77,8 @@ class DriverRegistrationActivity : AppCompatActivity(), DriverRegistrationViewMo
     var isVehicleRegistration : Boolean = false
     private lateinit var cropActivityResultLauncher: ActivityResultLauncher<Any?>
 
+    var isRateCardFrag : Boolean = false
+    var isTrackVerificationFrag : Boolean = false
 
     //list
     var mainNeedToProcessCompleteList = ArrayList<NeedToProcessComplete>()
@@ -83,6 +86,10 @@ class DriverRegistrationActivity : AppCompatActivity(), DriverRegistrationViewMo
     //get image path and adapter image position
     private var selectedImage : Uri? = null
     private var imagePosition : Int = 0
+
+    lateinit var fm:FragmentManager
+    lateinit var myFragment : RateCardFragment
+    lateinit var myFragment2 : TrackVerificationFragment
 
     //get title of doc name
     private var docsTitle = ObservableField<String>()
@@ -123,6 +130,7 @@ class DriverRegistrationActivity : AppCompatActivity(), DriverRegistrationViewMo
                 toasts("Do not use camera....")
             }
         }
+
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -138,11 +146,28 @@ class DriverRegistrationActivity : AppCompatActivity(), DriverRegistrationViewMo
             }
             R.id.rate_card -> {
                 layout_account_under_review.visibility = View.GONE
-                val fm : FragmentManager = supportFragmentManager
-                val myFragment : RateCardFragment = RateCardFragment()
+                 fm = supportFragmentManager
+                myFragment = RateCardFragment()
                 binding.fragmentView.visibility = View.VISIBLE
                 toolbar.title = "Rate Card"
                 fm.beginTransaction().replace(R.id.fragment_view, myFragment,TAG_FRAGMENT).addToBackStack("tag").commit()
+                isRateCardFrag = true
+                isTrackVerificationFrag = false
+                true
+            }
+            R.id.track_verification ->{
+                layout_account_under_review.visibility = View.GONE
+                fm= supportFragmentManager
+                myFragment2  = TrackVerificationFragment()
+                binding.fragmentView.visibility = View.VISIBLE
+                toolbar.title = "Track Verification"
+                fm.beginTransaction().replace(R.id.fragment_view, myFragment2,TAG_FRAGMENT).addToBackStack("tag").commit()
+                val bundle = Bundle()
+                bundle.putString("tag", "Driver")
+                bundle.putString("auth_token",Helper.getAuthToken.authToken(this))
+                myFragment2.arguments = bundle
+                isRateCardFrag = false
+                isTrackVerificationFrag = true
                 true
             }
             else -> super.onOptionsItemSelected(item)
@@ -604,13 +629,25 @@ class DriverRegistrationActivity : AppCompatActivity(), DriverRegistrationViewMo
 
     override fun onBackPressed() {
         super.onBackPressed()
-        val fragment: RateCardFragment? =
-            supportFragmentManager.findFragmentByTag(TAG_FRAGMENT) as RateCardFragment?
-        fragment?.allowReturnTransitionOverlap
-        toolbar.title = "Voila Sailor"
-        layout_account_under_review.visibility = View.VISIBLE
-        fragment?.isRateChange?.set(false)
-//        finishAffinity()
+        if (isRateCardFrag) {
+//            val fragment: RateCardFragment? =
+//                supportFragmentManager.findFragmentByTag(TAG_FRAGMENT) as RateCardFragment?
+//
+            myFragment.allowReturnTransitionOverlap
+            toolbar.title = "Voila Sailor"
+            layout_account_under_review.visibility = View.VISIBLE
+            myFragment.isRateChange.set(false)
+            binding.fragmentView.visibility = View.GONE
+        }
+        if (isTrackVerificationFrag) {
+//            val fragment2: TrackVerificationFragment? =
+//                supportFragmentManager.findFragmentByTag(TAG_FRAGMENT) as TrackVerificationFragment?
+
+            myFragment2.allowReturnTransitionOverlap
+            toolbar.title = "Voila Sailor"
+            layout_account_under_review.visibility = View.VISIBLE
+            binding.fragmentView.visibility = View.GONE
+        }
 
     }
 

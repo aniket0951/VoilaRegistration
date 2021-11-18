@@ -39,18 +39,25 @@ class SubDocumentAdapter(val context: Context):RecyclerView.Adapter<SubDocumentA
         private val documentName :AppCompatTextView = itemView.sub_document_name
         private val documentState: AppCompatTextView = itemView.sub_document_status
 
+
         fun bindData(position: Int){
-            documentName.text = sub_doc_list[position].document_name
-            if (sub_doc_list[position].document_status.equals("Pending",true)) {
-                documentState.text = "(" + sub_doc_list[position].document_status + ")"
-                documentState.setTextColor(Color.parseColor("#FF0000"))
-            }
-            else{
-                documentState.text = "(" + sub_doc_list[position].document_status + ")"
-                documentState.setTextColor(Color.parseColor("#008000"))
+            if (sub_doc_list.size >0) {
+                documentName.text = sub_doc_list[position].document_name
+                if (sub_doc_list[position].document_status.equals("Pending", true)) {
+                    documentState.text = "(" + sub_doc_list[position].document_status + ")"
+                    documentState.setTextColor(Color.parseColor("#FF0000"))
+                    documentName.setTextColor(Color.BLACK)
+                } else {
+                    documentName.setTextColor(Color.WHITE)
+                    documentState.text = "(" + sub_doc_list[position].document_status + ")"
+                    documentState.setTextColor(Color.parseColor("#FFFFFF"))
+                }
             }
         }
+
+
     }
+
 
     @SuppressLint("NotifyDataSetChanged")
     fun getSubDocuments(list:ArrayList<DocumentVerification>){

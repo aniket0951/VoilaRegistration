@@ -126,6 +126,12 @@ class RestaurantHomeScreenActivity : AppCompatActivity(), RestaurantHomeListener
                 toolbar.title = "Track Verification"
                 fm.beginTransaction().replace(R.id.fragment_view, myFragment,TAG_FRAGMENT).addToBackStack(null).commit()
                 isTrackVerifyFramentOpen = true
+
+                val bundle = Bundle()
+                bundle.putString("tag", "Restaurant")
+                bundle.putString("auth_token",Helper.getAuthToken.authToken(this))
+                myFragment.arguments = bundle
+
                 true
             }
             else -> super.onOptionsItemSelected(item)

@@ -17,30 +17,33 @@
 
         <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:orientation="vertical"
             >
 
-            <com.kofigyan.stateprogressbar.StateProgressBar
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:spb_stateBackgroundColor="@color/primary_color"
-                app:spb_stateForegroundColor="@color/color_claim_now_success_green"
-                app:spb_stateNumberBackgroundColor="@color/white"
-                app:spb_stateNumberForegroundColor="@color/white"
-                app:spb_currentStateDescriptionColor="@color/white"
-                app:spb_stateDescriptionColor="@color/white"
-                android:layout_marginTop="5dp"
-                android:id="@+id/step_bar"
-                android:visibility="visible"
-                app:spb_animateToCurrentProgressState="true"
-                app:spb_checkStateCompleted="true"/>
-
-            <androidx.recyclerview.widget.RecyclerView
+            <androidx.appcompat.widget.LinearLayoutCompat
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:id="@+id/recycler_view"
-                tools:listitem="@layout/track_rest_verification" />
+                android:orientation="horizontal"
+                android:baselineAligned="false"
+                android:visibility="visible"
+                >
+
+
+                <RelativeLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1">
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:id="@+id/recycler_view"
+                        tools:listitem="@layout/track_rest_verification"/>
+
+                </RelativeLayout>
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
         </androidx.appcompat.widget.LinearLayoutCompat>
 
 

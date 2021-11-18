@@ -135,11 +135,12 @@ class RestaurantRegistrationViewModel(var context: Context): ViewModel() {
     }
 
     // track verification process
-    fun trackVerificationProcess(){
+    fun trackVerificationProcess(tag:String,auth_token:String){
         progressDialog = Helper.DialogsUtils.showProgressDialog(context,"Please Wait we are tracking verification process..")
-        trackVerification("Restaurant", Helper.getAuthToken.authToken(context))
+        trackVerification(tag, auth_token)
         trackListener.onTrackVerification()
     }
+
 
     /*------------------------------------------ REPO ----------------------------*/
     private val getAllRestaurantDocsResponse : MutableLiveData<GetAllRestaurantDocsResponse> = mainRepository.getAllRequiredRestaurantObservable()
