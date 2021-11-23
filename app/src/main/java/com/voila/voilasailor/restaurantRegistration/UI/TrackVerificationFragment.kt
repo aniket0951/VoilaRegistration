@@ -1,14 +1,11 @@
 package com.voila.voilasailor.restaurantRegistration.UI
 
+import android.annotation.SuppressLint
 import android.graphics.Color
 import android.media.MediaParser
 import android.os.Bundle
 import android.util.Log
-import android.view.KeyEvent
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
@@ -36,19 +33,21 @@ import androidx.core.content.ContextCompat
 
 import com.voila.voilasailor.databinding.FragmentTrackVerificationBinding
 import android.app.Activity
+import android.view.*
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 
 
-
-
-
-class TrackVerificationFragment : Fragment(), TrackVerificationListner {
+class TrackVerificationFragment : Fragment(), TrackVerificationListner, SwipeRefreshLayout.OnRefreshListener {
 
     lateinit var trackVerificationAdapter: TrackVerificationAdapter
 
     lateinit var binding: FragmentTrackVerificationBinding
     lateinit var viewmodel:RestaurantRegistrationViewModel
     var pendingPosition:Int = 0
+    var isUser = ""
+    var authToken = ""
 
+    @SuppressLint("ResourceAsColor")
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -58,12 +57,16 @@ class TrackVerificationFragment : Fragment(), TrackVerificationListner {
         viewmodel.trackListener = this
         binding.executePendingBindings()
 
-        val tag = requireArguments().getString("tag")
-        val authToken = requireArguments().getString("auth_token")
+        isUser = requireArguments().getString("tag").toString()
+        authToken = requireArguments().getString("auth_token").toString()
 
+        viewmodel.trackVerificationProcess(isUser, authToken)
 
-        viewmodel.trackVerificationProcess(tag!!, authToken!!)
-
+        binding.swapRefresh.setOnRefreshListener(this);
+        binding.swapRefresh.setColorSchemeColors(android.R.color.holo_green_dark,
+            android.R.color.holo_red_dark,
+            android.R.color.holo_blue_dark,
+            android.R.color.holo_orange_dark)
 
         binding.recyclerView.layoutManager = LinearLayoutManager(requireContext())
 
@@ -75,6 +78,12 @@ class TrackVerificationFragment : Fragment(), TrackVerificationListner {
         viewmodel = ((activity?.run {
             ViewModelProviders.of(this,RestaurantViewModelFactory(requireContext()))[RestaurantRegistrationViewModel::class.java]
         }?:throw Exception("Invalid")) as RestaurantRegistrationViewModel?)!!
+        setHasOptionsMenu(true)
+    }
+
+    override fun onPrepareOptionsMenu(menu: Menu) {
+        val item = menu.findItem(R.id.track_verification)
+        if (item != null) item.isVisible = false
 
     }
 
@@ -87,6 +96,7 @@ class TrackVerificationFragment : Fragment(), TrackVerificationListner {
             .observe(this.requireActivity(), Observer {
                 if (it!=null){
                    if (it.result){
+                       binding.swapRefresh.isRefreshing = false
                        trackVerification(it)
                    }
                     else{
@@ -135,6 +145,10 @@ class TrackVerificationFragment : Fragment(), TrackVerificationListner {
             viewmodel.dismissProgressDai()
             MSG("Failed to track verification")
         }
+    }
+
+    override fun onRefresh() {
+        viewmodel.trackVerificationProcess(isUser,authToken)
     }
 
 }

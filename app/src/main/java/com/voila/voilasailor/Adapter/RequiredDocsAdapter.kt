@@ -21,6 +21,7 @@ class RequiredDocsAdapter(val context: Context) : RecyclerView.Adapter<RequiredD
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RequiredDocsAdapter.ViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
         return ViewHolder(layoutInflater.inflate(R.layout.all_required_docs, parent, false))
+
     }
 
     override fun onBindViewHolder(holder: RequiredDocsAdapter.ViewHolder, position: Int) {

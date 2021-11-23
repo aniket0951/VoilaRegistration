@@ -126,4 +126,9 @@ object WebServer {
 
     //get all required docs for dish
     const val GET_ALL_REQUIRED_DISH_DOCS = BASE_URL + "getDishRequiredDocs"
+
+
+    /* ------------------------  NOTIFICATIONS --------------------------------- */
+    const val GET_SAILOR_NOTIFICATION = BASE_URL + "getHardNotifications"
+    const val DELETE_NOTIFICATION = BASE_URL + "deleteNotification"
 }

@@ -1,39 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
         <variable
-            name="track"
-            type="com.voila.voilasailor.restaurantRegistration.restaurantViewModel.RestaurantRegistrationViewModel" />
+            name="notification"
+            type="com.voila.voilasailor.notification.viewModel.NotificationViewModel" />
     </data>
 
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/white"
-        tools:context=".restaurantRegistration.UI.TrackVerificationFragment">
+        tools:context=".notification.UI.NotificationFragment">
 
         <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:id="@+id/swap_refresh"
-            >
+            android:id="@+id/swap_refresh">
 
             <androidx.appcompat.widget.LinearLayoutCompat
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="vertical"
-                >
+                android:orientation="vertical">
 
                 <androidx.appcompat.widget.LinearLayoutCompat
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:orientation="horizontal"
                     android:baselineAligned="false"
-                    android:visibility="visible"
-                    >
+                    android:visibility="visible">
 
 
                     <RelativeLayout
@@ -45,7 +40,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:id="@+id/recycler_view"
-                            tools:listitem="@layout/track_rest_verification"/>
+                            tools:listitem="@layout/notification_screen" />
 
                     </RelativeLayout>
 
@@ -54,6 +49,7 @@
 
 
         </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
 
     </FrameLayout>
 </layout>

@@ -5,6 +5,6 @@
         android:title="Profile"/>
 
     <item  android:id="@+id/track_verification"
-        android:title="Track Verification"/>
+        android:title="Document Verification"/>
 
 </menu>

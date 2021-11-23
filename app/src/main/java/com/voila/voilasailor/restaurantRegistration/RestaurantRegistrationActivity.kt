@@ -88,7 +88,6 @@ class RestaurantRegistrationActivity : AppCompatActivity(),RestaurantViewModelLi
     @RequiresApi(Build.VERSION_CODES.KITKAT)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-       // setContentView(R.layout.activity_restaurant_registration)
 
         binding = DataBindingUtil.setContentView(this, R.layout.activity_restaurant_registration)
         restaurantViewModel = ViewModelProviders.of(this, RestaurantViewModelFactory(this)).get(RestaurantRegistrationViewModel::class.java)

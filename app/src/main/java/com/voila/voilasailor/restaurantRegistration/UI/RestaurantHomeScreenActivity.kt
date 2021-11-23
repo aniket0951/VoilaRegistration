@@ -22,7 +22,6 @@ import com.google.gson.JsonObject
 import com.voila.voilasailor.Helper.Helper
 import com.voila.voilasailor.R
 import com.voila.voilasailor.databinding.ActivityRestaurantHomeScreenBinding
-import com.voila.voilasailor.driverRegistration.RateCardFragment
 import com.voila.voilasailor.restaurantRegistration.Adpter.ApplyFilterOptionAdapter
 import com.voila.voilasailor.restaurantRegistration.Adpter.GetAllMenusAdapter
 import com.voila.voilasailor.restaurantRegistration.RestaurantFactory.RestaurantHomeViewModelFactory
@@ -35,6 +34,8 @@ import com.voila.voilasailor.restaurantRegistration.RestaurantViewModelListner.R
 import com.voila.voilasailor.restaurantRegistration.Util.toasts
 import com.voila.voilasailor.restaurantRegistration.restaurantViewModel.RestaurantHomeViewModel
 import kotlinx.android.synthetic.main.activity_driver_registration.*
+import com.voila.voilasailor.notification.UI.NotificationFragment
+import kotlinx.android.synthetic.main.driver_profile_details.*
 
 
 class RestaurantHomeScreenActivity : AppCompatActivity(), RestaurantHomeListener {
@@ -48,8 +49,13 @@ class RestaurantHomeScreenActivity : AppCompatActivity(), RestaurantHomeListener
     lateinit var filterDishAdapter: ApplyFilterOptionAdapter
     var positions : Int = 0
 
+    var profileFragment:ProfileFragment = ProfileFragment()
+    private var TrackVerificationFragment:TrackVerificationFragment = TrackVerificationFragment()
+    var notificationFragment : NotificationFragment = NotificationFragment()
+
     var isProfileFragmentOpen : Boolean = false
     var isTrackVerifyFramentOpen : Boolean = false
+    var isNotificationFragOpen : Boolean = false
 
     var jsonObject:JsonObject = JsonObject()
 
@@ -70,31 +76,31 @@ class RestaurantHomeScreenActivity : AppCompatActivity(), RestaurantHomeListener
         restaurantHomeViewModel.isAccountVerifyOrNot(Helper.getAuthToken.authToken(this))
         binding.recyclerView.layoutManager = LinearLayoutManager(this)
 
-        binding.profileText.setOnClickListener {
-
-            val fm : FragmentManager = supportFragmentManager
-            val myFragment : ProfileFragment = ProfileFragment()
-            fm.beginTransaction().replace(R.id.fragment_view, myFragment).commit()
-
-            isProfileFragmentOpen = true
-            binding.fragmentView.visibility = View.VISIBLE
-            binding.layoutAccountUnderReview.visibility = View.GONE
-            binding.optionsParentLayout.visibility = View.GONE
-
-            binding.toolbar.title = "Registration process"
-            binding.imageView.visibility = View.VISIBLE
-
-        }
-
         binding.imageView.setOnClickListener { backImageClickEvent() }
 
+        binding.notificationImg.setOnClickListener {
+            val fm : FragmentManager = supportFragmentManager
+            notificationFragment = NotificationFragment()
+            binding.fragmentView.visibility = View.VISIBLE
+            binding.toolbar.title = "Notification"
+
+            val bundle:Bundle = Bundle()
+            bundle.putString("request_token", Helper.getAuthToken.authToken(this))
+
+            notificationFragment.arguments = bundle
+
+            fm.beginTransaction().replace(R.id.fragment_view, notificationFragment).commit()
+            isNotificationFragOpen = true
+            binding.btnSaveConfirm.visibility = View.GONE
+            binding.notificationImg.visibility = View.GONE
+        }
     }
 
     // show a registartion process when profile click
     fun showProfile(){
         val fm : FragmentManager = supportFragmentManager
-        val myFragment : ProfileFragment = ProfileFragment()
-        fm.beginTransaction().replace(R.id.fragment_view, myFragment).commit()
+        profileFragment = ProfileFragment()
+        fm.beginTransaction().replace(R.id.fragment_view, profileFragment).commit()
 
         isProfileFragmentOpen = true
         binding.fragmentView.visibility = View.VISIBLE
@@ -121,16 +127,16 @@ class RestaurantHomeScreenActivity : AppCompatActivity(), RestaurantHomeListener
                 layout_account_under_review.visibility = View.GONE
                 binding.optionsParentLayout.visibility = View.GONE
                 val fm : FragmentManager = supportFragmentManager
-                val myFragment : TrackVerificationFragment = TrackVerificationFragment()
+                TrackVerificationFragment = TrackVerificationFragment()
                 binding.fragmentView.visibility = View.VISIBLE
                 toolbar.title = "Track Verification"
-                fm.beginTransaction().replace(R.id.fragment_view, myFragment,TAG_FRAGMENT).addToBackStack(null).commit()
+                fm.beginTransaction().replace(R.id.fragment_view, TrackVerificationFragment,TAG_FRAGMENT).addToBackStack(null).commit()
                 isTrackVerifyFramentOpen = true
 
                 val bundle = Bundle()
                 bundle.putString("tag", "Restaurant")
                 bundle.putString("auth_token",Helper.getAuthToken.authToken(this))
-                myFragment.arguments = bundle
+                TrackVerificationFragment.arguments = bundle
 
                 true
             }
@@ -138,6 +144,9 @@ class RestaurantHomeScreenActivity : AppCompatActivity(), RestaurantHomeListener
         }
     }
 
+    override fun onPrepareOptionsMenu(menu: android.view.Menu?): Boolean {
+        return super.onPrepareOptionsMenu(menu)
+    }
 
     private fun backImageClickEvent() {
         if (isProfileFragmentOpen){
@@ -268,6 +277,7 @@ class RestaurantHomeScreenActivity : AppCompatActivity(), RestaurantHomeListener
                 }
             })
     }
+
 
     private fun showFilterDish(it: GetAllDishWithFilterOptionResponse) {
         var list : ArrayList<FilterDish> = ArrayList()
@@ -450,7 +460,6 @@ class RestaurantHomeScreenActivity : AppCompatActivity(), RestaurantHomeListener
             binding.underReviewText.visibility = View.VISIBLE
 
             binding.filterImg.visibility = View.GONE
-            binding.profileText.visibility = View.VISIBLE
             binding.btnSaveConfirm.visibility = View.GONE
 
             binding.toolbar.title = "Account Under Review"
@@ -460,18 +469,13 @@ class RestaurantHomeScreenActivity : AppCompatActivity(), RestaurantHomeListener
         else {
             restaurantHomeViewModel.dismissProgressDai()
             binding.filterImg.visibility = View.VISIBLE
-            binding.profileText.visibility = View.GONE
             restaurantHomeViewModel.getAllMenu(Helper.getAuthToken.authToken(this),Helper.getRestaurantId.restaurantId(this))
         }
     }
 
     override fun onBackPressed() {
         if (isTrackVerifyFramentOpen) {
-            val fm: FragmentManager = supportFragmentManager
-            val myFragment: TrackVerificationFragment =
-                fm.findFragmentById(R.id.fragment_view) as TrackVerificationFragment
-
-            if(myFragment.isVisible){
+            if(TrackVerificationFragment.isVisible){
                 if (isTrackVerifyFramentOpen){
                     backImageClickEvent()
                 }
@@ -484,15 +488,25 @@ class RestaurantHomeScreenActivity : AppCompatActivity(), RestaurantHomeListener
             }
         }
         else if (isProfileFragmentOpen) {
-            val fm2: FragmentManager = supportFragmentManager
-            val profileFragment: ProfileFragment =
-                fm2.findFragmentById(R.id.fragment_view) as ProfileFragment
-
             if (profileFragment.isVisible){
                 if (isProfileFragmentOpen){
                     backImageClickEvent()
                 }
                 else{
+                    finishAffinity()
+                }
+            }
+            else{
+                finishAffinity()
+            }
+        }
+        else if (isNotificationFragOpen){
+            if (notificationFragment.isVisible){
+                if (isNotificationFragOpen){
+                    isNotificationFragOpen = false
+                    binding.notificationImg.visibility = View.VISIBLE
+                    backImageClickEvent()
+                }else {
                     finishAffinity()
                 }
             }

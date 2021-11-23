@@ -360,7 +360,6 @@ class DriverProfileActivity : AppCompatActivity(), DriverProfileViewModelListene
         }
     }
 
-    @DelicateCoroutinesApi
     override fun onVehicleDocumentUpdate() {
         GlobalScope.launch(Dispatchers.Main) {
             profileViewModel.updateVehicleProfileObservable()

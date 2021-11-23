@@ -41,6 +41,7 @@ import com.voila.voilasailor.driverRegistration.NetworkResponse.TrackDriverRegis
 import com.voila.voilasailor.driverRegistration.ViewModelFactory.DriverRegistrationViewModelFactory
 import com.voila.voilasailor.driverRegistration.ViewModelListener.DriverRegistrationViewModelListener
 import com.voila.voilasailor.driverRegistration.viewModel.DriverRegistrationViewModel
+import com.voila.voilasailor.notification.UI.NotificationFragment
 import com.voila.voilasailor.restaurantRegistration.RestaurantModel.NeedToProcessComplete
 import com.voila.voilasailor.restaurantRegistration.UI.TrackVerificationFragment
 import com.voila.voilasailor.restaurantRegistration.Util.toasts
@@ -90,6 +91,9 @@ class DriverRegistrationActivity : AppCompatActivity(), DriverRegistrationViewMo
     lateinit var fm:FragmentManager
     lateinit var myFragment : RateCardFragment
     lateinit var myFragment2 : TrackVerificationFragment
+    private lateinit var notificationFragment : NotificationFragment
+    var isNotificationFragOpen : Boolean = false
+
 
     //get title of doc name
     private var docsTitle = ObservableField<String>()
@@ -118,6 +122,25 @@ class DriverRegistrationActivity : AppCompatActivity(), DriverRegistrationViewMo
             ),
             100
         )
+
+        binding.notificationImg.setOnClickListener {
+            fm = supportFragmentManager
+            notificationFragment = NotificationFragment()
+            binding.fragmentView.visibility = View.VISIBLE
+            binding.toolbar.title = "Notification"
+
+            fm.beginTransaction().replace(R.id.fragment_view, notificationFragment,TAG_FRAGMENT).addToBackStack("tag").commit()
+            isNotificationFragOpen = true
+            isRateCardFrag = false
+            isTrackVerificationFrag = false
+
+            val bundle:Bundle = Bundle()
+            bundle.putString("request_token", Helper.getAuthToken.authToken(this))
+            notificationFragment.arguments = bundle
+
+            binding.notificationImg.visibility = View.GONE
+
+        }
 
         cropActivityResultLauncher = registerForActivityResult(cropActivityResultContract){
             it?.let { uri ->
@@ -627,27 +650,36 @@ class DriverRegistrationActivity : AppCompatActivity(), DriverRegistrationViewMo
         private const val SIMPLE_TEST = 100
     }
 
-    override fun onBackPressed() {
-        super.onBackPressed()
-        if (isRateCardFrag) {
-//            val fragment: RateCardFragment? =
-//                supportFragmentManager.findFragmentByTag(TAG_FRAGMENT) as RateCardFragment?
-//
-            myFragment.allowReturnTransitionOverlap
-            toolbar.title = "Voila Sailor"
-            layout_account_under_review.visibility = View.VISIBLE
-            myFragment.isRateChange.set(false)
-            binding.fragmentView.visibility = View.GONE
-        }
-        if (isTrackVerificationFrag) {
-//            val fragment2: TrackVerificationFragment? =
-//                supportFragmentManager.findFragmentByTag(TAG_FRAGMENT) as TrackVerificationFragment?
+    override fun onResume() {
+        super.onResume()
+        Log.d("DeleteItems", "onResume: on Re")
+    }
 
-            myFragment2.allowReturnTransitionOverlap
-            toolbar.title = "Voila Sailor"
-            layout_account_under_review.visibility = View.VISIBLE
-            binding.fragmentView.visibility = View.GONE
+    override fun onBackPressed() {
+        when {
+            isRateCardFrag -> {
+                myFragment.allowReturnTransitionOverlap
+                toolbar.title = "Voila Sailor"
+                layout_account_under_review.visibility = View.VISIBLE
+                myFragment.isRateChange.set(false)
+                binding.fragmentView.visibility = View.GONE
+            }
+            isTrackVerificationFrag -> {
+                myFragment2.allowReturnTransitionOverlap
+                toolbar.title = "Voila Sailor"
+                layout_account_under_review.visibility = View.VISIBLE
+                binding.fragmentView.visibility = View.GONE
+            }
+            isNotificationFragOpen -> {
+                notificationFragment.allowReturnTransitionOverlap
+                toolbar.title = "Voila Sailor"
+                binding.notificationImg.visibility = View.VISIBLE
+                layout_account_under_review.visibility = View.VISIBLE
+                binding.fragmentView.visibility = View.GONE
+            }
+
         }
+        super.onBackPressed()
 
     }
 

@@ -4,7 +4,6 @@ import android.app.Activity
 import android.app.ProgressDialog
 import android.content.Context
 import android.content.Intent
-import android.widget.Toast
 import androidx.databinding.ObservableField
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -30,12 +29,6 @@ class RestaurantRegistrationViewModel(var context: Context): ViewModel() {
 
     var mainRepository: MianRepository = MianRepository()
     var restaurantRepository : RestaurantRepository = RestaurantRepository()
-
-    fun showRegistrationForm(){
-        progressDialog = Helper.DialogsUtils.showProgressDialog(context,"Please wait getting form for you")
-        getAllRequiredRestaurantDocs("Restaurant")
-        listener.onOwnerBasicDetailFound()
-    }
 
 
     fun dismissProgressDai(){
@@ -150,6 +143,8 @@ class RestaurantRegistrationViewModel(var context: Context): ViewModel() {
     private val addRestaurantPhotoLiveData : MutableLiveData<AddRestaurantPhotoResponse> = restaurantRepository.addRestaurantPhotoObservable()
     var getRestaurantVerificationLiveData : MutableLiveData<RestaurantVerificationTrackResponse> = restaurantRepository.verificationTrackObservable()
 
+
+
     /*----------------------------------------- CALLING REPO FUN -----------------------*/
     private fun getAllRequiredRestaurantDocs(title: String){
         mainRepository.getAllRequiredRestaurantDocs(title)
@@ -178,6 +173,8 @@ class RestaurantRegistrationViewModel(var context: Context): ViewModel() {
     private fun trackVerification(tag:String,request_token:String){
         restaurantRepository.getRestVerificationTrack(tag,request_token)
     }
+
+
 
     /*-------------------------------------- OBSERVABLE --------------------------*/
     fun getAllRequiredRestaurantObservable() : MutableLiveData<GetAllRestaurantDocsResponse>{
@@ -208,4 +205,6 @@ class RestaurantRegistrationViewModel(var context: Context): ViewModel() {
     fun restVerificationTrackObservable(): MutableLiveData<RestaurantVerificationTrackResponse>{
         return getRestaurantVerificationLiveData
     }
+
+
 }

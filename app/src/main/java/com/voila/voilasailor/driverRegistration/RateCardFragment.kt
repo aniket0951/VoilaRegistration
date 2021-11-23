@@ -6,9 +6,7 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ObservableBoolean
@@ -72,6 +70,12 @@ class RateCardFragment : Fragment(), RateCardViewModelListener {
 
 
         } ?: throw Exception("Invalid Activity")
+        setHasOptionsMenu(true)
+    }
+
+    override fun onPrepareOptionsMenu(menu: Menu) {
+        val item = menu.findItem(R.id.rate_card)
+        if (item != null) item.isVisible = false
     }
 
     override fun onSystemRateSelect() {

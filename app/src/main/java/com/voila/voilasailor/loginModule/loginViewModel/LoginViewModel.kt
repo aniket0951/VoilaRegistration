@@ -4,6 +4,7 @@ import android.app.ProgressDialog
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
+import android.util.Log
 import androidx.databinding.ObservableField
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -70,12 +71,19 @@ class LoginViewModel(var context: Context) : ViewModel() {
 
                 progressDialog.dismiss()
                 listner.onFiledEmpty()
-           // Log.d("verifyOtp", "verifyTheOtp: please enter otp")
         }
         else{
             val otp = editOtp1.get()+editOtp2.get()+editOtp3.get()+editOtp4.get();
             sessionId.get()?.let { getFCMToken(otp, it, FCM_TOKEN.get().toString()) }
         }
+    }
+
+    fun testFCMToken(){
+        val messaging = FirebaseMessaging.getInstance()
+        messaging.token.addOnSuccessListener { s ->
+            Log.d("FCMTOKEN", "onCreate: $s")
+        }
+
     }
 
     //getting fcm token
@@ -84,7 +92,9 @@ class LoginViewModel(var context: Context) : ViewModel() {
             .addOnCompleteListener { task ->
                 if (task.isSuccessful) {
                     FCM_TOKEN.set(task.result.toString())
-                  otpVerify(otp, sessionId, fcm_token)
+                    Log.d("FCMTOKEN", "getFCMToken: passing fcm is $fcm_token",)
+                    Log.d("FCMTOKEN", "getFCMToken: getting from task fcm is $fcm_token",)
+                  otpVerify(otp, sessionId, task.result.toString())
                     listner.onVerifyOtpSuccess()
                 } else {
                     progressDialog.dismiss()
@@ -92,7 +102,6 @@ class LoginViewModel(var context: Context) : ViewModel() {
                 }
             }
     }
-
 
     //save user locally
     fun saveUserLocally(otpVerificationResponse: OtpVerificationResponse, get: String?) {

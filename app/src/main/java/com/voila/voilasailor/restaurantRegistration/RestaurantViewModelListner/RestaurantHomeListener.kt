@@ -22,4 +22,5 @@ interface RestaurantHomeListener {
 
     //remove dish
     fun onRemoveTheDishSuccess()
+
 }

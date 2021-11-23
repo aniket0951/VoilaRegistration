@@ -3,9 +3,11 @@ package com.voila.voilasailor.API
 import com.google.gson.JsonObject
 import com.voila.voilasailor.NetworkResponse.GetAllRequiredDocsResponse
 import com.voila.voilasailor.NetworkResponse.GetAllRestaurantDocsResponse
+import com.voila.voilasailor.notification.NetworkResponse.NotificationResponse
 import com.voila.voilasailor.driverRegistration.NetworkResponse.*
 import com.voila.voilasailor.loginModule.NetworkResponse.OtpVerificationResponse
 import com.voila.voilasailor.loginModule.NetworkResponse.SendOtpResponse
+import com.voila.voilasailor.notification.NetworkResponse.DeleteNotificationResponse
 import com.voila.voilasailor.restaurantRegistration.RestaurantNetworkResponse.*
 import io.reactivex.Observable
 import okhttp3.MultipartBody
@@ -172,4 +174,11 @@ interface ApiService {
 
     @POST(WebServer.POST_GET_DISH_WITH_FILTER)
     fun getAllDishWithFilter(@Query("api_token") api_token: String?,@Body jsonObject: JsonObject) : Observable<GetAllDishWithFilterOptionResponse?>?
+
+    /*----------------------------------------------  SAILOR NOTIFICATIONS  --------------------------------*/
+    @GET(WebServer.GET_SAILOR_NOTIFICATION)
+    fun getSailorNotification(@Query("request_token")request_token:String?): Observable<NotificationResponse?>?
+
+    @DELETE(WebServer.DELETE_NOTIFICATION)
+    fun removeNotification(@Query("id")id:String?):Observable<DeleteNotificationResponse?>?
 }

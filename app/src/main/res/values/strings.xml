@@ -73,6 +73,7 @@
     <string name="confirm_system_rate">Confirm System Rate</string>
     <string name="confirm_conform_rate">Conform Custom Rate</string>
     <string name="change_rate_card">Change Rate Card</string>
+    <string name="notification_title">Notification Title</string>
 
     <!-- Menu items -->
     <string-array name="menuItems">

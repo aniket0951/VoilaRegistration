@@ -61,7 +61,7 @@ class MainActivityViewModel(var context: Context) : ViewModel(){
         authToken.set(sharedPreferences.getString("authToken",""))
         registrationForCheck.set(sharedPreferences.getString("registrationFor",""))
 
-        Log.d("regCheck", "checkUserLogin: ${registrationForCheck.get()}")
+//        Log.d("regCheck", "checkUserLogin: ${registrationForCheck.get()}")
 
         if (userId.get()!=null && userId.get().isNullOrEmpty() && authToken.get()!=null && registrationForCheck.get()!=null){
             isLoading = true
