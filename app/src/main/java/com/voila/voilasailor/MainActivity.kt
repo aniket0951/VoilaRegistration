@@ -22,13 +22,14 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.voila.voilasailor.Adapter.RequireRestaurantDocsAdapter
 import com.voila.voilasailor.Adapter.RequiredDocsAdapter
+import com.voila.voilasailor.Helper.Helper
 import com.voila.voilasailor.MainViewModelListener.MainViewModelListener
 import com.voila.voilasailor.Model.*
 import com.voila.voilasailor.NetworkResponse.GetAllRequiredDocsResponse
 import com.voila.voilasailor.NetworkResponse.GetAllRestaurantDocsResponse
 import com.voila.voilasailor.databinding.ActivityMainBinding
 import com.voila.voilasailor.loginModule.LoginActivity
-import com.voila.voilasailor.restaurantRegistration.Util.toast
+import com.voila.voilasailor.restaurantRegistration.Util.toasts
 import com.voila.voilasailor.viewModel.MainActivityViewModel
 import com.voila.voilasailor.viewModel.MainViewModelFactory
 import kotlinx.android.synthetic.main.required_docs_bottomsheet.*
@@ -61,16 +62,18 @@ class MainActivity : AppCompatActivity() , MainViewModelListener {
         activityMainBinding.main = mainActivityViewModel
         mainActivityViewModel.listener = this
         mainActivityViewModel.checkUserLogin()
+        mainActivityViewModel.isNetworkStateCheck()
         activityMainBinding.executePendingBindings()
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-            ActivityCompat.requestPermissions(
-                this, arrayOf(
-                    Manifest.permission.RECEIVE_SMS,
-                    Manifest.permission.READ_SMS
-                ),
-                100)
-        }
+
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+//            ActivityCompat.requestPermissions(
+//                this, arrayOf(
+//                    Manifest.permission.RECEIVE_SMS,
+//                    Manifest.permission.READ_SMS
+//                ),
+//                100)
+//        }
 
         activityMainBinding.recyclerView.layoutManager = LinearLayoutManager(this)
 
@@ -108,7 +111,7 @@ class MainActivity : AppCompatActivity() , MainViewModelListener {
                 mainActivityViewModel.checkUserLogin()
             }
             else {
-                toast("permission denied please try again")
+                toasts("permission denied please try again")
             }
         }
 
@@ -136,6 +139,9 @@ class MainActivity : AppCompatActivity() , MainViewModelListener {
                         showDocsRequiredList(it)
                         mainActivityViewModel.getAppRequiredDocsObservable()
                             .removeObservers(this)
+                    }
+                    else{
+                        toasts("Please try again and check your internet connection")
                     }
                 })
     }
@@ -179,14 +185,14 @@ class MainActivity : AppCompatActivity() , MainViewModelListener {
             val intent = Intent(this@MainActivity,LoginActivity::class.java)
             intent.putExtra("registrationFor",mainActivityViewModel.registrationFor.get())
             startActivity(intent)
-            finishAffinity()
+          //  finishAffinity()
         }
 
         bottomSheetDialog.next.setOnClickListener {
             val intent = Intent(this@MainActivity,LoginActivity::class.java)
             intent.putExtra("registrationFor",mainActivityViewModel.registrationFor.get())
             startActivity(intent)
-            finishAffinity()
+           // finishAffinity()
         }
         bottomSheetDialog.show()
     }

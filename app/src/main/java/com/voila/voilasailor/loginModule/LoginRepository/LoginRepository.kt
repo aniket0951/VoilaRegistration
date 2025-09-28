@@ -1,5 +1,6 @@
 package com.voila.voilasailor.loginModule.LoginRepository
 
+import android.annotation.SuppressLint
 import androidx.lifecycle.MutableLiveData
 import com.voila.voilasailor.API.ApiClient
 import com.voila.voilasailor.API.WebServer
@@ -26,6 +27,7 @@ class LoginRepository {
     }
 
     /*------------------------------ SEND REQUEST TO REPO -------------------------*/
+    @SuppressLint("CheckResult")
     fun sendOtpOnMobileNumber(mobile_number: String){
 
         val apiClient = ApiClient.RetrofitCall.retrofit
@@ -44,6 +46,7 @@ class LoginRepository {
     }
 
     //verify the otp
+    @SuppressLint("CheckResult")
     fun verifyOtp(otp: String, sessionId: String, fcm_token: String, mobile_number: String){
         val jsonObject = JsonObject()
         jsonObject.addProperty("mobile_number", mobile_number)

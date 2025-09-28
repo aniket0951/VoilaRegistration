@@ -4,11 +4,8 @@ import android.annotation.SuppressLint
 import androidx.lifecycle.MutableLiveData
 import com.voila.voilasailor.API.ApiClient
 import com.voila.voilasailor.API.WebServer
-import com.voila.voilasailor.restaurantRegistration.RestaurantNetworkResponse.AddRestaurantOwnerDetailsResponse
-import com.voila.voilasailor.restaurantRegistration.RestaurantNetworkResponse.AddRestaurantPhotoResponse
-import com.voila.voilasailor.restaurantRegistration.RestaurantNetworkResponse.AddRestaurantProfileResponse
-import com.voila.voilasailor.restaurantRegistration.RestaurantNetworkResponse.TrackRegistrationProcessResponse
 import com.google.gson.JsonObject
+import com.voila.voilasailor.restaurantRegistration.RestaurantNetworkResponse.*
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
@@ -21,6 +18,7 @@ class RestaurantRepository {
     var trackRestaurantRegistrationLiveData : MutableLiveData<TrackRegistrationProcessResponse> = MutableLiveData()
     var addRestaurantProfileDetailsLiveData : MutableLiveData<AddRestaurantProfileResponse> = MutableLiveData()
     var addRestaurantPhotoLiveData : MutableLiveData<AddRestaurantPhotoResponse> = MutableLiveData()
+    var getRestaurantVerificationLiveData : MutableLiveData<RestaurantVerificationTrackResponse> = MutableLiveData()
 
     /*------------------------------ OBSERVABLE FUN---------------------------*/
 
@@ -44,6 +42,11 @@ class RestaurantRepository {
         return  addRestaurantPhotoLiveData
     }
 
+
+    // get restaurant verification tracker
+    fun verificationTrackObservable(): MutableLiveData<RestaurantVerificationTrackResponse>{
+        return getRestaurantVerificationLiveData
+    }
 
     /*----------------------------------- CALL FUN -----------------------------*/
 
@@ -117,5 +120,21 @@ class RestaurantRepository {
             })
     }
 
+    // get restaurant verification tracker
+    @SuppressLint("CheckResult")
+    fun getRestVerificationTrack(tag:String, request_token:String){
+        val apiClient = ApiClient.RetrofitCall.retrofit
+        val restaurantVerificationObservable : Observable<RestaurantVerificationTrackResponse?>? = apiClient.getRestaurantVerification(WebServer.external_api_token,tag, request_token)
+
+        restaurantVerificationObservable
+            ?.subscribeOn(Schedulers.io())
+            ?.unsubscribeOn(Schedulers.computation())
+            ?.observeOn(AndroidSchedulers.mainThread())
+            ?.subscribe({
+                getRestaurantVerificationLiveData.postValue(it)
+            },{
+                getRestaurantVerificationLiveData.postValue(null)
+            })
+    }
 
 }

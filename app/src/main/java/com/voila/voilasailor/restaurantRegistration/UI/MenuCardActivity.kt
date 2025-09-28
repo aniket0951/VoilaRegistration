@@ -1,6 +1,5 @@
 package com.voila.voilasailor.restaurantRegistration.UI
 
-
 import android.Manifest
 import android.app.Activity
 import android.content.Context
@@ -32,7 +31,7 @@ import com.voila.voilasailor.restaurantRegistration.RestaurantNetworkResponse.Ge
 import com.voila.voilasailor.restaurantRegistration.RestaurantNetworkResponse.ResultData
 import com.voila.voilasailor.restaurantRegistration.RestaurantViewModelListner.MenuCardViewListener
 import com.voila.voilasailor.restaurantRegistration.Util.getFileName
-import com.voila.voilasailor.restaurantRegistration.Util.toast
+import com.voila.voilasailor.restaurantRegistration.Util.toasts
 import com.voila.voilasailor.restaurantRegistration.restaurantViewModel.MenuCardViewModel
 import id.zelory.compressor.Compressor
 import id.zelory.compressor.constraint.format
@@ -49,10 +48,6 @@ import java.io.File
 import java.io.FileInputStream
 import java.io.FileOutputStream
 import java.util.*
-
-
-
-
 
 class MenuCardActivity : AppCompatActivity(),MenuCardViewListener,
     GetDishRequiredDocsAdapter.OnItemClickListener {
@@ -128,11 +123,11 @@ class MenuCardActivity : AppCompatActivity(),MenuCardViewListener,
     }
 
     override fun onSuccess(string: String) {
-        this.toast(string)
+        this.toasts(string)
     }
 
     override fun onFailed(string: String) {
-        this.toast(string)
+        this.toasts(string)
     }
 
     override fun onMoveHomeScreen() {

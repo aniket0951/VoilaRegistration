@@ -8,9 +8,15 @@ import com.voila.voilasailor.API.WebServer
 import com.voila.voilasailor.driverRegistration.NetworkResponse.*
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
+import rx.Subscription
+import io.reactivex.observers.DisposableObserver
+import io.reactivex.disposables.CompositeDisposable
+import rx.subscriptions.CompositeSubscription
+
 
 class DriverRegistrationRepository {
 
@@ -20,6 +26,8 @@ class DriverRegistrationRepository {
     private val addKYCDocumentLiveData : MutableLiveData<AddKYCDocumentResponse> = MutableLiveData()
     private val addVehicleDetailsLiveData : MutableLiveData<AddVehicleDetailsResponse> = MutableLiveData()
     private val addVehicleProfileLiveData : MutableLiveData<AddVehicleProfileResponse> = MutableLiveData()
+
+     var subscription : Subscription? = null
 
     /*---------------------------  OBSERVABLE ----------------------------------*/
 
@@ -146,10 +154,15 @@ class DriverRegistrationRepository {
 
     //add vehicle profile details
     @SuppressLint("CheckResult")
-    fun addVehicleProfile(body: MultipartBody.Part, title: RequestBody, request_token: RequestBody){
+    fun addVehicleProfile(body: MultipartBody.Part, title: RequestBody, request_token: RequestBody) {
 
         val apiClient = ApiClient.RetrofitCall.retrofit
         val addKYCDocumentObservable : Observable<AddVehicleProfileResponse?>? = apiClient.addVehicleProfile(body,title, request_token)
+
+        if (subscription !=null && !subscription!!.isUnsubscribed){
+            subscription!!.unsubscribe()
+            subscription = null
+        }
 
         addKYCDocumentObservable
             ?.subscribeOn(Schedulers.io())
@@ -160,6 +173,7 @@ class DriverRegistrationRepository {
             },{
                 addVehicleProfileLiveData.postValue(null)
             })
+
     }
 
 }

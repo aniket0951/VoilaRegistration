@@ -57,6 +57,15 @@ object WebServer {
     //update vehicle documents
     const val POST_UPDATE_VEHICLE_DOCUMENTS = BASE_URL + "updateVehicleDocument"
 
+    /*-- get system rate card -- */
+    const val GET_SYSTEM_RATE_CARD = BASE_URL + "getSystemRates"
+
+    /*--- confirm a rate card ---*/
+    const val  POST_CONFORM_RATE_CARD = BASE_URL + "createCustomeRateCard"
+
+    /*-- get custom rate card --*/
+    const val POST_CUSTOM_RATE_CARD = BASE_URL + "getDriverVehicleInfo"
+
     /*-------------------------- RESTAURANT REGISTRATION MODULE ----------------------------- */
 
     //add new restaurant owner details
@@ -98,6 +107,9 @@ object WebServer {
     //update restaurant documents
     const val POST_UPDATE_RESTAURANT_DOCUMENT = BASE_URL + "updateRestaurantProfile"
 
+   // restaurant verification tracker
+   const val GET_RESTAURANT_VERIFICATION_TRACKER = BASE_URL + "restaurantVerificationTracker"
+
     /*------------------------ FILTER OPTIONS -----------------*/
 
     //get filter options
@@ -114,4 +126,9 @@ object WebServer {
 
     //get all required docs for dish
     const val GET_ALL_REQUIRED_DISH_DOCS = BASE_URL + "getDishRequiredDocs"
+
+
+    /* ------------------------  NOTIFICATIONS --------------------------------- */
+    const val GET_SAILOR_NOTIFICATION = BASE_URL + "getHardNotifications"
+    const val DELETE_NOTIFICATION = BASE_URL + "deleteNotification"
 }

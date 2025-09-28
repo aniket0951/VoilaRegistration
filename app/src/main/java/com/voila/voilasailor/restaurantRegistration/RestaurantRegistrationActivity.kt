@@ -41,7 +41,7 @@ import com.voila.voilasailor.restaurantRegistration.RestaurantNetworkResponse.Tr
 import com.voila.voilasailor.restaurantRegistration.RestaurantViewModelListner.RestaurantViewModelListener
 import com.voila.voilasailor.restaurantRegistration.Util.getFileName
 import com.voila.voilasailor.restaurantRegistration.Util.snackbar
-import com.voila.voilasailor.restaurantRegistration.Util.toast
+import com.voila.voilasailor.restaurantRegistration.Util.toasts
 import com.voila.voilasailor.restaurantRegistration.restaurantViewModel.RestaurantRegistrationViewModel
 import id.zelory.compressor.Compressor
 import id.zelory.compressor.constraint.format
@@ -88,7 +88,6 @@ class RestaurantRegistrationActivity : AppCompatActivity(),RestaurantViewModelLi
     @RequiresApi(Build.VERSION_CODES.KITKAT)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-       // setContentView(R.layout.activity_restaurant_registration)
 
         binding = DataBindingUtil.setContentView(this, R.layout.activity_restaurant_registration)
         restaurantViewModel = ViewModelProviders.of(this, RestaurantViewModelFactory(this)).get(RestaurantRegistrationViewModel::class.java)
@@ -148,7 +147,7 @@ class RestaurantRegistrationActivity : AppCompatActivity(),RestaurantViewModelLi
            .observe(this, Observer {
                if (it != null && it.result) {
                    showRegistrationFormToUser(it)
-                   toast("From All Required Info")
+                   toasts("From All Required Info")
                }
                else onFailed("Basic Details Not Found")
            })
@@ -216,6 +215,9 @@ class RestaurantRegistrationActivity : AppCompatActivity(),RestaurantViewModelLi
                             onFailed(it.message)
                         }
 
+                    }
+                    else{
+                        onFailed("Failed Please check your internet connection or try again")
                     }
                 })
     }
@@ -336,7 +338,7 @@ class RestaurantRegistrationActivity : AppCompatActivity(),RestaurantViewModelLi
 
     //set registration title on toolbar
     private fun setRegistrationTitle(it: TrackRegistrationProcessResponse) {
-        Log.d("processCode", "setRegistrationTitle: ${it.processCompleteStatus}")
+        //Log.d("processCode", "setRegistrationTitle: ${it.processCompleteStatus}")
         if (it.processCompleteStatus!=null){
             when(it.processCompleteStatus){
 
@@ -380,7 +382,14 @@ class RestaurantRegistrationActivity : AppCompatActivity(),RestaurantViewModelLi
                         onSuccess(it.message)
                         restaurantViewModel.trackRegistrationProcess()
                     }
+                    else{
+                        restaurantViewModel.dismissProgressDai()
+                        Helper.onFailedMSG.onFailed(this,it.message)
+                    }
 
+                }
+                else{
+                    onFailed("Failed Please check your internet connection or try again")
                 }
             })
     }
@@ -392,7 +401,7 @@ class RestaurantRegistrationActivity : AppCompatActivity(),RestaurantViewModelLi
                     if (it!=null ){
                         if (it.result){
                             restaurantViewModel.dismissProgressDai()
-                            onSuccess(it.message)
+                            onSuccess("Document uploaded successfully")
                             restaurantViewModel.trackRegistrationProcess()
                             isShowSnackBar = true
                         }
@@ -400,6 +409,9 @@ class RestaurantRegistrationActivity : AppCompatActivity(),RestaurantViewModelLi
                             restaurantViewModel.dismissProgressDai()
                             onFailed("Please try again the image is not uploaded")
                         }
+                    }
+                    else{
+                        onFailed("Failed Please check your internet connection or try again")
                     }
                 })
         }

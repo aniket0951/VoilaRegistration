@@ -17,8 +17,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:background="@color/off_white"
-        android:backgroundTint="@color/off_white"
+        android:background="@color/white"
+        android:backgroundTint="@color/white"
         tools:context=".driverRegistration.DriverRegistrationActivity">
 
         <!-- AppBar layout for using Toolbar as AppBar -->
@@ -67,6 +67,21 @@
                     android:layout_marginLeft="5dp"
                     />
 
+                <ImageView
+                    android:id="@+id/notification_img"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_baseline_notifications_24"
+                    app:tint="#ffff"
+                    tools:ignore="MissingConstraints,RtlSymmetry"
+                    android:visibility="visible"
+                    android:layout_marginRight="60dp"
+                    android:layout_marginEnd="60dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    />
+
             </androidx.constraintlayout.widget.ConstraintLayout>
 
         </com.google.android.material.appbar.AppBarLayout>
@@ -86,11 +101,17 @@
             app:spb_animateToCurrentProgressState="true"
             app:spb_checkStateCompleted="true"/>
 
+        <androidx.fragment.app.FragmentContainerView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/fragment_view"
+            android:visibility="gone"
+            />
 
         <!--Recycler view-->
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         >
 
         <androidx.appcompat.widget.LinearLayoutCompat
@@ -142,7 +163,6 @@
 
             </androidx.appcompat.widget.LinearLayoutCompat>
 
-
             <!-- to show a account is under review layout -->
             <androidx.appcompat.widget.LinearLayoutCompat
                 android:layout_width="match_parent"
@@ -150,7 +170,8 @@
                 android:orientation="vertical"
                 android:layout_gravity="center"
                 android:gravity="center"
-                android:background="@color/off_white"
+                android:background="@color/white"
+                android:backgroundTint="@color/white"
                 android:id="@+id/layout_account_under_review"
                 >
 
@@ -177,7 +198,7 @@
                     android:layout_gravity="end"
                     android:layout_marginRight="15dp"
                     android:textAllCaps="false"
-                    android:visibility="visible"
+                    android:visibility="gone"
                     android:layout_marginBottom="15dp"
                     android:onClick="@{() -> driver.showProfileInformation()}"
                     android:id="@+id/profile_text"
@@ -206,6 +227,7 @@
                     />
 
             </androidx.appcompat.widget.LinearLayoutCompat>
+
 
 
         </androidx.appcompat.widget.LinearLayoutCompat>

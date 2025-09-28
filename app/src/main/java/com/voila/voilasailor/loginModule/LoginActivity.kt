@@ -20,6 +20,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.databinding.ObservableField
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import com.google.firebase.messaging.FirebaseMessagingService
 import com.voila.voilasailor.Helper.Helper
 import com.voila.voilasailor.Helper.SmsReceiver
 import com.voila.voilasailor.Helper.UpdateOTPReceiver
@@ -29,6 +30,10 @@ import com.voila.voilasailor.loginModule.LoginViewModelFactory.LoginViewModelFac
 import com.voila.voilasailor.loginModule.LoginViewModelListner.LoginViewModelListener
 import com.voila.voilasailor.loginModule.loginViewModel.LoginViewModel
 import kotlinx.android.synthetic.main.activity_login.*
+import com.google.firebase.messaging.FirebaseMessaging
+
+
+
 
 class LoginActivity : AppCompatActivity(),LoginViewModelListener {
 
@@ -108,6 +113,8 @@ class LoginActivity : AppCompatActivity(),LoginViewModelListener {
                 }
             }
         })
+
+
     }
 
     private fun TextView.makeLinks(vararg links: Pair<String, View.OnClickListener>) {
@@ -168,6 +175,7 @@ class LoginActivity : AppCompatActivity(),LoginViewModelListener {
         loginViewModel.sendOtpResponseObservable()
             .observe(this, Observer {
                 if (it != null && it.result) {
+                    Log.d("MyOtp", "onOTPSendSuccess: ${it.otp}")
                     if (it.details.equals("Insufficient Account Balance",ignoreCase = true)){
                         onOTPSendFailed()
                     }
@@ -221,22 +229,6 @@ class LoginActivity : AppCompatActivity(),LoginViewModelListener {
         Toast.makeText(this, "Login Successfully", Toast.LENGTH_SHORT).show()
     }
 
-    override fun onStart() {
-        super.onStart()
-        mUpdateOtpReceiver = UpdateOTPReceiver()
-        registerReceiver(mUpdateOtpReceiver, IntentFilter("UPDATE_OTP"))
-        registerSMSReceiver()
-
-        mUpdateOtpReceiver?.bindListener(object : SmsListener {
-            override fun messageReceived(messageText: String?) {
-                // Log.d("SMSReads", "messageReceived: from sms listener from on Start $messageText")
-                otp_edit_box1.setText(messageText!!.substring(0))
-                otp_edit_box2.setText(messageText!!.substring(1))
-                otp_edit_box3.setText(messageText!!.substring(2))
-                otp_edit_box4.setText(messageText!!.substring(3))
-            }
-        })
-    }
 
     private fun registerSMSReceiver() {
         mSmsReceiver = SmsReceiver()
@@ -258,4 +250,10 @@ class LoginActivity : AppCompatActivity(),LoginViewModelListener {
                 }
             })
     }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+        finish()
+    }
+
 }

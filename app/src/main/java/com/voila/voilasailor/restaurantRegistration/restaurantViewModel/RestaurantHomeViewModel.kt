@@ -29,6 +29,7 @@ class RestaurantHomeViewModel(var context:Context) : ViewModel() {
     lateinit var adapter : FilterOptionAdapter
     var jsonObject : JsonObject = JsonObject()
 
+
     //to check is account verify
     fun isAccountVerifyOrNot(request_token: String){
         progressDialog = Helper.DialogsUtils.showProgressDialog(context,"Please wait we are check is account verify or not...")
@@ -139,7 +140,6 @@ class RestaurantHomeViewModel(var context:Context) : ViewModel() {
         }
     }
 
-
     /*-------------------------------------- IN REPOSITORY -------------------------*/
     private val isAccountVerifyLiveData : MutableLiveData<IsAccountVerifyResponse> = restaurantHomeRepository.isAccountVerifyObservable()
     private val getAllMenusLiveData : MutableLiveData<GetMenusResponse> = restaurantHomeRepository.getMenusObservable()
@@ -174,7 +174,6 @@ class RestaurantHomeViewModel(var context:Context) : ViewModel() {
     private fun dishRemove(jsonObject: JsonObject){
         restaurantHomeRepository.dishRemove(jsonObject)
     }
-
 
 
     /*-----------------------------------  CALL OBSERVABLE -----------------------*/

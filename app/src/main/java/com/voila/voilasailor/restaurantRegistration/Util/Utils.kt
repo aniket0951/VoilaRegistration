@@ -5,7 +5,11 @@ import android.content.Context
 import android.net.Uri
 import android.provider.OpenableColumns
 import android.view.View
+import android.widget.TextView
 import android.widget.Toast
+import androidx.annotation.DimenRes
+import androidx.annotation.DrawableRes
+import androidx.core.content.ContextCompat
 import com.voila.voilasailor.Helper.Helper
 import com.google.android.material.snackbar.Snackbar
 
@@ -34,8 +38,11 @@ fun View.snackbar(message: String) {
         }
     }.show()
 }
+ val toasts : Toast? = null
+fun Context.toasts(message: CharSequence) =
+   Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
 
-fun Context.toast(message: CharSequence) =
-    Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
+fun removeToast() = toasts!!.cancel()
 
 fun Context.authToken() = Helper.getAuthToken.authToken(this)
+

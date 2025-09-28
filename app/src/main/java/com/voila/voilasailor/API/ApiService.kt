@@ -3,9 +3,11 @@ package com.voila.voilasailor.API
 import com.google.gson.JsonObject
 import com.voila.voilasailor.NetworkResponse.GetAllRequiredDocsResponse
 import com.voila.voilasailor.NetworkResponse.GetAllRestaurantDocsResponse
+import com.voila.voilasailor.notification.NetworkResponse.NotificationResponse
 import com.voila.voilasailor.driverRegistration.NetworkResponse.*
 import com.voila.voilasailor.loginModule.NetworkResponse.OtpVerificationResponse
 import com.voila.voilasailor.loginModule.NetworkResponse.SendOtpResponse
+import com.voila.voilasailor.notification.NetworkResponse.DeleteNotificationResponse
 import com.voila.voilasailor.restaurantRegistration.RestaurantNetworkResponse.*
 import io.reactivex.Observable
 import okhttp3.MultipartBody
@@ -99,7 +101,9 @@ interface ApiService {
     fun updateRestaurantDocument(@Part image :MultipartBody.Part,@Part("title")title: RequestBody,@Part("request_token")request_token: RequestBody) : Observable<AddRestaurantPhotoResponse?>?
 
 
-
+    // to track restaurant verification
+    @GET(WebServer.GET_RESTAURANT_VERIFICATION_TRACKER)
+    fun getRestaurantVerification(@Query("api_token") api_token: String?,@Query("tag") tag:String?, @Query("request_token")request_token:String?) : Observable<RestaurantVerificationTrackResponse?>?
 
 
     /*----------------------------------------------  DRIVER MODULE --------------------------------*/
@@ -130,7 +134,7 @@ interface ApiService {
 
     //get all requested information before account is verify
     @GET(WebServer.GET_ALL_REQUESTED_INFORMATION)
-    fun getAllRequestedInformation(@Query("api_token")api_token: String?,@Query("request_token")request_token: String) : Observable<DriverRequestedInfoResponse>??
+    fun getAllRequestedInformation(@Query("api_token")api_token: String?,@Query("request_token")request_token: String) : Observable<DriverRequestedInfoResponse>?
 
     //update personal info
     @POST(WebServer.POST_UPDATE_PERSONAL_INFORMATION)
@@ -152,6 +156,16 @@ interface ApiService {
     @POST(WebServer.POST_UPDATE_VEHICLE_DOCUMENTS)
     fun updateVehicleDocuments(@Part image :MultipartBody.Part,@Part("title")title: RequestBody,@Part("request_token")request_token: RequestBody) : Observable<AddVehicleProfileResponse?>?
 
+    //get system rate card
+    @GET(WebServer.GET_SYSTEM_RATE_CARD)
+    fun getSystemRateCard(@Query("auth_token")auth_token:String): Observable<SystemRateCardResponse?>?
+
+    @POST(WebServer.POST_CONFORM_RATE_CARD)
+    fun conformRateCard(@Body jsonObject: JsonObject): Observable<ConformRateCardResponse?>?
+
+    @POST(WebServer.POST_CUSTOM_RATE_CARD)
+    fun getCustomRateCard(@Body jsonObject: JsonObject): Observable<CustomRateCardResponse?>?
+
     /*----------------------------------------------  FILTER OPTIONS --------------------------------*/
 
     //get all filter options
@@ -160,4 +174,11 @@ interface ApiService {
 
     @POST(WebServer.POST_GET_DISH_WITH_FILTER)
     fun getAllDishWithFilter(@Query("api_token") api_token: String?,@Body jsonObject: JsonObject) : Observable<GetAllDishWithFilterOptionResponse?>?
+
+    /*----------------------------------------------  SAILOR NOTIFICATIONS  --------------------------------*/
+    @GET(WebServer.GET_SAILOR_NOTIFICATION)
+    fun getSailorNotification(@Query("request_token")request_token:String?): Observable<NotificationResponse?>?
+
+    @DELETE(WebServer.DELETE_NOTIFICATION)
+    fun removeNotification(@Query("id")id:String?):Observable<DeleteNotificationResponse?>?
 }

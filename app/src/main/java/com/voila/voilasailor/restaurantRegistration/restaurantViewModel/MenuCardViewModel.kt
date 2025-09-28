@@ -13,7 +13,7 @@ import com.voila.voilasailor.restaurantRegistration.RestaurantNetworkResponse.Ge
 import com.voila.voilasailor.restaurantRegistration.RestaurantRespository.MenuCardRepository
 import com.voila.voilasailor.restaurantRegistration.RestaurantViewModelListner.MenuCardViewListener
 import com.voila.voilasailor.restaurantRegistration.UI.RestaurantHomeScreenActivity
-import com.voila.voilasailor.restaurantRegistration.Util.toast
+import com.voila.voilasailor.restaurantRegistration.Util.toasts
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 
@@ -70,12 +70,12 @@ class MenuCardViewModel(var context: Context) : ViewModel() {
     fun menuAddedSuccessfully(addNewDishResponse: AddNewDishResponse) {
         if (addNewDishResponse.result){
             dismissProgressDai()
-            context.toast(addNewDishResponse.message)
+            context.toasts(addNewDishResponse.message)
             moveOnHomeScreen()
         }
         else if (!addNewDishResponse.result){
             dismissProgressDai()
-            context.toast("Dish Not added please try again..")
+            context.toasts("Dish Not added please try again..")
             moveOnHomeScreen()
         }
     }

@@ -12,12 +12,10 @@ import com.voila.voilasailor.Helper.Helper
 import com.voila.voilasailor.Helper.NetworkStatus
 import com.voila.voilasailor.NetworkResponse.GetAllRestaurantDocsResponse
 import com.voila.voilasailor.Repository.MianRepository
-import com.voila.voilasailor.restaurantRegistration.RestaurantNetworkResponse.AddRestaurantOwnerDetailsResponse
-import com.voila.voilasailor.restaurantRegistration.RestaurantNetworkResponse.AddRestaurantPhotoResponse
-import com.voila.voilasailor.restaurantRegistration.RestaurantNetworkResponse.AddRestaurantProfileResponse
-import com.voila.voilasailor.restaurantRegistration.RestaurantNetworkResponse.TrackRegistrationProcessResponse
+import com.voila.voilasailor.restaurantRegistration.RestaurantNetworkResponse.*
 import com.voila.voilasailor.restaurantRegistration.RestaurantRespository.RestaurantRepository
 import com.voila.voilasailor.restaurantRegistration.RestaurantViewModelListner.RestaurantViewModelListener
+import com.voila.voilasailor.restaurantRegistration.RestaurantViewModelListner.TrackVerificationListner
 import com.voila.voilasailor.restaurantRegistration.UI.RestaurantHomeScreenActivity
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -25,17 +23,13 @@ import okhttp3.RequestBody
 class RestaurantRegistrationViewModel(var context: Context): ViewModel() {
 
     lateinit var listener : RestaurantViewModelListener
+    lateinit var trackListener : TrackVerificationListner
     lateinit var progressDialog: ProgressDialog
      val processCompleteStatusCode = ObservableField<String>()
 
     var mainRepository: MianRepository = MianRepository()
     var restaurantRepository : RestaurantRepository = RestaurantRepository()
 
-    fun showRegistrationForm(){
-        progressDialog = Helper.DialogsUtils.showProgressDialog(context,"Please wait getting form for you")
-        getAllRequiredRestaurantDocs("Restaurant")
-        listener.onOwnerBasicDetailFound()
-    }
 
     fun dismissProgressDai(){
         if (progressDialog!= null) progressDialog.dismiss()
@@ -133,6 +127,12 @@ class RestaurantRegistrationViewModel(var context: Context): ViewModel() {
         (context as Activity).finish()
     }
 
+    // track verification process
+    fun trackVerificationProcess(tag:String,auth_token:String){
+        progressDialog = Helper.DialogsUtils.showProgressDialog(context,"Please Wait we are tracking verification process..")
+        trackVerification(tag, auth_token)
+        trackListener.onTrackVerification()
+    }
 
 
     /*------------------------------------------ REPO ----------------------------*/
@@ -141,6 +141,9 @@ class RestaurantRegistrationViewModel(var context: Context): ViewModel() {
     private val trackRestaurantRegistration : MutableLiveData<TrackRegistrationProcessResponse> = restaurantRepository.trackRegistrationProcessObservable()
     private val addRestaurantProfileDetailsLiveData : MutableLiveData<AddRestaurantProfileResponse> = restaurantRepository.addRestaurantProfileDetailsObservable()
     private val addRestaurantPhotoLiveData : MutableLiveData<AddRestaurantPhotoResponse> = restaurantRepository.addRestaurantPhotoObservable()
+    var getRestaurantVerificationLiveData : MutableLiveData<RestaurantVerificationTrackResponse> = restaurantRepository.verificationTrackObservable()
+
+
 
     /*----------------------------------------- CALLING REPO FUN -----------------------*/
     private fun getAllRequiredRestaurantDocs(title: String){
@@ -165,6 +168,12 @@ class RestaurantRegistrationViewModel(var context: Context): ViewModel() {
     private fun addRestaurantPhoto(title: RequestBody,request_token: RequestBody,body: MultipartBody.Part){
         restaurantRepository.addRestaurantPhoto(body,title,request_token)
     }
+
+    // track verification process
+    private fun trackVerification(tag:String,request_token:String){
+        restaurantRepository.getRestVerificationTrack(tag,request_token)
+    }
+
 
 
     /*-------------------------------------- OBSERVABLE --------------------------*/
@@ -191,4 +200,11 @@ class RestaurantRegistrationViewModel(var context: Context): ViewModel() {
     fun addRestaurantPhotoObservable() : MutableLiveData<AddRestaurantPhotoResponse>{
         return addRestaurantPhotoLiveData
     }
+
+    // verification track observable
+    fun restVerificationTrackObservable(): MutableLiveData<RestaurantVerificationTrackResponse>{
+        return getRestaurantVerificationLiveData
+    }
+
+
 }

@@ -1,0 +1,542 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="ratecard"
+            type="com.voila.voilasailor.driverRegistration.viewModel.RateCardViewModel" />
+
+    </data>
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        tools:context=".driverRegistration.RateCardFragment">
+
+<!--        choice to select the rate card type-->
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:visibility="visible"
+            android:id="@+id/choice_rate_card_parent"
+            >
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/two_color_bg_button"
+                android:textColor="@color/white"
+                android:text="@string/system_rate"
+                android:fontFamily="@font/poppins_medium"
+                android:textSize="16sp"
+                android:layout_marginStart="15dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:textAllCaps="false"
+                android:visibility="visible"
+                android:layout_marginBottom="15dp"
+                android:layout_marginEnd="15dp"
+                android:onClick="@{() -> ratecard.useSystemRateCard()}"
+                />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/two_color_bg_button"
+                android:textColor="@color/white"
+                android:text="@string/custom_rate"
+                android:fontFamily="@font/poppins_medium"
+                android:textSize="16sp"
+                android:layout_marginStart="15dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:textAllCaps="false"
+                android:visibility="visible"
+                android:layout_marginBottom="15dp"
+                android:onClick="@{() -> ratecard.useCustomRateCard()}"
+                android:layout_marginEnd="15dp" />
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        >
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            >
+
+            <!--  system rate card layout-->
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:id="@+id/system_rate_card_parent"
+                android:visibility="gone"
+                >
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="vehicle type"
+                    android:textSize="16sp"
+                    android:layout_marginStart="10dp"
+                    android:textColor="@color/black"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginLeft="10dp"
+                    android:id="@+id/title"
+                    android:fontFamily="@font/poppins_medium"
+                    android:textStyle="bold"
+                    android:drawableLeft="@drawable/star_validation"
+                    android:drawableStart="@drawable/star_validation"
+                    android:drawablePadding="5dp"
+                    />
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/edt_text_layout"
+                    android:theme="@style/textInputLayoutAppearance"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+                    android:layout_marginLeft="10dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginTop="5dp"
+                    >
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/vehicle_type_edt"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:freezesText="true"
+                        android:inputType="text"
+                        android:focusable="false"
+                        android:textColorHint="@color/black"
+                        android:singleLine="true"
+                        android:textColor="@color/black"
+                        android:textSize="16sp"
+                        >
+
+                    </com.google.android.material.textfield.TextInputEditText>
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="vehicle number"
+                    android:textSize="16sp"
+                    android:layout_marginStart="10dp"
+                    android:textColor="@color/black"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginLeft="10dp"
+                    android:fontFamily="@font/poppins_medium"
+                    android:textStyle="bold"
+                    android:drawableLeft="@drawable/star_validation"
+                    android:drawableStart="@drawable/star_validation"
+                    android:drawablePadding="5dp"
+                    />
+                <com.google.android.material.textfield.TextInputLayout
+                    android:theme="@style/textInputLayoutAppearance"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+                    android:layout_marginLeft="10dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginTop="5dp"
+                    >
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/vehicle_number_edt"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:freezesText="true"
+                        android:inputType="text"
+                        android:focusable="false"
+                        android:textColorHint="@color/black"
+                        android:singleLine="true"
+                        android:textColor="@color/black"
+                        android:textSize="16sp"
+                        >
+
+                    </com.google.android.material.textfield.TextInputEditText>
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Minumum Rate"
+                    android:textSize="16sp"
+                    android:layout_marginStart="10dp"
+                    android:textColor="@color/black"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginLeft="10dp"
+                    android:fontFamily="@font/poppins_medium"
+                    android:textStyle="bold"
+                    android:drawableLeft="@drawable/star_validation"
+                    android:drawableStart="@drawable/star_validation"
+                    android:drawablePadding="5dp"
+                    />
+                <com.google.android.material.textfield.TextInputLayout
+                    android:theme="@style/textInputLayoutAppearance"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+                    android:layout_marginLeft="10dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginTop="5dp"
+                    >
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/minimum_rate_edt"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:freezesText="true"
+                        android:inputType="text"
+                        android:focusable="false"
+                        android:textColorHint="@color/black"
+                        android:singleLine="true"
+                        android:textColor="@color/black"
+                        android:textSize="16sp"
+                        >
+
+                    </com.google.android.material.textfield.TextInputEditText>
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Maximum Rate"
+                    android:textSize="16sp"
+                    android:layout_marginStart="10dp"
+                    android:textColor="@color/black"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginLeft="10dp"
+                    android:fontFamily="@font/poppins_medium"
+                    android:textStyle="bold"
+                    android:drawableLeft="@drawable/star_validation"
+                    android:drawableStart="@drawable/star_validation"
+                    android:drawablePadding="5dp"
+                    />
+                <com.google.android.material.textfield.TextInputLayout
+                    android:theme="@style/textInputLayoutAppearance"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+                    android:layout_marginLeft="10dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginTop="5dp"
+                    >
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/maximum_rate_edt"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:freezesText="true"
+                        android:inputType="text"
+                        android:focusable="false"
+                        android:textColorHint="@color/black"
+                        android:singleLine="true"
+                        android:textColor="@color/black"
+                        android:textSize="16sp"
+                        >
+
+                    </com.google.android.material.textfield.TextInputEditText>
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/two_color_bg_button"
+                    android:textColor="@color/white"
+                    android:text="@string/confirm_system_rate"
+                    android:fontFamily="@font/poppins_medium"
+                    android:textSize="16sp"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginBottom="15dp"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginRight="15dp"
+                    android:textAllCaps="false"
+                    android:visibility="gone"
+                    android:id="@+id/btn_conform_system_rate"
+                    android:layout_marginEnd="15dp"
+                    />
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/two_color_bg_button"
+                    android:textColor="@color/white"
+                    android:text="@string/change_rate_card"
+                    android:fontFamily="@font/poppins_medium"
+                    android:textSize="16sp"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginBottom="15dp"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginRight="15dp"
+                    android:textAllCaps="false"
+                    android:visibility="gone"
+                    android:id="@+id/btn_change_rate_card"
+                    android:layout_marginEnd="15dp"
+                    android:onClick="@{() -> ratecard.changeRateCardType()}"
+                    />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/system_rate_description"
+                    android:layout_gravity="bottom"
+                    android:gravity="bottom"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginEnd="20dp"
+                    android:layout_marginRight="20dp"
+                    android:textSize="16sp"
+                    android:textColor="@color/dark_grey"
+                    />
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+            <!--  custom rate card layout -->
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="gone"
+                android:id="@+id/conform_custom_rate_parent"
+                >
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="vehicle type"
+                    android:textSize="16sp"
+                    android:layout_marginStart="10dp"
+                    android:textColor="@color/black"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginLeft="10dp"
+                    android:fontFamily="@font/poppins_medium"
+                    android:textStyle="bold"
+                    android:drawableLeft="@drawable/star_validation"
+                    android:drawableStart="@drawable/star_validation"
+                    android:drawablePadding="5dp"
+                    />
+                <com.google.android.material.textfield.TextInputLayout
+                    android:theme="@style/textInputLayoutAppearance"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+                    android:layout_marginLeft="10dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginTop="5dp"
+                    >
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/conform_vehicle_type_edt"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:freezesText="true"
+                        android:inputType="text"
+                        android:focusable="false"
+                        android:textColorHint="@color/black"
+                        android:singleLine="true"
+                        android:textColor="@color/black"
+                        android:textSize="14sp"
+                        >
+
+                    </com.google.android.material.textfield.TextInputEditText>
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="vehicle number"
+                    android:textSize="16sp"
+                    android:layout_marginStart="10dp"
+                    android:textColor="@color/black"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginLeft="10dp"
+                    android:fontFamily="@font/poppins_medium"
+                    android:textStyle="bold"
+                    android:drawableLeft="@drawable/star_validation"
+                    android:drawableStart="@drawable/star_validation"
+                    android:drawablePadding="5dp"
+                    />
+                <com.google.android.material.textfield.TextInputLayout
+                    android:theme="@style/textInputLayoutAppearance"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+                    android:layout_marginLeft="10dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginTop="5dp"
+                    >
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/conform_vehicle_number_edt"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:freezesText="true"
+                        android:inputType="text"
+                        android:focusable="false"
+                        android:textColorHint="@color/black"
+                        android:singleLine="true"
+                        android:textColor="@color/black"
+                        android:textSize="14sp"
+                        >
+
+                    </com.google.android.material.textfield.TextInputEditText>
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Minumum Rate"
+                    android:textSize="16sp"
+                    android:layout_marginStart="10dp"
+                    android:textColor="@color/black"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginLeft="10dp"
+                    android:fontFamily="@font/poppins_medium"
+                    android:textStyle="bold"
+                    android:drawableLeft="@drawable/star_validation"
+                    android:drawableStart="@drawable/star_validation"
+                    android:drawablePadding="5dp"
+                    />
+                <com.google.android.material.textfield.TextInputLayout
+                    android:theme="@style/textInputLayoutAppearance"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+                    android:layout_marginLeft="10dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginTop="5dp"
+                    >
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/conform_minimum_rate_edt"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:freezesText="true"
+                        android:inputType="number"
+                        android:textColorHint="@color/black"
+                        android:singleLine="true"
+                        android:textColor="@color/black"
+                        android:textSize="14sp"
+                        >
+
+                    </com.google.android.material.textfield.TextInputEditText>
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Maximum Rate"
+                    android:textSize="16sp"
+                    android:layout_marginStart="10dp"
+                    android:textColor="@color/black"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginLeft="10dp"
+                    android:fontFamily="@font/poppins_medium"
+                    android:textStyle="bold"
+                    android:drawableLeft="@drawable/star_validation"
+                    android:drawableStart="@drawable/star_validation"
+                    android:drawablePadding="5dp"
+                    />
+                <com.google.android.material.textfield.TextInputLayout
+                    android:theme="@style/textInputLayoutAppearance"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+                    android:layout_marginLeft="10dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginTop="5dp"
+                    >
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/conform_maximum_rate_edt"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:freezesText="true"
+                        android:inputType="number"
+                        android:textColorHint="@color/black"
+                        android:singleLine="true"
+                        android:textColor="@color/black"
+                        android:textSize="14sp"
+                        >
+
+                    </com.google.android.material.textfield.TextInputEditText>
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/two_color_bg_button"
+                    android:textColor="@color/white"
+                    android:text="@string/confirm_conform_rate"
+                    android:fontFamily="@font/poppins_medium"
+                    android:textSize="16sp"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginRight="15dp"
+                    android:textAllCaps="false"
+                    android:visibility="gone"
+                    android:layout_marginBottom="15dp"
+                    android:id="@+id/btn_conform_custom_rate"
+                    android:layout_marginEnd="15dp"
+                    />
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/two_color_bg_button"
+                    android:textColor="@color/white"
+                    android:text="@string/change_rate_card"
+                    android:fontFamily="@font/poppins_medium"
+                    android:textSize="16sp"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginRight="15dp"
+                    android:textAllCaps="false"
+                    android:visibility="gone"
+                    android:layout_marginBottom="15dp"
+                    android:id="@+id/btn_custom_change_rate_card"
+                    android:layout_marginEnd="15dp"
+                    android:onClick="@{() -> ratecard.changeRateCardType()}"
+                    />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/custom_rate_description"
+                    android:layout_gravity="bottom"
+                    android:gravity="bottom"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginEnd="20dp"
+                    android:layout_marginRight="20dp"
+                    android:layout_marginTop="20dp"
+                    android:textSize="16sp"
+                    android:textColor="@color/dark_grey"
+                    />
+
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+    </ScrollView>
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+</layout>

@@ -7,6 +7,7 @@ import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import android.os.Build
+import android.util.Log
 import androidx.core.app.NotificationCompat.Builder
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
@@ -93,5 +94,10 @@ class FirebaseMessageReceiver : FirebaseMessagingService() {
             )
         }
         notificationManager.notify(0, builder.build())
+    }
+
+    override fun onNewToken(p0: String) {
+        super.onNewToken(p0)
+        Log.d("FCMTOKEN", "onNewToken: ${p0}")
     }
 }

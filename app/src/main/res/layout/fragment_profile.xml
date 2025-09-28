@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    >
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
 
@@ -16,54 +15,98 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
+        android:background="@color/white"
+        android:backgroundTint="@color/white"
         tools:context=".restaurantRegistration.UI.ProfileFragment">
+
+<!--        &lt;!&ndash; AppBar layout for using Toolbar as AppBar &ndash;&gt;-->
+<!--        <com.google.android.material.appbar.AppBarLayout-->
+<!--            android:id="@+id/appBarLayout"-->
+<!--            -->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            app:layout_constraintEnd_toEndOf="parent"-->
+<!--            app:layout_constraintStart_toStartOf="parent"-->
+<!--            app:layout_constraintTop_toTopOf="parent">-->
+
+<!--            <androidx.constraintlayout.widget.ConstraintLayout-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="match_parent">-->
+
+<!--                &lt;!&ndash; ToolBar widget &ndash;&gt;-->
+<!--                <androidx.appcompat.widget.Toolbar-->
+<!--                    android:id="@+id/toolbar"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:background="@color/primary_color"-->
+<!--                    android:minHeight="?attr/actionBarSize"-->
+<!--                    android:theme="?attr/actionBarTheme"-->
+<!--                    app:layout_constraintEnd_toEndOf="parent"-->
+<!--                    app:layout_constraintStart_toStartOf="parent"-->
+<!--                    app:layout_constraintTop_toTopOf="parent"-->
+<!--                    app:title="  Restaurant Profile"-->
+<!--                    app:titleTextColor="#ffff"-->
+<!--                    app:titleMarginStart="25dp"-->
+<!--                    />-->
+<!--            </androidx.constraintlayout.widget.ConstraintLayout>-->
+
+<!--        </com.google.android.material.appbar.AppBarLayout>-->
+
 
         <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:orientation="vertical"
             android:id="@+id/text_parent_layout"
             android:visibility="visible"
+            android:layout_gravity="center"
+            android:gravity="center"
             >
 
             <TextView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_width="260dp"
+                android:layout_height="wrap_content"
                 android:text="@string/owner_details"
                 android:layout_marginTop="10dp"
-                android:layout_marginStart="10dp"
-                android:layout_marginLeft="10dp"
                 android:textSize="16sp"
-                android:textColor="@color/black"
+                android:padding="10dp"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:textColor="@color/white"
+                android:background="@drawable/two_color_bg_button"
                 android:fontFamily="@font/poppins_medium"
                 android:id="@+id/owner_details"
                 android:onClick="@{() -> profile.showOwnerDetails()}"
                 />
             <TextView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_width="260dp"
+                android:layout_height="wrap_content"
                 android:text="@string/restaurant_details"
                 android:layout_marginTop="15dp"
-                android:layout_marginStart="10dp"
-                android:layout_marginLeft="10dp"
                 android:textSize="16sp"
-                android:textColor="@color/black"
                 android:fontFamily="@font/poppins_medium"
                 android:id="@+id/restaurant_details"
+                android:padding="10dp"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:textColor="@color/white"
+                android:background="@drawable/two_color_bg_button"
                 android:onClick="@{() -> profile.showRestaurantDetails()}"
                 />
             <TextView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_width="260dp"
+                android:layout_height="wrap_content"
                 android:text="@string/restaurant_docs"
                 android:layout_marginTop="10dp"
-                android:layout_marginStart="10dp"
-                android:layout_marginLeft="10dp"
                 android:textSize="16sp"
-                android:textColor="@color/black"
                 android:fontFamily="@font/poppins_medium"
                 android:id="@+id/restaurant_profile_details"
                 android:layout_marginBottom="10dp"
+                android:padding="10dp"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:textColor="@color/white"
+                android:background="@drawable/two_color_bg_button"
                 android:onClick="@{() -> profile.showRestaurantDocsDetails()}"
                 />
 
